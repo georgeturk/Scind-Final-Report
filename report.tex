@@ -1,0 +1,37 @@
+% Hamad Medical Corporation
+% Georges Younes
+
+% while inotifywait -e close_write *.tex; do pdflatex -interaction=nonstopmode -synctex=1 report; biber report; makeglossaries report; done
+% optipng -strip all *.png
+
+\input{report.preamble}
+
+\xtitle{Development of a Next-Generation Robotic-Assisted Surgery Simulator}
+\xnprp{5-995-2-415}
+\xinvestigator[1]{Prof.\ George Turkiyyah, Lead Principle Investigator}
+\xinvestigator[2]{Dr.\ Adbulla Alansari, Co-Lead Principle Investigator}
+\xinvestigator[2]{Dr.\ Julien Abinahed, Principle Investigator}
+\xinvestigator[2]{Dr.\ Nikhil Navkar, Principle Investigator}
+\xinvestigator[3]{Prof.\ Dinesh Manocha, Principle Investigator}
+\xaffiliation[1]{American University of Beirut}
+\xaffiliation[2]{Hamad Medical Corporation}
+\xaffiliation[3]{University of North Carolina at Chapel Hill}
+\xdate{\today}
+\xstartdate{Aug 1, 2016}
+\xenddate{Dec 31, 2019}
+\xsummary{I'm your summary. You can edit me in the main report file (\path{report.tex}).}
+
+\begin{document}
+\input{01.introduction}
+\input{02.literature}
+\input{03.methodology}
+\input{04.discussion}
+\input{05.beneficiaries}
+\input{06.recommendations}
+\input{07.conclusions}
+\input{08.bibliography}
+\input{09.nomenclatures}
+\input{10.appendices}
+
+\newpage\null\thispagestyle{empty}\newpage%
+\end{document}

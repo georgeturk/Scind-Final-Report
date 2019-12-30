@@ -1,0 +1,494 @@
+% Georges Younes
+% Hamad Medical Corporation
+
+\documentclass[english,a4paper,oneside,leqno,11pt]{memoir}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{excludeonly}
+%\DisemulatePackage{setspace}
+%\usepackage[nodisplayskipstretch]{setspace}
+%\usepackage{marginnote}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage[english]{babel}
+\usepackage[pangram]{blindtext}
+%\usepackage{lipsum}
+\usepackage{caption}
+%\usepackage[export]{adjustbox}
+\usepackage{listings}
+\usepackage{amsmath,amssymb,amsxtra,amsfonts}
+\usepackage{bm,mathtools}
+\usepackage[ruled]{algorithm}
+%\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+\usepackage[fixpdftex,usenames,dvipsnames,table]{xcolor}
+%\usepackage{indentfirst}
+\usepackage{paralist}
+\usepackage{xspace}
+\usepackage{tikz,tikz-3dplot,pgfplots}
+\usepackage{ifthen}
+%\usepackage[nocompress]{cite}
+\usepackage[toc,acronym,nonumberlist]{glossaries}
+\usepackage{varioref}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{authblk}
+\usepackage{pageslts}
+\usepackage[autostyle]{csquotes}
+\usepackage[breaklinks]{hyperref}
+%\usepackage[pagebackref,breaklinks]{hyperref}
+\usepackage{memhfixc}
+\usepackage[all]{hypcap}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,isbn=false,url=false,doi=true]{biblatex}
+\addbibresource{report.bib}
+%\bibliography{report}
+\usepackage{pdfpages}
+
+%% helper commands for cover page
+\newcommand{\xtitle}[1]{\gdef\xtitle{#1}\title{#1}}
+\newcommand{\xnprp}[1]{\gdef\xnprp{#1}}
+\newcommand{\xdate}[1]{\gdef\xdate{#1}\date{#1}}
+\newcommand{\xstartdate}[1]{\gdef\xstartdate{#1}}
+\newcommand{\xenddate}[1]{\gdef\xenddate{#1}}
+\newcommand{\xsummary}[1]{\gdef\xsummary{#1}}
+
+%%% https://tex.stackexchange.com/questions/74707/how-to-concatenate-strings-into-a-single-command
+\usepackage{etoolbox}
+
+\gdef\xinvestigators{}
+\gdef\xaffiliations{}
+
+\makeatletter%
+%\newcommand\uptag[1]{\textsuperscript{#1}}
+\newcommand\uptag[1]{\textsuperscript{\textit{\@alph{#1}}}}
+%\newcommand\uptag[1]{\textsuperscript{\@fnsymbol{#1}}}
+\makeatother%
+
+\newcommand{\xinvestigator}[2][]{
+  \author[#1]{#2}
+  \appto\xinvestigators{#2\uptag{#1}\par}
+}
+
+\newcommand{\xaffiliation}[2][]{
+  \affil[#1]{#2}
+  \appto\xaffiliations{#2\uptag{#1}\par}
+}
+
+%%% toc format
+%\setcounter{secnumdepth}{6}
+%\setcounter{tocdepth}{6}
+\setsecnumdepth{paragraph}
+\settocdepth{subsubsection}
+
+%%% page margins
+%\setlrmarginsandblock{1.5cm}{7.5cm}{*}
+\setlrmarginsandblock{2.5cm}{2.5cm}{*}
+%\setlrmarginsandblock{4.5cm}{4.5cm}{*}
+\setulmarginsandblock{3.0cm}{4.0cm}{*}
+%\setmarginnotes{7.5mm}{6cm}{0cm}
+\setmarginnotes{7.5mm}{2cm}{0cm}
+\checkandfixthelayout%
+%\setlength{\footskip}{1.45\baselineskip}
+
+%%% margin notes format
+\renewcommand{\sideparfont}{\raggedright\footnotesize\color[named]{Gray}}
+\sideparmargin{outer}
+
+%%% boxed chapter style
+%%% https://texblog.org/2012/07/03/fancy-latex-chapter-styles/
+%%% https://latex.org/forum/viewtopic.php?t=16624
+\makechapterstyle{box}{
+  \setlength{\beforechapskip}{0pt}
+  \setlength{\afterchapskip}{0.7cm}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapnumfont}{\normalfont\sffamily\huge\bfseries}
+  %\renewcommand*{\printchapternum}{}
+  \renewcommand*{\printchapternum}{
+    \flushleft
+    \begin{tikzpicture}
+      \draw[fill,color=black] (0,0) rectangle (1cm,1cm);
+      \draw[color=white] (0.5cm,0.5cm) node {\chapnumfont\thechapter};
+    \end{tikzpicture}
+    \vspace{-5ex}
+  }
+  \renewcommand*{\chaptitlefont}{\normalfont\sffamily\huge\bfseries}
+  \renewcommand*{\printchaptertitle}[1]{\flushleft\chaptitlefont##1}
+%   \renewcommand*{\printchaptertitle}[1]{
+%     \flushleft
+%     \begin{tikzpicture}
+%       \draw[fill,color=black] (0,0) rectangle (1cm,1cm);
+%       \draw[color=white] (0.5cm,0.5cm) node {\chapnumfont\thechapter};
+%     \end{tikzpicture}
+%     \chaptitlefont##1
+%   }
+}
+\chapterstyle{box}
+
+%%% heading styles
+\setsecheadstyle{\normalfont\large\bfseries}
+\setsubsecheadstyle{\normalfont\normalsize\bfseries}
+\setsubsubsecheadstyle{\normalfont\normalsize\bfseries}
+\setparaheadstyle{\normalfont\normalsize\bfseries}
+\setsubparaheadstyle{\normalfont\normalsize\bfseries}
+
+%%% table of contents name
+\addto\captionsenglish{%
+  \renewcommand\contentsname{Table of Contents}%
+}
+
+%%% page numbering in header/footer
+%%% https://tex.stackexchange.com/questions/227/how-can-i-add-page-of-on-my-document
+\makeevenhead{plain}{}{}{}
+\makeoddhead{plain}{}{}{}
+\makeevenhead{headings}{}{}{}
+\makeoddhead{headings}{}{}{}
+\makeevenfoot{plain}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
+\makeoddfoot{plain}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
+\makeevenfoot{headings}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
+\makeoddfoot{headings}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
+
+%\makefootrule{plain}{\textwidth}{\normalrulethickness}{}
+%\makeheadrule{headings}{\textwidth}{\normalrulethickness}{}
+
+%%% toc dots
+\renewcommand{\cftchapterdotsep}{\cftdotsep}
+\renewcommand{\cftchapterleader}{\cftdotfill{\cftchapterdotsep}}
+%\renewcommand{\cftchapterfont}{\normalfont}
+%\renewcommand{\cftchapterpagefont}{\normalfont}
+
+%%% compact lists
+%%% https://latex.org/forum/viewtopic.php?t=25565
+\usepackage{paralist}
+\let\itemize\compactitem
+\let\enditemize\endcompactitem
+\let\enumerate\compactenum
+\let\endenumerate\endcompactenum
+\let\description\compactdesc
+\let\enddescription\endcompactdesc
+\pltopsep=\medskipamount
+\plitemsep=1pt
+\plparsep=1pt
+
+% Disable indent
+\setlength{\parindent}{0pt}
+% Paragraph break
+\setlength{\parskip}{1ex}
+
+\usepackage{enumitem}
+\setlist{
+%  itemindent=,
+%  labelsep=,
+%  labelindent=,
+%  leftmargin=*,
+  listsep=1ex,
+  listparindent=0pt,
+  noitemsep
+%  before=
+}
+%\setlist{nolistsep,noitemsep}
+
+%%% float numbering
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\numberwithin{equation}{chapter}
+\numberwithin{algorithm}{chapter}
+%\numberwithin{lstlisting}{chapter}
+
+%%% float default locations
+\setfloatlocations{figure}{htp}
+\setfloatlocations{table}{htp}
+\setfloatlocations{algorithm}{tbp}
+\setfloatlocations{lstlisting}{tbp}
+
+\captionsetup[ruled]{labelfont=rm,labelsep=colon,strut=off}
+\captionsetup{format=plain,labelformat=simple,labelsep=colon,justification=raggedright}
+
+\newsubfloat{figure}
+%\renewcommand{\thesubfigure}{(\arabic{subfigure})}
+\renewcommand{\thesubfigure}{(\emph{\roman{subfigure}})}
+
+%%% various options for hyperref
+%http://www.tug.org/applications/hyperref/manual.html#x1-40003
+\hypersetup{
+  unicode,
+  %pdftex,
+  %xetex,
+  bookmarks,
+  bookmarksnumbered,
+  bookmarksdepth=subsection,
+  colorlinks=true,
+  linktoc=all,
+  %linkcolor=gray,
+  %anchorcolor=gray,
+  %citecolor=gray,
+  %filecolor=gray,
+  %menucolor=gray,
+  %runcolor=gray,
+  %urlcolor=gray,
+  linkcolor=Blue,
+  anchorcolor=Blue,
+  citecolor=Blue,
+  filecolor=Blue,
+  menucolor=Blue,
+  runcolor=Blue,
+  urlcolor=Blue,
+  plainpages=false,
+  pdfpagelabels,
+  hyperfigures,
+  hyperindex,
+  hyperfootnotes,
+  hypertexnames, %page links in the index will stop working (page 86 - lshort)
+  pdfborder={0 0 0},
+  %pdfstartview={FitH},
+  pdfnewwindow,
+  %pdfpagetransition={Dissolve},
+  %pdfpagelayout=OneColumn,
+  %pageanchor=false,
+  pdfcreator={},
+  pdfproducer={},
+  pdftitle={},
+  pdfauthor={},
+  pdfsubject={},
+  pdfkeywords={},
+  %http://www.cl.cam.ac.uk/~mgk25/publ-tips/
+  %pdfpagescrop={70 28 552 786},
+}
+
+%\renewcommand*{\chapterautorefname}{Chapter}
+%\renewcommand*{\sectionautorefname}{Section}
+%\renewcommand*{\subsectionautorefname}{\sectionautorefname}
+%\renewcommand*{\subsubsectionautorefname}{\sectionautorefname}
+%\renewcommand*{\paragraphautorefname}{Paragraph}
+%\renewcommand*{\subparagraphautorefname}{\paragraphautorefname}
+%\newcommand{\subfigureautorefname}{\figureautorefname}
+
+%%% https://tex.stackexchange.com/questions/370991/change-chapter-to-chapter-how-to-do-this-using-autoref
+\addto\extrasenglish{%
+  \def\chapterautorefname{Chapter}%
+  %\def\appendixautorefname{Appendix}%
+  \def\sectionautorefname{Section}%
+  \def\subsectionautorefname{\sectionautorefname}%
+  \def\subsubsectionautorefname{\sectionautorefname}%
+  \def\paragraphautorefname{Paragraph}%
+  \def\subparagraphautorefname{\paragraphautorefname}%
+  \def\subfigureautorefname{\figureautorefname}%
+}
+
+%%% sans-serif for chapter/appendix headings in toc
+%%% https://tex.stackexchange.com/questions/96899/change-the-chapter-font-in-toc-without-using-tocloft-package
+\makeatletter%
+\let\originall@chapter\l@chapter
+\def\l@chapter#1#2{\originall@chapter{{\sffamily #1}}{#2}}
+\let\originall@appendix\l@appendix
+\def\l@appendix#1#2{\originall@appendix{{\sffamily #1}}{#2}}
+\makeatother%
+
+\nonfrenchspacing%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% automatic referencing
+%\newcommand\frf[1]{{\bfseries#1}}
+\newcommand\frf[1]{#1}
+%\labelformat{chapter}{Chapter~\frf#1}
+%\labelformat{section}{Section~\frf#1}
+%\labelformat{subsection}{Subsection~\frf#1}
+%\labelformat{subsubsection}{Subsubsection~\frf#1}
+%\labelformat{paragraph}{Paragraph~\frf#1}
+%\labelformat{subparagraph}{Subparagraph~\frf#1}
+%\labelformat{equation}{(\frf#1)}
+%\labelformat{figure}{Figure~\frf#1}
+%\labelformat{table}{Table~\frf#1}
+%\labelformat{algorithm}{Algorithm~\frf#1}
+\labelformat{chapter}{\frf#1}
+\labelformat{section}{\frf#1}
+\labelformat{subsection}{\frf#1}
+\labelformat{subsubsection}{\frf#1}
+\labelformat{paragraph}{\frf#1}
+\labelformat{subparagraph}{\frf#1}
+\labelformat{equation}{(\frf#1)}
+\labelformat{figure}{\frf#1}
+\labelformat{table}{\frf#1}
+\labelformat{algorithm}{\frf#1}
+
+%%% color palette
+% https://clrs.cc
+% https://openglcolor.mpeters.me
+\xdefinecolor{Aqua}{rgb}{0.49803922,0.85882353,1.0}
+\xdefinecolor{Black}{rgb}{0.06666667,0.06666667,0.06666667}
+\xdefinecolor{Blue}{rgb}{0.0,0.45490196,0.85098039}
+\xdefinecolor{Cream}{rgb}{0.93333333,0.93333333,0.93333333}
+\xdefinecolor{DarkGray}{rgb}{0.33333333,0.33333333,0.33333333}
+\xdefinecolor{Fuschia}{rgb}{0.94117647,0.07058824,0.74509804}
+\xdefinecolor{Gray}{rgb}{0.66666667,0.66666667,0.66666667}
+\xdefinecolor{Green}{rgb}{0.18039216,0.8,0.25098039}
+\xdefinecolor{Lime}{rgb}{0.00392157,1.0,0.43921569}
+\xdefinecolor{Maroon}{rgb}{0.52156863,0.07843137,0.29411765}
+\xdefinecolor{Navy}{rgb}{0.0,0.12156863,0.24705882}
+\xdefinecolor{Olive}{rgb}{0.23921569,0.6,0.43921569}
+\xdefinecolor{Orange}{rgb}{1.0,0.52156863,0.10588235}
+\xdefinecolor{Purple}{rgb}{0.69411765,0.05098039,0.78823529}
+\xdefinecolor{Red}{rgb}{1.0,0.25490196,0.21176471}
+\xdefinecolor{Silver}{rgb}{0.86666667,0.86666667,0.86666667}
+\xdefinecolor{Teal}{rgb}{0.22352941,0.8,0.8}
+\xdefinecolor{White}{rgb}{1.0,1.0,1.0}
+\xdefinecolor{Yellow}{rgb}{1.0,0.8627451,0.0}
+
+%%% left ruler
+%%% https://latex.org/forum/viewtopic.php?t=9072
+%\usepackage{eso-pic}
+%\usepackage{calc}
+%\usepackage{blindtext}
+%
+%\newlength{\leftrule}
+%\newlength{\rightrule}
+%\setlength{\leftrule}{2\leftmargin-0.5\marginparsep}
+%\setlength{\rightrule}{2\leftmargin+\textwidth}
+%\AddToShipoutPicture{%
+%   \AtPageLowerLeft{%
+%%     \put(\LenToUnit{\leftrule},0){\rule{0.5pt}{\paperheight}}  % Rule on the left
+%     \put(\LenToUnit{\rightrule},0){\rule{0.5pt}{\paperheight}}  % Rule on the right
+%   }
+%}
+%\SetBgScale{1}
+% \SetBgAngle{0}
+% \SetBgColor{gray}
+% \SetBgContents{\rule{.4pt}{\paperheight}}
+% \SetBgHshift{-9cm}
+
+%%% https://tex.stackexchange.com/questions/414572/drawing-a-line-on-the-right-margin
+\usepackage{eso-pic}
+\usetikzlibrary{positioning}
+
+%\AtBeginDocument{
+%\AddToShipoutPictureBG{%
+%  \AtPageLowerLeft{%
+%    \begin{tikzpicture}[overlay,remember picture]
+%    % angles
+%    \coordinate (pagene) at (.98\paperwidth,.98\paperheight);
+%    \draw[thin] (pagene) -- +(-1,0) -- (pagene) -- +(0,-1);
+%    \coordinate (pagenw) at (.02\paperwidth,.98\paperheight);
+%    \draw[thin] (pagenw) -- +(1,0) -- (pagenw) -- +(0,-1);
+%    \coordinate (pagese) at (.98\paperwidth,.02\paperheight);
+%    \draw[thin] (pagese) -- +(-1,0) -- (pagese) -- +(0,1);
+%    \coordinate (pagesw) at (.02\paperwidth,.02\paperheight);
+%    \draw[thin] (pagesw) -- +(1,0) -- (pagesw) -- +(0,1);
+%    \end{tikzpicture}
+%  }
+%  \ifthenelse{\value{page}>0}{% if page > 2 add:
+%  \AtPageLowerLeft{%
+%    \begin{tikzpicture}[overlay,remember picture]
+%    % Writing at the very top
+%    \node[anchor=north east, align=center,
+%    font=\small] (W)
+%    at (.95\paperwidth,.95\paperheight)
+%    {};
+%    \node[anchor=north east,
+%    font=\bfseries, align=right]
+%    at (W.north west) {};
+%    % vertical lines
+%    %\draw[thin] (W.north west) -- +(0,-.9\paperheight);
+%    %\draw[thin] (W.north east) -- +(0,-.9\paperheight);
+%    % horizontal line
+%    %\draw[thin] (W.south west) -- (W.south east);
+%    \end{tikzpicture}}%
+%  }{}%
+%  }
+%}
+
+%%% page layout
+%\usepackage{layouts}
+%\AtEndDocument{
+%\printinunitsof{mm}
+%\twocolumnlayoutfalse%
+%\currentpage%
+%\marginparswitchtrue%
+%\pagedesign%
+%\thispagestyle{empty}
+%\newpage%
+%}
+
+%%% cover page
+\newcommand*{\coverpage}{
+\begingroup%
+\rule{\textwidth}{1pt}\par
+\vspace{0.4\baselineskip}
+{\sffamily\Huge\bfseries Final Report}\\
+\rule{\textwidth}{1pt}\par
+\vspace*{10ex}
+{\Large \xtitle}\\[0.5\baselineskip]
+{\Large NPRP \#\xnprp}\par
+\vspace*{7ex}
+\xinvestigators
+\vspace*{4ex}
+\xaffiliations
+\vfill%
+%{\xdate}
+\begin{tabular}{ll}
+Start date: & \xstartdate\\
+End date: & \xenddate%\\
+%Report date: & \xdate\\
+\end{tabular}
+\endgroup
+\clearpage%
+}
+
+%%% frontmatter
+\newcommand*{\makecover}{%
+\frontmatter%
+\addcontentsline{toc}{chapter}{Cover Page}
+\thispagestyle{empty}
+\coverpage%
+
+% \renewcommand\Authsep{\\}
+% \renewcommand\Authand{\\}
+% \renewcommand\Authands{\\}
+% \maketitle%
+% \thispagestyle{empty}
+
+\chapter*{Disclaimer}\label{chp:disclaimer}
+\addcontentsline{toc}{chapter}{Disclaimer}
+This project outcomes report for the general public is displayed verbatim as submitted by the Principal Investigator[s] (PI's) for this award. Any opinions, findings, and conclusions or recommendations expressed in this report are those of the PI’s and do not necessarily reflect the views of the Qatar National Research Fund (QNRF); QNRF has not approved or endorsed its content.
+%\clearpage%
+
+\vspace{10ex}
+{\let\clearpage\relax\chapter*{Acknowledgments}\label{chp:acknowledgments}}
+%\chapter*{Acknowledgments}\label{chp:acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+This project was made possible by a National Priorities Research Program (NPRP) grant \#\xnprp{} from the Qatar National Research Fund, a member of Qatar Foundation. The statements made herein are solely the responsibility of the author[s].
+\clearpage%
+
+%\begin{KeepFromToc}
+\tableofcontents%
+\label{chp:contents}
+%\end{KeepFromToc}
+\clearpage%
+
+\listoftables%
+\label{chp:tables}
+\clearpage%
+
+\listoffigures%
+\label{chp:figures}
+\clearpage%
+
+\chapter*{List of Acronyms}\label{chp:Aacronyms}
+\addcontentsline{toc}{chapter}{List of Acronyms}
+\par%
+\printglossary[type=acronym,title=List of Acronyms,nonumberlist]
+
+\chapter*{Executive Summary}\label{chp:summary}
+\addcontentsline{toc}{chapter}{Executive Summary}
+\xsummary%
+
+\mainmatter%
+}
+
+\AtBeginDocument{
+\makecover%
+}
+
+%%% glossaries: acronyms (abbreviations) and symbols (nomenclatures)
+%\input{\jobname.glossaries}
+\input{report.glossaries}
