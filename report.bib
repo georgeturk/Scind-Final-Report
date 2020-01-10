@@ -1,6 +1,6 @@
 % https://github.com/FlamingTempura/bibtex-tidy
 % npm install -g bibtex-tidy
-% bibtex-tidy bibliography.bib --curly --numeric --align --sort --sort-fields --escape --strip-enclosing-braces
+% bibtex-tidy report.bib --curly --numeric --align --sort --sort-fields --escape --strip-enclosing-braces
 @article{bielser:gm:2004,
   title         = {A State Machine for Real-Time Cutting of Tetrahedral Meshes},
   author        = {Bielser, D. and Glardon, P. and Teschner, Matthias and Gross, Markus},
@@ -80,7 +80,7 @@
   title         = {OpenVolumeMesh -- A Versatile Index-Based Data Structure for 3D Polytopal Complexes},
   author        = {Kremer, Michael and Bommes, David and Kobbelt, Leif},
   year          = 2013,
-  booktitle     = {Proceedings of the 21^st^ International Meshing Roundtable},
+  booktitle     = {Proceedings of the 21\textsuperscript{st} International Meshing Roundtable},
   publisher     = {Springer},
   address       = {Berlin, Heidelberg},
   pages         = {531--548},
@@ -118,7 +118,7 @@
   url           = {https://doi.org/10.1007/s00371-015-1123-x},
   abstract      = {Virtual cutting of deformable objects is at the core of many applications in interactive simulation and especially in computational medicine. The ability to simulate surgical cuts, dissection, soft tissue tearing or micro-fractures is essential for augmenting the capabilities of existing or future simulation systems. To support such features, we combine a new remeshing algorithm with a fast finite element approach. The proposed method is generic enough to support a large variety of applications. We show the benefits of our approach evaluating the impact of cuts on the number of nodes and the numerical quality of the mesh. These points are crucial to ensure accurate and stable real-time simulations.}
 }
-article{paulus:vc:2015:hal,
+@article{paulus:vc:2015:hal,
   title         = {Virtual Cutting of Deformable Objects based on Efficient Topological Operations},
   author        = {Paulus, Christoph and Untereiner, Lionel and Courtecuisse, Hadrien and Cotin, Stephane and Cazier, David},
   year          = 2015,
@@ -195,6 +195,26 @@ article{paulus:vc:2015:hal,
   pages         = {61--81},
   doi           = {10.1111/j.1467-8659.2005.00829.x},
   --month       = 3
+}
+@article{tetwild,
+  title         = {Tetrahedral Meshing in the Wild},
+  author        = {Hu, Yixin and Zhou, Qingnan and Gao, Xifeng and Jacobson, Alec and Zorin, Denis and Panozzo, Daniele},
+  year          = 2018,
+  month         = jul,
+  journal       = {ACM Trans. Graph.},
+  publisher     = {ACM},
+  address       = {New York, NY, USA},
+  volume        = 37,
+  number        = 4,
+  pages         = {60:1--60:14},
+  doi           = {10.1145/3197517.3201353},
+  issn          = {0730-0301},
+  url           = {http://doi.acm.org/10.1145/3197517.3201353},
+  issue_date    = {August 2018},
+  articleno     = 60,
+  numpages      = 14,
+  acmid         = 3201353,
+  keywords      = {mesh generation, robust geometry processing, tetrahedral meshing}
 }
 @article{weng:sym:2018,
   title         = {Interactive Cutting of Thin Deformable Objects},

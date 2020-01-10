@@ -4,7 +4,156 @@
 \chapter{Introduction}\label{chp:introduction}
 
 \section{Project Background}\label{sec:background}
+Robotic-assisted surgery promises to bring significant improvements in precision and accuracy to surgical interventions as well as reduced pain, scars, and recovery time and cost to patients. Since their introduction in operating rooms about a decade and a half ago, the surgical robots have steadily improved in capabilities, dexterity, and ease of use and there are more than a thousand surgical robots deployed worldwide. The current generation of commercial robots (\eg\ \acr{isi}'s da Vinci Xi) attempts to combine the ergonomic and visual advantages of open surgical techniques with the benefits of traditional laparoscopy, also known as \acr{mis}. A surgeon's console offers a comfortable seated position and a \acr{3d} view of the surgical field through a stereo endoscope. A patient-side cart with robotic arms that translate and pivot at small operating ports is controlled from the remote surgeon's console via master controls. In addition, through the use of robotic wrist mechanisms at the end of the laparoscopic arms, increased dexterity, finer ranges of motion, and additional manipulation degrees of freedom beyond those currently possible with traditional \acr{mis} are available. This allows precise dissection, suturing and tissue manipulation and holds the promise to significantly improve the effectiveness of surgical therapy, as well as to allow remote surgical procedures.
+
+Despite significant progress, there remains however a mismatch between the medical promise of robotic-assisted surgery and the clinical outcomes observed in operating rooms. Reasons for this disparity are manifold. New interfaces to the dexterous robotic wrists and the resulting tool-tissue interaction behaviors create a steep learning curve for surgeons. The range of motion of the instruments and the available degrees of freedom require complex manipulation of soft tissue and organs from perspectives and angles that make it difficult to register all relevant anatomical landmarks, especially when tissue is being dissected and undergoes very large deformations. The steep learning curve of robotic \acr{mis} procedures in complex anatomies has been extensively documented and has resulted in significant variation in surgical outcome by different surgeons. These hurdles towards achieving the full potential of robotic surgery point to the critical need for significant surgeon training prior to using the robots on patients. Urologists generally agree that a typical surgeon will need to perform as many as 50 prostatectomies with the robot before achieving real proficiencies. This is quite impractical and expensive. Alternative training methods are needed.
+
+Among the many possible training modalities, surgical simulation is perhaps the most effective and practical mechanism for training a broad range of users. In many high-risk professions such as aviation, nuclear power-plant operation, maintenance of massive man-made structures such the Boeing 787 or the Airbus A380, simulation and operations on virtual prototypes have proven their effectiveness in terms of improved design and training, and have now become routine vehicles for practice before performing the tasks in real settings (\eg flying the airplanes). In robotic surgery, simulators can play a similar and important role in training student surgeons in the effective use of modern surgical robots for specific procedures, without the expense and logistic difficulties associated with training directly on the robot. Virtual training surgical simulators have also additional advantages. Tactile sensation that is generally lost in robotic surgery can be restored through haptic interfaces, for initial training purposes. Auxiliary information can also be laid out on the display to provide the surgeon in-training with additional feedback. For example, magnitudes of internal tissue stresses induced in the process of grasping or suturing can be overlaid as color on the images displayed to the surgeon.
+
+Significant challenges remain however towards the development of next-generation simulators that can offer sufficient fidelity to become reliable training environments. Current-generation simulators allow users to practice on the control of robotic wrists, clutching and arm movement, camera control, and \enquote{drills} such as putting rings on pegs---tasks all intended for psychomotor skills training (instrument manipulation, depth perception, and overall console awareness) but not sufficient for procedure training. Some modern simulators use \enquote{pseudo-physics-based} models (spring and masses) in an attempt to simulate operations such as cutting, suturing, and tissue deformation, and hence cannot offer sufficient fidelity. While such simplified models may occasionally be adequate for giving an overall feel of a procedure, they do not provide the necessary high-quality realism for haptic rendering and tool-tissue deformation, nor the reliable collision and contact handling among the deforming tissue models. Such fidelity is essential for developing trustworthy immersive environments acceptable for training. The primary challenges of high-fidelity simulations come from the complex geometry and mechanical behavior involved in dissection, resection, organ deformations, suturing, and related procedures of surgical robotics, and the need to perform all the processing in real-time. Effective simulators demand interactive performance (\ie 30 or more updates per second) in the presence of a human-in-the-loop. This implies that all physics-based computations, collision handling and display need to be performed in less than \SI{35}{\milli\second} per update!
 
 \section{Study Objectives}\label{sec:objectives}
+In this project, we propose to develop, deploy, and evaluate a new interactive robotic surgery simulation system that addresses the key challenges highlighted above. The proposed simulator will support higher-resolution geometric representations and visual fidelity, and more realistic tissue mechanics, and contact handling models, than has been possible hitherto. Advances in modeling and simulation, as well as in commodity high-performance hardware and user interface technology have now made it possible to envision the development of real-time, immersive, bimanual surgical simulators of unprecedented visual and haptic fidelity to bring more robust and versatile virtual environments to surgeons. Commodity \acr{gpu}'s, which were originally designed for graphical display and visual processing, are now used as general purpose computational units and are capable of performing teraflop-computations on desktop workstations thereby making it possible to achieve interactive real-time simulation of complicated non-linear behavior of deformable models. High-quality affordable stereo displays devices can now provide a much richer and compelling interaction with virtual worlds.
+
+The project brings together two novel algorithmic contributions towards the development and deployment of such a system: parallel \acr{gpu} algorithms for handling collisions and geometric computations in a dynamically changing, deformable complex anatomical environment, as well as parallel continuum-mechanics based finite element algorithms for generating the mechanical behavior of soft tissues as they are manipulated by surgical instruments. Both sets of algorithms operate in real-time allowing the human-in-the-loop to interactively control the simulation at unprecedented levels of fidelity. These innovations will be integrated in an immersive environment to provide an ergonomically-realistic experience for surgeons. The resulting system will allow the generation of specific metrics for assessing the quality of the simulator and detailed data on its effectiveness in training. We will focus on a specific procedure, urethral transection in a radical prostatectomy, for developing and testing the simulator. Clinically, this is the most common procedure performed in robot-assisted \acr{mis}. Technically, the anatomy of the prostate has a high complexity in terms of simulation and allows us to showcase our technology in a complex heterogeneous setting.
 
 \section{Tasks and Aims}\label{sec:aims}
+
+This project had 2 (iterative) phases, 6 aims, and 21 tasks. The aims/tasks are outlined in \autoref{tbl:outline}.
+
+\begin{table}
+%\small
+\centering
+\begin{tabular}{ll}
+  \textbf{Aim} & \textbf{Task}\\
+  \toprule
+  \multirow[t]{3}{*}{Model Generation}
+  & Geometric Organ/Instrument Models\\
+  & Texture Models\\
+  & Material Models\\
+  \midrule
+  \multirow[t]{4}{*}{Finite Element Simulation Kernel}
+  & Discontinuous Finite Elements\\
+  & Fast Incremental Solver\\
+  & Nonlinear Solver\\
+  & GPU Acceleration\\
+  & Faster Time Integration\\
+  \midrule
+  \multirow[t]{3}{*}{Fast Continuous Collision Processing}
+  & Generation of Model Hierarchies\\
+  & Culling and Optimization\\
+  & GPU Acceleration\\
+  \midrule
+  \multirow[t]{3}{*}{System Integration}
+  & Console Setup\\
+  & Haptic Control\\
+  & Stereo Rendering\\
+  \midrule
+  \multirow[t]{4}{*}{Training and Test Scenarios}
+  & Clinical Steps\\
+  & Graphical User Interface\\
+  & Metrics for Performance Evaluation\\
+  & Evaluation Protocols\\
+  \midrule
+  \multirow[t]{4}{*}{Validation and Assessment}
+  & Face Validity Tests\\
+  & Content Validity Tests\\
+  & Construct Validity Tests\\
+  & Predictive Evaluation\\
+  \bottomrule
+\end{tabular}
+\caption{Project aims and tasks}\label{tbl:outline}
+\end{table}
+
+%\begin{enumerate}
+%  \item Model Generation
+%  \begin{enumerate}
+%    \item Geometric Organ/Instrument Models
+%    \item Texture Models
+%    \item Material Models
+%  \end{enumerate}
+
+%  \item Finite Element Simulation Kernel
+%  \begin{enumerate}
+%    \item Discontinuous Finite Elements
+%    \item Fast Incremental Solver
+%    \item Nonlinear Solver
+%    \item GPU Acceleration
+%  \end{enumerate}
+
+%  \item Fast Continuous Collision Processing
+%  \begin{enumerate}
+%    \item Generation of Model Hierarchies
+%    \item Culling and Optimization
+%    \item GPU Acceleration
+%  \end{enumerate}
+
+%  \item System Integration
+%  \begin{enumerate}
+%    \item Console Setup
+%    \item Haptic Control
+%    \item Stereo Rendering
+%  \end{enumerate}
+
+%  \item Training and Test Scenarios
+%  \begin{enumerate}
+%    \item Clinical Steps
+%    \item Graphical User Interface
+%    \item Metrics for Performance Evaluation
+%    \item Evaluation Protocols
+%  \end{enumerate}
+
+%  \item Validation and Assessment
+%  \begin{enumerate}
+%    \item Face Validity Tests
+%    \item Content Validity Tests
+%    \item Construct Validity Tests
+%    \item Predictive Evaluation
+%  \end{enumerate}
+%\end{enumerate}
+
+\subsection{Aim 1: Model Generation}
+Model generation involves the creation, texuring, and visualization of 3d surface and volumetric models for the endowrist tools, prostate, urethra and its surrounding.
+
+\subsubsection{Task 1: Geometric Organ/Instrument Models}
+\subsubsection{Task 2: Texture Models}
+\subsubsection{Task 3: Material Models}
+
+\subsection{Aim 2: Finite Element Simulation Kernel}
+\textcolor{Red}{TODO}
+
+\subsubsection{Task 4: Discontinuous Finite Elements}
+\subsubsection{Task 5: Fast Incremental Solver}
+\subsubsection{Task 6: Nonlinear Solver}
+\subsubsection{Task 7: GPU Acceleration}
+\subsubsection{Task 8: Faster Time Integration} We have developed new algorithms for faster time integration using position-based dynamics formulation. The main benefit of these schemes is to accelerate the time integration computation for real-time simulation.
+
+\subsection{Aim 3: Fast Continuous Collision Processing}
+Fast Continuous Collision Processing involves checking for collision between the surface and volumetric primitives during the simulation. These include self-collision as well as collisions between discrete time instances. Collision detection can be regarded as a major bottleneck in terms of realtime simulation and it is important to resolve these collisions accurately for robust simulation.
+
+\subsubsection{Task 8: Generation of Model Hierarchies}
+\subsubsection{Task 9: Culling and Optimization}
+\subsubsection{Task 10: GPU Acceleration}
+
+\subsection{Aim 4: System Integration}
+System Integration consists of tasks involving the integration of the collision computations, Finite Element simulation kernel, cutting system and integration with various display and input technologies including stereoscopic and monoscoping display technologies. This includes handling many issues related to the interfaces between different modules and the corner cases.
+
+\subsubsection{Task 11: Console Setup}
+\subsubsection{Task 12: Haptic Control}
+\subsubsection{Task 13: Stereo Rendering}
+
+\subsection{Aim 5: Metrics for Performance Evaluation}
+Metrics for Performance Evaluation aim starts with understanding the clinical steps involved in the chosen surgical procedure, showing live metrics through the user interface and to define the protocols for evaluation.
+
+\subsubsection{Task 14: Clinical Steps}
+\subsubsection{Task 15: Graphical User Interface}
+\subsubsection{Task 16: Metrics for Performance Evaluation}
+\subsubsection{Task 17: Evaluation Protocols}
+
+\subsection{Aim 6: Validation and Assessment}
+\textcolor{Red}{TODO}
+
+\subsubsection{Task 18: Face Validity Tests}
+\subsubsection{Task 19: Content Validity Tests}
+\subsubsection{Task 20: Construct Validity Tests}
+\subsubsection{Task 21: Predictive Evaluation}

@@ -9,22 +9,31 @@
 %\DisemulatePackage{setspace}
 %\usepackage[nodisplayskipstretch]{setspace}
 %\usepackage{marginnote}
+\usepackage[counterclockwise]{rotating}
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
 \graphicspath{{figures/}}
 \usepackage[english]{babel}
 \usepackage[pangram]{blindtext}
+%\usepackage{csquotes}
 %\usepackage{lipsum}
 \usepackage{caption}
-%\usepackage[export]{adjustbox}
+\usepackage[export]{adjustbox}
+%\usepackage{type1cm}
+%\usepackage{ragged2e}
+%\usepackage{microtype}
 \usepackage{listings}
-\usepackage{amsmath,amssymb,amsxtra,amsfonts}
+\usepackage{fix-cm}
+\usepackage{amsmath,amssymb,amsxtra,amsbsy,amsfonts}
 \usepackage{bm,mathtools}
 \usepackage[ruled]{algorithm}
 %\usepackage{algorithmicx}
 \usepackage[noend]{algpseudocode}
 \usepackage[fixpdftex,usenames,dvipsnames,table]{xcolor}
 %\usepackage{indentfirst}
-\usepackage{paralist}
+%\usepackage{paralist}
+\usepackage{multirow}
+\usepackage{multicol}
 \usepackage{xspace}
 \usepackage{tikz,tikz-3dplot,pgfplots}
 \usepackage{ifthen}
@@ -32,7 +41,8 @@
 \usepackage[toc,acronym,nonumberlist]{glossaries}
 \usepackage{varioref}
 \usepackage{booktabs}
-\usepackage{siunitx}
+\usepackage{tabularx}
+\usepackage[binary-units]{siunitx}
 \usepackage{authblk}
 \usepackage{pageslts}
 \usepackage[autostyle]{csquotes}
@@ -40,10 +50,15 @@
 %\usepackage[pagebackref,breaklinks]{hyperref}
 \usepackage{memhfixc}
 \usepackage[all]{hypcap}
-\usepackage[backend=biber,style=numeric-comp,sorting=none,isbn=false,url=false,doi=true]{biblatex}
-\addbibresource{report.bib}
-%\bibliography{report}
 \usepackage{pdfpages}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage[inline,shortlabels]{enumitem}
+\usepackage{soul}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,isbn=false,url=false,doi=false]{biblatex}
+\addbibresource{report.bib}
+\addbibresource{proposal.bib}
+%\bibliography{report}
 
 %% helper commands for cover page
 \newcommand{\xtitle}[1]{\gdef\xtitle{#1}\title{#1}}
@@ -61,18 +76,20 @@
 
 \makeatletter%
 %\newcommand\uptag[1]{\textsuperscript{#1}}
-\newcommand\uptag[1]{\textsuperscript{\textit{\@alph{#1}}}}
 %\newcommand\uptag[1]{\textsuperscript{\@fnsymbol{#1}}}
+% https://tex.stackexchange.com/questions/63895/click-to-go-to-an-anchored-line
+\newcommand\uptagi[1]{\hyperlink{#1}{\textsuperscript{\textit{\@alph{#1}}}}}
+\newcommand\uptaga[1]{\hypertarget{#1}{\textsuperscript{\textit{\@alph{#1}}}}}
 \makeatother%
 
 \newcommand{\xinvestigator}[2][]{
   \author[#1]{#2}
-  \appto\xinvestigators{#2\uptag{#1}\par}
+  \appto\xinvestigators{#2\uptagi{#1}\par}
 }
 
 \newcommand{\xaffiliation}[2][]{
   \affil[#1]{#2}
-  \appto\xaffiliations{#2\uptag{#1}\par}
+  \appto\xaffiliations{#2\uptaga{#1}\par}
 }
 
 %%% toc format
@@ -159,34 +176,35 @@
 
 %%% compact lists
 %%% https://latex.org/forum/viewtopic.php?t=25565
-\usepackage{paralist}
-\let\itemize\compactitem
-\let\enditemize\endcompactitem
-\let\enumerate\compactenum
-\let\endenumerate\endcompactenum
-\let\description\compactdesc
-\let\enddescription\endcompactdesc
-\pltopsep=\medskipamount
-\plitemsep=1pt
-\plparsep=1pt
+%\usepackage{paralist}
+%\let\itemize\compactitem
+%\let\enditemize\endcompactitem
+%\let\enumerate\compactenum
+%\let\endenumerate\endcompactenum
+%\let\description\compactdesc
+%\let\enddescription\endcompactdesc
+%\pltopsep=\medskipamount
+%\plitemsep=1pt
+%\plparsep=1pt
 
 % Disable indent
 \setlength{\parindent}{0pt}
 % Paragraph break
 \setlength{\parskip}{1ex}
 
-\usepackage{enumitem}
-\setlist{
-%  itemindent=,
-%  labelsep=,
-%  labelindent=,
-%  leftmargin=*,
-  listsep=1ex,
-  listparindent=0pt,
-  noitemsep
-%  before=
-}
-%\setlist{nolistsep,noitemsep}
+%\usepackage[shortlabels]{enumitem}
+% \setlist{
+% %  itemindent=,
+% %  labelsep=,
+% %  labelindent=,
+% %  leftmargin=*,
+%   listsep=1ex,
+%   listparindent=0pt,
+%   noitemsep,
+%   nosep,
+% %  before=
+% }
+\setlist{leftmargin=*,itemsep=0ex}
 
 %%% float numbering
 \numberwithin{figure}{chapter}
@@ -201,12 +219,24 @@
 \setfloatlocations{algorithm}{tbp}
 \setfloatlocations{lstlisting}{tbp}
 
-\captionsetup[ruled]{labelfont=rm,labelsep=colon,strut=off}
-\captionsetup{format=plain,labelformat=simple,labelsep=colon,justification=raggedright}
+\captionsetup[ruled]{
+  strut=off
+}
+\captionsetup{
+  format=plain,
+  labelformat=simple,
+%  labelsep=colon,
+  labelsep=space,
+  labelfont=bf,
+  justification=raggedright,
+  font=small,
+  width=\textwidth
+}
 
 \newsubfloat{figure}
 %\renewcommand{\thesubfigure}{(\arabic{subfigure})}
-\renewcommand{\thesubfigure}{(\emph{\roman{subfigure}})}
+%\renewcommand{\thesubfigure}{(\emph{\roman{subfigure}})}
+\renewcommand{\thesubfigure}{(\emph{\alph{subfigure}})}
 
 %%% various options for hyperref
 %http://www.tug.org/applications/hyperref/manual.html#x1-40003
@@ -312,6 +342,26 @@
 \labelformat{table}{\frf#1}
 \labelformat{algorithm}{\frf#1}
 
+% https://stackoverflow.com/questions/3282319/correct-way-to-define-macros-etc-ie-in-latex
+\usepackage{xspace}
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+\newcommand{\latin}[1]{{\fontshape{ui}\selectfont#1}}
+
+\def\eg{\latin{e.g}\onedot}% \def\Eg{\latin{E.g}\onedot}
+\def\ie{\latin{i.e}\onedot}% \def\Ie{\latin{I.e}\onedot}
+\def\cf{\latin{c.f}\onedot}% \def\Cf{\latin{C.f}\onedot}
+\def\etc{\latin{etc}\onedot}
+\def\vs{\latin{vs}\onedot}
+\def\wrt{w.r.t\onedot}
+\def\dof{d.o.f\onedot}
+\def\etal{\latin{et al}\onedot}
+\makeatother
+
+%\sisetup{per-mode=symbol,per-symbol=p}
+\sisetup{quotient-mode=fraction,range-units=single,range-phrase=--}
+
 %%% color palette
 % https://clrs.cc
 % https://openglcolor.mpeters.me
@@ -411,84 +461,208 @@
 
 %%% cover page
 \newcommand*{\coverpage}{
-\begingroup%
-\rule{\textwidth}{1pt}\par
-\vspace{0.4\baselineskip}
-{\sffamily\Huge\bfseries Final Report}\\
-\rule{\textwidth}{1pt}\par
-\vspace*{10ex}
-{\Large \xtitle}\\[0.5\baselineskip]
-{\Large NPRP \#\xnprp}\par
-\vspace*{7ex}
-\xinvestigators
-\vspace*{4ex}
-\xaffiliations
-\vfill%
-%{\xdate}
-\begin{tabular}{ll}
-Start date: & \xstartdate\\
-End date: & \xenddate%\\
-%Report date: & \xdate\\
-\end{tabular}
-\endgroup
-\clearpage%
-}
+  \begingroup%
+    \rule{\textwidth}{1pt}\par
+    \vspace{0.4\baselineskip}
+    {\sffamily\Huge\bfseries Final Report}\\
+    \rule{\textwidth}{1pt}\par
+    \vspace*{10ex}
+    {\Large \xtitle}\\[0.5\baselineskip]
+    {\Large NPRP \#\xnprp}\par
+    \vspace*{7ex}
+    \xinvestigators
+    \vspace*{4ex}
+    \xaffiliations
+    \vfill%
+    %{\xdate}
+    \begin{tabular}{ll}
+      Start date: & \xstartdate\\
+      End date: & \xenddate%\\
+      %Report date: & \xdate\\
+    \end{tabular}
+  \endgroup
+  \clearpage%
+  }
 
-%%% frontmatter
-\newcommand*{\makecover}{%
-\frontmatter%
-\addcontentsline{toc}{chapter}{Cover Page}
-\thispagestyle{empty}
-\coverpage%
+  %%% frontmatter
+  \newcommand*{\makecover}{%
+  \frontmatter%
+  \addcontentsline{toc}{chapter}{Cover Page}
+  \thispagestyle{empty}
+  \coverpage%
 
-% \renewcommand\Authsep{\\}
-% \renewcommand\Authand{\\}
-% \renewcommand\Authands{\\}
-% \maketitle%
-% \thispagestyle{empty}
+  % \renewcommand\Authsep{\\}
+  % \renewcommand\Authand{\\}
+  % \renewcommand\Authands{\\}
+  % \maketitle%
+  % \thispagestyle{empty}
 
-\chapter*{Disclaimer}\label{chp:disclaimer}
-\addcontentsline{toc}{chapter}{Disclaimer}
-This project outcomes report for the general public is displayed verbatim as submitted by the Principal Investigator[s] (PI's) for this award. Any opinions, findings, and conclusions or recommendations expressed in this report are those of the PI’s and do not necessarily reflect the views of the Qatar National Research Fund (QNRF); QNRF has not approved or endorsed its content.
-%\clearpage%
+  \chapter*{Disclaimer}\label{chp:disclaimer}
+  \addcontentsline{toc}{chapter}{Disclaimer}
+  This project outcomes report for the general public is displayed verbatim as submitted by the Principal Investigator[s] (PI's) for this award. Any opinions, findings, and conclusions or recommendations expressed in this report are those of the PI’s and do not necessarily reflect the views of the Qatar National Research Fund (QNRF); QNRF has not approved or endorsed its content.
+  %\clearpage%
 
-\vspace{10ex}
-{\let\clearpage\relax\chapter*{Acknowledgments}\label{chp:acknowledgments}}
-%\chapter*{Acknowledgments}\label{chp:acknowledgments}
-\addcontentsline{toc}{chapter}{Acknowledgments}
-This project was made possible by a National Priorities Research Program (NPRP) grant \#\xnprp{} from the Qatar National Research Fund, a member of Qatar Foundation. The statements made herein are solely the responsibility of the author[s].
-\clearpage%
+  \vspace{10ex}
+  {\let\clearpage\relax\chapter*{Acknowledgments}\label{chp:acknowledgments}}
+  %\chapter*{Acknowledgments}\label{chp:acknowledgments}
+  \addcontentsline{toc}{chapter}{Acknowledgments}
+  This project was made possible by a National Priorities Research Program (NPRP) grant \#\xnprp{} from the Qatar National Research Fund, a member of Qatar Foundation. The statements made herein are solely the responsibility of the author[s].
+  \clearpage%
 
-%\begin{KeepFromToc}
-\tableofcontents%
-\label{chp:contents}
-%\end{KeepFromToc}
-\clearpage%
+  %\begin{KeepFromToc}
+  \tableofcontents%
+  \label{chp:contents}
+  %\end{KeepFromToc}
+  \clearpage%
 
-\listoftables%
-\label{chp:tables}
-\clearpage%
+  \listoftables%
+  \label{chp:tables}
+  \clearpage%
 
-\listoffigures%
-\label{chp:figures}
-\clearpage%
+  \listoffigures%
+  \label{chp:figures}
+  \clearpage%
 
-\chapter*{List of Acronyms}\label{chp:Aacronyms}
-\addcontentsline{toc}{chapter}{List of Acronyms}
-\par%
-\printglossary[type=acronym,title=List of Acronyms,nonumberlist]
+  \chapter*{List of Acronyms}\label{chp:Aacronyms}
+  \addcontentsline{toc}{chapter}{List of Acronyms}
+  \par%
+  \printglossary[type=acronym,title=List of Acronyms,nonumberlist]
 
-\chapter*{Executive Summary}\label{chp:summary}
-\addcontentsline{toc}{chapter}{Executive Summary}
-\xsummary%
+  \chapter*{Executive Summary}\label{chp:summary}
+  \addcontentsline{toc}{chapter}{Executive Summary}
+  \xsummary%
 
-\mainmatter%
+  \mainmatter%
 }
 
 \AtBeginDocument{
-\makecover%
+  \makecover%
 }
 
 %%% glossaries: acronyms (abbreviations) and symbols (nomenclatures)
 %\input{\jobname.glossaries}
 \input{report.glossaries}
+\newcommand{\acr}[1]{{\fontshape{ui}\selectfont\gls{#1}}}
+\newcommand{\nom}[1]{\gls{#1}}
+
+%%% phantom sub captions for referencing
+% https://tex.stackexchange.com/questions/412838/memoir-label-and-ref-subfigures-inside-bigger-image
+
+\makeatletter
+% \begin{macro}{\subcaptionphantom}
+% \cs{subcaptionphantom}\oarg{list-entry}\marg{caption} is a hidden
+% non-printed subcaption. Designed for the case if "(a)", "(b)" are
+% already embedded in the figure itself.
+% Roughtly equivalent to \cs{phantomsubcaption} from the \Lpack{subcaption} package.
+%
+%    \begin{macrocode}
+\newcommand{\subcaptionphantom}{%
+  \bgroup
+    \let\label=\memsub@label
+    \ifdonemaincaption\else
+      \advance\csname c@\@captype\endcsname\@ne
+    \fi
+    \refstepcounter{sub\@captype}\@contkeep
+    \@ifnextchar [%
+      {\@memsubcapphantom{sub\@captype}}%
+      {\@memsubcapphantom{sub\@captype}[\@empty]}}
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\@memsubcapphantom}
+% Quick-and-dirty analog of \Lpack{memoir} \cs{memsubcap}, adapted
+% for use in \cs{subcaptionphantom}.
+%    \begin{macrocode}
+\long\def\@memsubcapphantom#1[#2]#3{%
+  \@tempdima=\hsize
+  \vskip\subfloatcapskip
+  \ifx \@empty #2
+    \@memsubcaptionphantom{#1}{#3}{#3}%
+  \else
+    \@memsubcaptionphantom{#1}{#2}{#3}%
+  \fi
+  \vskip\subfloatcapskip
+  \egroup}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{\@memsubcaptionphantom}
+% Quick-and-dirty analog of \Lpack{memoir} \cs{memsubcaption}, adapted
+% for use in \cs{memsubcapphantom}.
+%    \begin{macrocode}
+\newcommand{\@memsubcaptionphantom}[3]{%
+
+  \ifx \relax#2\relax \else
+    \bgroup
+      \let\label\@gobble
+      \let\protect\string
+      \def\@memsubcaplabel{\@nameuse{@@the#1}}%
+      \xdef\@memsubfigcaptionlist{%
+        \@memsubfigcaptionlist,%
+  {\protect\numberline{\@memsubcaplabel}\noexpand{\ignorespaces #2}}}%
+    \egroup
+  \fi
+  \@makesubfloatcaptionphantom{\@nameuse{@the#1}}{#3}%
+  }
+
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\@makesubfloatcaptionphantom}
+% Quick-and-dirty analog of \Lpack{memoir} \cs{makesubfloatcaption}, adapted
+% for use in \cs{memsubcaptionphantom}.
+%    \begin{macrocode}
+\newcommand{\@makesubfloatcaptionphantom}[2]{%
+  \setbox\@tempboxa\hbox{%
+    \@subcapsize
+    {\phantom{\@subcaplabelfont#1}}{\ignorespaces #2}\unskip}%
+  \@tempdimb=-\subfloatcapmargin
+  \multiply\@tempdimb\tw@
+  \advance\@tempdimb\@tempdima
+  \hb@xt@\@tempdima{%
+    \hss
+    \ifdim \wd\@tempboxa >\@tempdimb
+      \phantom{\memsubfig@caption{#1}}{#2}%
+    \else
+      \if@shortsubcap
+        \phantom{\memsubfig@caption{#1}}{#2}%
+      \else
+        \box\@tempboxa
+      \fi
+    \fi
+    \hss}}
+%    \end{macrocode}
+% \end{macro}
+\makeatother
+
+%%% C code formatting lst
+\lstdefinestyle{CStyle}{
+  language=C,                % choose the language of the code
+  numbers=left,                   % where to put the line-numbers
+  stepnumber=1,                   % the step between two line-numbers.
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+}
+
+\lstset{
+  basicstyle=\footnotesize,
+  numbers=none,
+  %numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  numbersep=8pt,
+  tabsize=3,
+  frame=tb,
+  breaklines=true,
+  inputencoding=utf8,
+  %columns=fullflexible
+}

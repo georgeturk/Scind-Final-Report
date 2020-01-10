@@ -1,4 +1,5 @@
 .DS_Store
+.dropbox
 report.pdf
 *.acn
 *.acr
@@ -25,8 +26,9 @@ report.pdf
 *.nmo
 *.nms
 *.out
+*.ptc
 *.toc
 *.run.xml
 *.xdy
-*.synctex.gz
+*.synctex*
 
