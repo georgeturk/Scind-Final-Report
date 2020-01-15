@@ -131,62 +131,62 @@ The construct validity is a type of test that is widely used in research. The ma
 
 Each surgeon will be performing the same cutting task five times. It is expected to see a difference in terms of performance across trials: Performance is expected to improve slightly with each trial. Additionally, it is expected to see a difference of overall performance between surgeons with varying expertise: Expert surgeons are expected to have a higher overall performance than novice surgeons.
 
-\subsubsection{Data collection}
-We recorded various parameters per trial per surgeon. We used 6 different parameters listed below. By the end of one surgeon study, we are expecting to have 30 comma-separated values (CSV) files. \autoref{tab:params} and \autoref{tab:csv} present a summary of the parameters.
+% \subsubsection{Data collection}
+% We recorded various parameters per trial per surgeon. We used 6 different parameters listed below. By the end of one surgeon study, we are expecting to have 30 comma-separated values (CSV) files. \autoref{tab:params} and \autoref{tab:csv} present a summary of the parameters.
 
-\begin{enumerate}[start=1,label={Para \#\arabic*, }]
-	\item \textbf{Plane of the cut:} Cutting in one symmetrical plane: The cut should be performed in one plane that is parallel to the plane of the prostate. The simulation software should be able to calculate the cutting plane that the surgeon is performing and approximate with one flat plane parallel to the surface of the prostate for a cut to be correctly performed, and warn the surgeon about the cutting in a wrong plane. \autoref{fig:goodCutPlanes} below depicts a correct cutting plane. \autoref{fig:badCutPlanes} depicts bad cutting planes.
+% \begin{enumerate}[start=1,label={Para \#\arabic*, }]
+% 	\item \textbf{Plane of the cut:} Cutting in one symmetrical plane: The cut should be performed in one plane that is parallel to the plane of the prostate. The simulation software should be able to calculate the cutting plane that the surgeon is performing and approximate with one flat plane parallel to the surface of the prostate for a cut to be correctly performed, and warn the surgeon about the cutting in a wrong plane. \autoref{fig:goodCutPlanes} below depicts a correct cutting plane. \autoref{fig:badCutPlanes} depicts bad cutting planes.
 
-\begin{figure}
-  \centering
-  \subbottom[]{\includegraphics[width=.4\textwidth]{validation/cutPlane1}}\qquad\qquad
-  \subbottom[]{\includegraphics[width=.4\textwidth]{validation/cutPlane2}}
-  \caption{Good urethra cutting planes}\label{fig:goodCutPlanes}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \subbottom[]{\includegraphics[width=.4\textwidth]{validation/cutPlane1}}\qquad\qquad
+%   \subbottom[]{\includegraphics[width=.4\textwidth]{validation/cutPlane2}}
+%   \caption{Good urethra cutting planes}\label{fig:goodCutPlanes}
+% \end{figure}
 
-\begin{figure}
-  \centering
-  \subbottom[]{\includegraphics[width=.4\textwidth]{validation/B-cutPlane1}}\qquad\qquad
-  \subbottom[]{\includegraphics[width=.4\textwidth]{validation/B-cutPlane3}}
-  \caption{Bad urethra cutting planes}\label{fig:badCutPlanes}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \subbottom[]{\includegraphics[width=.4\textwidth]{validation/B-cutPlane1}}\qquad\qquad
+%   \subbottom[]{\includegraphics[width=.4\textwidth]{validation/B-cutPlane3}}
+%   \caption{Bad urethra cutting planes}\label{fig:badCutPlanes}
+% \end{figure}
 
-	\item \textbf{Size of the cut:} small snips at a time: A good practice for a clean cut is cutting only a few millimeters at a time. The size of a good cut is currently calculated by the surface area that has been separated.  If the surface area is above a certain threshold, it is considered a large cut. If it is below, it is considered a good cut. Having big snips may risk in cutting different layers that should not be cut like nerves. \autoref{fig:goodBadCuts} below show two different examples of big and small cuts.
+% 	\item \textbf{Size of the cut:} small snips at a time: A good practice for a clean cut is cutting only a few millimeters at a time. The size of a good cut is currently calculated by the surface area that has been separated.  If the surface area is above a certain threshold, it is considered a large cut. If it is below, it is considered a good cut. Having big snips may risk in cutting different layers that should not be cut like nerves. \autoref{fig:goodBadCuts} below show two different examples of big and small cuts.
 
-	%snips
-\begin{figure}
-  \centering
-  \subbottom[]{\includegraphics[width=.4\textwidth,frame]{validation/bigCut}}\qquad\qquad
-  \subbottom[]{\includegraphics[width=.422\textwidth,frame]{validation/smallCut}}
-  \caption{(\emph{a}) shows an example of a bad cut, whereas (\emph{b}) shows an example of a good cut \ie small snip}\label{fig:goodBadCuts}
-\end{figure}
+% 	%snips
+% \begin{figure}
+%   \centering
+%   \subbottom[]{\includegraphics[width=.4\textwidth,frame]{validation/bigCut}}\qquad\qquad
+%   \subbottom[]{\includegraphics[width=.422\textwidth,frame]{validation/smallCut}}
+%   \caption{(\emph{a}) shows an example of a bad cut, whereas (\emph{b}) shows an example of a good cut \ie small snip}\label{fig:goodBadCuts}
+% \end{figure}
 
-	\item \textbf{Topological cut:} A good practice for a clean cut, the surgeon should perform the task starting from only one initial cut and continue along the same plane in the urethra and should not create multiple initial cuts. By the end of the simulation, there should exist one continuous cut around the urethra that separates it into two pieces. Whether the surgeon prefers to create one or multiple small cuts initially, they should end up as one eventually. To calculate topological cuts, once a cut is performed, we take a set intersection between the triangles of the mesh after cutting and the initial mesh. The result of this would be the new triangles resulting from all cuts. By counting the number of disjoint group of triangles, we can identify the number of topological cut. \autoref{fig:topCut} shows different snip sizes.
+% 	\item \textbf{Topological cut:} A good practice for a clean cut, the surgeon should perform the task starting from only one initial cut and continue along the same plane in the urethra and should not create multiple initial cuts. By the end of the simulation, there should exist one continuous cut around the urethra that separates it into two pieces. Whether the surgeon prefers to create one or multiple small cuts initially, they should end up as one eventually. To calculate topological cuts, once a cut is performed, we take a set intersection between the triangles of the mesh after cutting and the initial mesh. The result of this would be the new triangles resulting from all cuts. By counting the number of disjoint group of triangles, we can identify the number of topological cut. \autoref{fig:topCut} shows different snip sizes.
 
-  \begin{figure}
-    \centering
-    \includegraphics[width=.7\textwidth]{validation/initial_cut.jpg}
-    \caption{Cutting plane with multiple initial cuts. It ends up with only one topological cut}\label{fig:topCut}
-  \end{figure}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=.7\textwidth]{validation/initial_cut.jpg}
+%     \caption{Cutting plane with multiple initial cuts. It ends up with only one topological cut}\label{fig:topCut}
+%   \end{figure}
 
-	\item \textbf{Rectal wall collisions:} A good practice is to avoid collisions with the surrounding tissues and rectal wall. Injuries in the rectum occur more often during the dissection of the prostatic apex (if not completely mobilized off of the posterior of the prostate). When the rectum stays adherent to the apex, it is at a risk of injury in the process of urethra transecting. \autoref{fig:recWalls} below shows the rectal wall as white-shaded areas.
+% 	\item \textbf{Rectal wall collisions:} A good practice is to avoid collisions with the surrounding tissues and rectal wall. Injuries in the rectum occur more often during the dissection of the prostatic apex (if not completely mobilized off of the posterior of the prostate). When the rectum stays adherent to the apex, it is at a risk of injury in the process of urethra transecting. \autoref{fig:recWalls} below shows the rectal wall as white-shaded areas.
 
-  \begin{figure}
-    \centering
-    \subbottom[]{\includegraphics[width=.42\textwidth,frame]{validation/rec1}}\qquad
-    \subbottom[]{\includegraphics[width=.4\textwidth,frame]{validation/rec2}}
-    \caption{(\emph{a}) Side view of rectal wall boarders (\emph{b}) Front view of rectal wall boarders}\label{fig:recWalls}
-  \end{figure}
+%   \begin{figure}
+%     \centering
+%     \subbottom[]{\includegraphics[width=.42\textwidth,frame]{validation/rec1}}\qquad
+%     \subbottom[]{\includegraphics[width=.4\textwidth,frame]{validation/rec2}}
+%     \caption{(\emph{a}) Side view of rectal wall boarders (\emph{b}) Front view of rectal wall boarders}\label{fig:recWalls}
+%   \end{figure}
 
-	\item \textbf{Tools out-of-scene count:} A good practice is to keep surgical tools always visible within the surgical view. Moving the tools out of the scene may result in injuring the patient in a real operation setting. The surgeon shall be able to control the motion of these surgical tools and keep them within his surgical view. \autoref{fig:fov} illustrates the good and bad scenarios of this parameter.
+% 	\item \textbf{Tools out-of-scene count:} A good practice is to keep surgical tools always visible within the surgical view. Moving the tools out of the scene may result in injuring the patient in a real operation setting. The surgeon shall be able to control the motion of these surgical tools and keep them within his surgical view. \autoref{fig:fov} illustrates the good and bad scenarios of this parameter.
 
-  \begin{figure}
-    \centering
-    \includegraphics[width=.9\textwidth,frame]{validation/fov}
-    \caption{Tools should be always kept within the field of view. Tools out of the scene are dangerous in a real setting.}\label{fig:fov}
-  \end{figure}
-	\item \textbf{Time elapsed for task completion:} This parameter will be used to assess the skills acquired by surgeons by using this simulator through their difference in performance parameters throughout trials. This parameter will also be used as an indication to differentiate between different surgeon expertise: a senior surgeon who is used to the console setup performs the task faster than a novice surgeon.
-\end{enumerate}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=.9\textwidth,frame]{validation/fov}
+%     \caption{Tools should be always kept within the field of view. Tools out of the scene are dangerous in a real setting.}\label{fig:fov}
+%   \end{figure}
+% 	\item \textbf{Time elapsed for task completion:} This parameter will be used to assess the skills acquired by surgeons by using this simulator through their difference in performance parameters throughout trials. This parameter will also be used as an indication to differentiate between different surgeon expertise: a senior surgeon who is used to the console setup performs the task faster than a novice surgeon.
+% \end{enumerate}
 
 \begin{sidewaystable}
 %\begin{table}
@@ -242,7 +242,7 @@ The figures below show the performance of the subjects in terms of:
     \item \textbf{Rectal wall collisions count:} Tools should not be touching the surrounding organs. When the tool touches the rectal wall, the subject is visually notified and prompted to not touch it. The number of hits is shown in the on-screen report in the end of the simulation.
 \end{enumerate}
 
-Below is a list of plots in \autoref{fig:indivSubjs} showing all trials and for all subjects:
+A list of plots in \autoref{fig:indivSubjs} shows all trials and for all subjects. 
 
 \begin{figure}
   \centering
@@ -277,6 +277,15 @@ Variability in the rectal wall collision data in \autoref{fig:recwallvar} is not
 
 Another potential reason is the size of surgical tools: One of the dominant feedback we received is that the tools are too big in the scene and they are not as big in a real setting. As the tool is big, hitting the rectal wall shall happen often. A combined factor of big surgical tools and depth misperception significantly increased the chances of rectal wall collisions. To rectify this, the tools will be made smaller than the current size in the future versions of the simulator.
 
+Taking by the subjects feedback, the depth issue was fixed by developing two different solutions and to check                                                                   
+\textbf{ADD ANOTHER SECTION FOR COMPARISON BETWEEN LKG AND VR}
+
+Hypothesis: VR is better than LKG since it mimics a real DaVinci console. 
+
+Evaluation: pending
+Analysis: using Chi-squared for significance testing. 
+Final summative feedback: Pass testing (yes or no) 
+
 \begin{figure}
   \centering
   \includegraphics[width=.72\textwidth]{validation/recWallVar}
@@ -284,6 +293,3 @@ Another potential reason is the size of surgical tools: One of the dominant feed
   \label{fig:recwallvar}
 \end{figure}
 
-%\section{\st{Predictive Evaluation}}\label{sec:predictive}
-
-% \textbf{\textcolor{red}{This is here for reference but has to be addressed}}

@@ -224,7 +224,7 @@ Before the start of the simulation, the subject is taken through a presentation 
 
 \subsubsection{Per-Simulation}
 This graphical user interface, presented in all its possible scenarios as multiple mockups in \autoref{fig:training_mockup}, shows the graphical representations of communicating an error to the surgeon. In the default case, the surgeon's simulator screen has little to no information displayed other than the surgical scene and the time elapsed since the start of the cutting task. In case of creating an asymmetrical cut (related to \autoref{par:metric_1}), the deviation is highlighted in red for the surgeon to visualize the cutting error and deviate back to the correct track. In case of creating multiple initial cuts (related to \autoref{par:metric_2}), the location of any other cut made other than the first one is highlighted in red. In all other error cases, a message will be displayed to the surgeon.
-When the surgeon hits the rectal wall, the circumference of the simulator screen will turn red, prompting the surgeon to retract his surgical tools. In the case where the surgeon takes his tools out of the scene, a caution sign will appear indicating the exit of surgical tools and prompting the user to return them back within surgcial view.
+When the surgeon hits the rectal wall, the circumference of the simulator screen will turn red, prompting the surgeon to retract his surgical tools. In the case where the surgeon takes his tools out of the scene, a caution sign will appear indicating the exit of surgical tools and prompting the user to return them back within surgical view.
 Note that all error visualizations and messages disappear within a few seconds to minimize distractions from the main task and to optimize the focus of the surgeon on cutting.
 \begin{figure}
   %\captionsetup[subfigure]{width=0.45\textwidth}
@@ -235,7 +235,7 @@ Note that all error visualizations and messages disappear within a few seconds t
   \\
   \subbottom[Error: multiple initial cuts]{\includegraphics[width=0.45\textwidth]{validation/training_3}}
   \hfill%
-  \subbottom[The rest of error messages (HUD)]{\includegraphics[width=0.45\textwidth]{validation/training_4}}
+  \subbottom[Unnecessary collusion with surrounding organs]{\includegraphics[width=0.45\textwidth]{validation/training_4}}
   \caption{A mockup of the training screen and the different possible scenarios}\label{fig:training_mockup}
 \end{figure}
 
@@ -557,12 +557,12 @@ The $4\times 4$ transformation matrix of the tooltip $\mathbf{M}(t)$. This will 
 \subsection{Recording Metrics}\label{chp:literature}
 
 \subsubsection{Complex metrics}
-For recording metrics that have complicated structures required for the specified validations, we went for the serialization library that comes with Boost collection. The library allows for serializing C++ structs into boost format (written in ASCII). The serialized data can be de-serialized at a later stage and then converted into any format necessary for analysis and validation. A serialize function needs to be provided within structs that should be serialized. Boost serialization library provides a method to write serialization functions for data types that cannot be modified to include a serialize function such as with \texttt{glm} vectors, matrices that are required for recording metrics.
+For recording metrics that have complicated structures required for the specified validations, we went for the serialization library that comes with Boost collection. The library allows for serializing C++ structs into boost format (written in ASCII). The serialized data can be de-serialized at a later stage and then converted into any format necessary for analysis and validation. A serialize function needs to be provided within structs that should be serialized. Boost serialization library provides a method to write serialization functions for data types that cannot be modified to include a serialize function such as with \texttt{glm} vectors, matrices that are required for recording metrics. The steps one should know are as follows:
 
 \begin{enumerate}
     \item Non-intrusive serialization for library defined data types
-    To serialize data types defined by libraries such as \texttt{glm} without modifying them, \texttt{boost::serialization} library provides a way to write serialization functions externally. For logging the required metrics, we use \texttt{glm} vectors, quaternions and matrices within structs created for logging. The code below shows how serializing functions can be written in non-intrusively.
-    \begin{lstlisting}[style=CStyle]
+    To serialize data types defined by libraries such as \texttt{glm} without modifying them, \texttt{boost::serialization} library provides a way to write serialization functions externally. For logging the required metrics, we use \texttt{glm} vectors, quaternions and matrices within structs created for logging. \autoref{code:custom_serialize} shows how serializing functions can be written in non-intrusively.
+    \begin{lstlisting}[style=CStyle, caption={Serializing custom data types},label={code:custom_serialize}]
 using glm::mat4;
 using glm::quat;
 using glm::vec3;
@@ -592,8 +592,8 @@ namespace boost {
   } // namespace serialization
 } // namespace boost
     \end{lstlisting}
-    \item Writing a struct for serialization
-    \begin{lstlisting}[style=CStyle]
+    \item Writing a struct for serialization (\autoref{code:serializable_struct})
+    \begin{lstlisting}[style=CStyle, caption={A struct with serialize function written within it.},label={code:serializable_struct}]
 struct my_struct {
   vec3 position;
   quat orientation;
@@ -608,13 +608,13 @@ struct my_struct {
     }
 };
     \end{lstlisting}
-    \item Serialize an object of struct `my\_struct` to a stream
-    \begin{lstlisting}[style=CStyle]
+    \item Serialize an object of struct `my\_struct` to a stream (\autoref{code:write_serialized})
+    \begin{lstlisting}[style=CStyle, caption={Writing struct to a stream}, label={code:write_serialized}]
 boost::archive::text_oarchive oa(stream);
 oa << m;
     \end{lstlisting}
-    \item De-serializing
-    \begin{lstlisting}[style=CStyle]
+    \item De-serializing (\autoref{code:read_serialized})
+    \begin{lstlisting}[style=CStyle, caption={Reading/De-serializing struct from a stream},label={code:read_serialized}]
 boost::archive::text_iarchive ia(s);
 ls::log_cut_struct m1;
 ia >> m1;
@@ -622,9 +622,9 @@ ia >> m1;
 \end{enumerate}
 
 \subsubsection{Simple metrics}
-As for metrics that can be represented with one to few variables, we used the spdlog library combined with Boost format library for logging it as comma separated values to files. We chose to use this combination of libraries to log simple metrics since they were already part of the project for producing logs for debug.
+As for metrics that can be represented with one to few variables, we used the spdlog library combined with Boost format library for logging it as comma separated values to files. We chose to use this combination of libraries to log simple metrics as shown in \autoref{code:simple_logging} since they were already part of the project for producing logs for debug.
 
-\begin{lstlisting}[style=CStyle]
+\begin{lstlisting}[style=CStyle, caption={Example of simple metrics logging},label={code:simple_logging}]
 void Logger::log_collision_count(float col_count) {
 collision_logger->info(str(boost::format("%f,%f") % get_elapsed() % col_count));
 }
@@ -636,8 +636,8 @@ The types of data logged are classified into three categories, resulting in tota
 NOTE: The constructors and serialization functions have been omitted for legibility.
 
 \begin{enumerate}
-    \item Per Cut: Data recorded after a single cut is completed. In the case of scissors, a single cut is defined from when the scissors open ($t_1$) near a mesh to when the scissors close ($t_2$), resulting in mesh deformation. In the case of a single blade, a single cut is defined from when a blade collides with a mesh ($t_1$), to when it is moved away from the mesh ($t_2$), resulting in mesh deformation.
-    \begin{lstlisting}[style=CStyle]
+    \item Per Cut: After data recorded after a single cut is completed, in the case of scissors, a single cut is defined from when the scissors open ($t_1$) near a mesh to when the scissors close ($t_2$), resulting in mesh deformation. In the case of a single blade, a single cut is defined from when a blade collides with a mesh ($t_1$), to when it is moved away from the mesh ($t_2$), resulting in mesh deformation. A struct that represents these information is shown in \autoref{code:cut_deformation_struct}
+    \begin{lstlisting}[style=CStyle, caption={Cut deformation struct}, label={code:cut_deformation_struct}]
 struct region_struct {
   vec3 position;
   quat orientation;
@@ -659,8 +659,8 @@ struct log_cut_deformation_struct {
       \caption{Mesh change before and after cut}\label{fig:before_after_cut}
     \end{figure}
 
-    \item Per Collision: Data recorded at each collision between the tool and the mesh of interest.
-    \begin{lstlisting}[style=CStyle]
+    \item Per Collision: Data recorded at each collision between the tool and the mesh of interest.\autoref{code:per_collision}
+    \begin{lstlisting}[style=CStyle, caption={Log per collision}, label={code:per_collision}]
 Logger::log_collision_count(float col_count) {
   collision_logger - > info(str(boost::format("%f,%f") % get_elapsed() %
     col_count));
@@ -668,8 +668,8 @@ Logger::log_collision_count(float col_count) {
     \end{lstlisting}
    Per collision, we record the time elapsed since start of simulation along with a counter that tracks unnecessary collisions. The data is stored as comma separated values, with each call to the function being written to a new line.
 
-    \item Per Time Frame: Data recorded at all times.
-    \begin{lstlisting}[style=CStyle]
+    \item Per Time Frame: Data recorded at all times. (\autoref{code:per_timeframe})
+    \begin{lstlisting}[style=CStyle, caption={Struct for logging per time frame}, label={code:per_timeframe}]
 struct log_per_time_frame_struct {
   double time_elapsed;
   mat4 blade_frame;
@@ -680,7 +680,8 @@ struct log_per_time_frame_struct {
 
 \end{enumerate}
 
-\subsection{Evaluation Protocols}\label{sec:evaluation}
+% Commented part is to be deleted
+% \subsection{Evaluation Protocols}\label{sec:evaluation}
 
 % The validity tests we are performing at this stage of research are carried in a form of a formative usability study. A formative usability study is an iterative process of multiple usability testing approaches to evaluate the system being developed and assess the integration of features to ensure detecting and eliminating usability issues early before the final design is produced.
 
@@ -785,37 +786,37 @@ struct log_per_time_frame_struct {
 % \end{enumerate}
 
 % \hrule
-% TO BE DELETED
-Validation is an iterative assessment process throughout the prototype's development cycle to evaluate it from different perspectives: how it looks, how efficient it is, \etc.  We chose to conduct face, content, and construct validity to evaluate the simulator's realism, appropriateness as a teaching modality, and how good it is to differentiate between novice and expert surgeons, respectively.
-For this, we have developed a validation protocol, which we followed to conduct the studies. The protocol details are in the section below.
+% % TO BE DELETED
+% Validation is an iterative assessment process throughout the prototype's development cycle to evaluate it from different perspectives: how it looks, how efficient it is, \etc.  We chose to conduct face, content, and construct validity to evaluate the simulator's realism, appropriateness as a teaching modality, and how good it is to differentiate between novice and expert surgeons, respectively.
+% For this, we have developed a validation protocol, which we followed to conduct the studies. The protocol details are in the section below.
 
-\subsubsection{Validation Study Protocol}\label{sec:protocol}
+% \subsubsection{Validation Study Protocol}\label{sec:protocol}
 
 
-\paragraph{Pre-evaluation session}
-Estimated time: 10 minutes\\[-2ex]
-\hrule%
-The session moderator starts by taking permission for voice or video recording for future research use exclusively and letting them know that this session would take approximately one hour. Explaining the background of the surgical simulation with respect to urethral dissection and the technology under development. Moderator would use appropriate tools like a presentation and a RARP video. Using the think-aloud protocol, the surgeon is then asked to loudly express all their thoughts about the simulator, whether they are positive or negative. The surgeon is later asked to fill in a form with information such as name, speciality, number of experience years, and other relevant fields.
+% \paragraph{Pre-evaluation session}
+% Estimated time: 10 minutes\\[-2ex]
+% \hrule%
+% The session moderator starts by taking permission for voice or video recording for future research use exclusively and letting them know that this session would take approximately one hour. Explaining the background of the surgical simulation with respect to urethral dissection and the technology under development. Moderator would use appropriate tools like a presentation and a RARP video. Using the think-aloud protocol, the surgeon is then asked to loudly express all their thoughts about the simulator, whether they are positive or negative. The surgeon is later asked to fill in a form with information such as name, speciality, number of experience years, and other relevant fields.
 
-\paragraph{Evaluation session}
-Estimated time: 30 minutes\\[-2ex]
-\hrule%
-During this session, the subject will manipulate a simulated model using the provided interface to get familiar with the setup at first. Then, the subject will start snipping the tubular structure (representing a urethra) and the user-interactions will be logged.
-While performing the snipping, the subject is expected to speak out their thoughts, while the moderator is asking them questions to get further feedback. The moderator shall remain unbiased while asking questions.
-A subject is expected to perform the same action (small snips on the urethra until it is completely detached in two pieces) five times.
-A unique identifier (ID) is assigned to each subject to preserve their anonymity. Since the procedure is repeated five times, the ID is assigned as follows, for instance: \texttt{50\_1}, \texttt{50\_2}, \texttt{50\_3}, \texttt{50\_4}, \texttt{50\_5}. \autoref{fig:subject} below shows the experimental setup during one of the evaluation studies:
+% \paragraph{Evaluation session}
+% Estimated time: 30 minutes\\[-2ex]
+% \hrule%
+% During this session, the subject will manipulate a simulated model using the provided interface to get familiar with the setup at first. Then, the subject will start snipping the tubular structure (representing a urethra) and the user-interactions will be logged.
+% While performing the snipping, the subject is expected to speak out their thoughts, while the moderator is asking them questions to get further feedback. The moderator shall remain unbiased while asking questions.
+% A subject is expected to perform the same action (small snips on the urethra until it is completely detached in two pieces) five times.
+% A unique identifier (ID) is assigned to each subject to preserve their anonymity. Since the procedure is repeated five times, the ID is assigned as follows, for instance: \texttt{50\_1}, \texttt{50\_2}, \texttt{50\_3}, \texttt{50\_4}, \texttt{50\_5}. \autoref{fig:subject} below shows the experimental setup during one of the evaluation studies:
 
-\begin{figure}
-  \centering
-  \includegraphics[width=.7\textwidth,frame]{validation/subject}
-  \caption{A urologist performing the cutting task}
-  \label{fig:subject}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=.7\textwidth,frame]{validation/subject}
+%   \caption{A urologist performing the cutting task}
+%   \label{fig:subject}
+% \end{figure}
 
-\paragraph{Post evaluation session}
-Estimated time: 20 minutes\\[-2ex]
-\hrule%
-Once the subject finishes all five trials, the moderator asks him to fill in some questions related to face and content validity. They are also free to express any further feedback that was not addressed through the questionnaire.
+% \paragraph{Post evaluation session}
+% Estimated time: 20 minutes\\[-2ex]
+% \hrule%
+% Once the subject finishes all five trials, the moderator asks him to fill in some questions related to face and content validity. They are also free to express any further feedback that was not addressed through the questionnaire.
 
 
 \clearpage%
