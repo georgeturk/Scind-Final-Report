@@ -6,7 +6,7 @@
 \subsection{Console Setup}\label{ssec:console_setup}
 We developed software with the following features:
 \begin{enumerate}
-  \item Able to load and render \acr{dicom} \acr{mri} images, organ models (derived from \acr{mri} images), and \acr{cad} models of surgical robotic instruments (which include stereoscopic camera, EndoWrist instruments, and trocars),
+  \item Able to load and render \acr{dicom} images, organ models (derived from \acr{mri} images), and \acr{cad} models of surgical robotic instruments (which include stereoscopic camera, EndoWrist instruments, and trocars),
   \item The user can select and manipulate the positions of the trocars with Fulcrum effect simulated at the incision point (\autoref{fig:simulation_setup}), and
   \item Using the software, one can define the starting scenario for patient-specific simulation of a surgical procedure (\autoref{fig:stereoscopic_console}).
 \end{enumerate}
@@ -42,7 +42,7 @@ We have created a cross-platform pipeline for continuous integration between our
 
 \subsection{User Interface}\label{ssec:console}
 
-We're using robust C++11 libraries and frameworks such as GLFW, GLM, CGAL, Boost, and Eigen, and rendering using OpenGL's Core Profile. We've added support for a bimanual interface using a pair of 3Dconnexion Spaceballs, shown in \autoref{fig:spaceball}, and we're also collecting all the various metrics outlined in Aim 5. This'll allow to replay the procedures as they happened too.
+We're using robust C++11 libraries and frameworks such as GLFW, GLM, CGAL, Boost, and Eigen, and rendering using OpenGL's Core Profile. We've added support for a bimanual interface using a pair of 3Dconnexion Spaceballs, shown in \autoref{fig:spaceball}, and we're also collecting all the various metrics outlined in Aim 5. This will allow to replay the procedures as they happened too.
 
 \begin{figure}
   \centering%
@@ -377,7 +377,7 @@ Using this technology we have rendered the scene in the virtual environment and 
   The installation and setup of these tools is available at the respective links.
 
   \item High-Level Architecture:
-  OpenVR, an open source programming interface created by Valve to allow communication with a \acr{vr} system.  OpenVR serves in this regard, and is compatible with all major \acr{hmd}'s. SteamVR, Valve's commercial implementation of OpenVR, serves additionally as the main software driver for the Oculus \acr{hmd}'s. Our simulator software submits the scene to OpenVR for both eyes, and OpenVR passes the information to the SteamVR driver and finally to the \acr{vr} headset.
+  OpenVR, an open source programming interface created by Valve to allow communication with a \acr{vr} system.  OpenVR serves in this regard, and is compatible with all major \acr{hmd}'s. SteamVR, Valve's commercial implementation of OpenVR, serves additionally as the main software driver for the Oculus \acr{hmd}'s. Our simulator software submits the scene to OpenVR for both eyes, and OpenVR passes the data to the SteamVR driver and finally to the \acr{vr} headset.
 
   \begin{center}
   \begin{tikzpicture}
@@ -403,7 +403,7 @@ Using this technology we have rendered the scene in the virtual environment and 
   \end{figure}
 
   \item Controller:
-  \acr{vr} controllers offer the buttons and joysticks of a traditional gamepad with added motion tracking and a layout designed to be used without sight of the hands. The controllers are used to move the surgical tools. With the location and orientation of the controller, the movement of the surgical tools is defined. Using the controller, the user can translate, rotate and reset the position of the scene (\autoref{fig:touch_controllers}). The \textsf{X} and \textsf{Y} buttons on the controller give the ability to navigate between two modes: one where the scene is fixed to the headset and another where the scene is in the world coordinates and the user and move around the scene to visualize it.
+  \acr{vr} controllers offer the buttons and joysticks of a traditional gamepad with added motion tracking and a layout designed to be used without sight of the hands. The controllers are used to move the surgical tools. With the location and orientation of the controller, the movement of the surgical tools is defined. Using the controller, the user can translate, rotate and reset the position of the scene (\autoref{fig:touch_controllers}). The \textsf{X} and \textsf{Y} buttons on the controller give the ability to navigate between two modes: one where the scene is fixed to the headset and another where the scene is in world coordinates and the user and move around the scene to visualize it.
 
   \begin{figure}
     \centering
@@ -414,7 +414,7 @@ Using this technology we have rendered the scene in the virtual environment and 
 
 \paragraph{Holographic Rendering with the Looking Glass}
 Looking Glass is a holographic display that generates 45 distinct views of a 3D scene to give an illusion of depth without requiring the user to wear any glasses, or headset. The lenticular lens of the looking glass distributes these 45 unique views to the user allowing for more than one user and to view from more angles.
-Looking Glass outputs a horizontal-parallax-only light field image made of 45 distinct views. Each light field is stored in their own format known as Quilt. To display any 3D environment in the Looking Glass, we have to construct a Quilt which consists of the 45 views represented in a grid format. Each of the views is rendered to a texture, which is then copied on to the quilt using a copy function provided by their \acr{api}. Once the quilt is properly constructed, another \acr{api} function is used for rendering the light field using the quilt.
+Looking Glass outputs a horizontal-parallax-only light field image made of 45 distinct views. Each light field is stored in their own format known as \enquote{quilt.} To display any 3D environment in the Looking Glass, we have to construct a quilt which consists of the 45 views represented in a grid format. Each of the views is rendered to a texture, which is then copied on to the quilt using a copy function provided by their \acr{api}. Once the quilt is properly constructed, another \acr{api} function is used for rendering the light field using the quilt.
 
 \begin{figure}
   \centering
@@ -422,17 +422,17 @@ Looking Glass outputs a horizontal-parallax-only light field image made of 45 di
   \caption{The simulator scene being visualized in the large variant of the Looking Glass}\label{fig:looking_glass}
 \end{figure}
 
-\subsubsection{SOFA Integration}
-SOFA is a widely used simulation framework, especially for medical simulations. We wanted to replicate the surgical scenario in SOFA to benchmark it against our implementation. We also wanted to investigate the added value of SOFA such as its fast prototyping capabilities by using \acr{xml}-based scene building and using Python scripting to customize behavior and apply modifications rapidly.
+\subsubsection{\acr{sofa} Integration}
+\acr{sofa} is a widely used simulation framework, especially for medical simulations. We wanted to replicate the surgical scenario in \acr{sofa} to benchmark it against our implementation. We also wanted to investigate the added value of \acr{sofa} such as its fast prototyping capabilities by using \acr{xml}-based scene building and using Python scripting to customize behavior and apply modifications rapidly.
 
-To recreate a similar environment in SOFA, we wanted to create or use existing SOFA capabilities to replicate the core functionalities of our simulator. SOFA comes bundled with plugins for tool simulation, mesh deformation, and cutting simulation. However, SOFA did not have an \acr{ovm} loader for loading volumetric tetrahedral meshes that we use in our simulator for deformable models. It also did not have support for UV-map-based texturing for volumetric meshes.
+To recreate a similar environment in \acr{sofa}, we wanted to create or use existing \acr{sofa} capabilities to replicate the core functionalities of our simulator. \acr{sofa} comes bundled with plugins for tool simulation, mesh deformation, and cutting simulation. However, \acr{sofa} did not have an \acr{ovm} loader for loading volumetric tetrahedral meshes that we use in our simulator for deformable models. It also did not have support for UV-map-based texturing for volumetric meshes.
 
 We were able to successfully develop plugins that enable us to load tagged \acr{ovm} meshes along with custom properties such as UV coordinates for the surface triangles and use it to apply UV-mapped textured to the volumetric meshes.
 
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth,frame]{integration/sofa_preview}
-  \caption{\acr{ovm} meshes loaded and textured in SOFA}\label{fig:sofa_preview}
+  \caption{\acr{ovm} meshes loaded and textured in \acr{sofa}}\label{fig:sofa_preview}
 \end{figure}
 
 \subsubsection{Simulation Software Architecture}\label{sec:software_architecture}
