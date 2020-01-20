@@ -7,11 +7,11 @@
 \section{Scalable Methods for Non-linear Real-time Finite Element Simulation}\label{sec:fem_simulation}
 
 \subsection{Incremental Introduction of Cuts and Discontinuities in 3D meshes}\label{ssec:discontinuous_fem}
-One modeling challenge in surgical simulation is the geometric and topological representation of cuts and their effects on an underlying tetrahedral mesh. Data structures and algorithms to address this problem are described next. 
+One modeling challenge in surgical simulation is the geometric and topological representation of cuts and their effects on an underlying tetrahedral mesh. Data structures and algorithms to address this problem are described next.
 
 \subsubsection{Tetrahedral Subdivision Template}
 
-Cutting a tetrahedral mesh should result in a new mesh retaining topological integrity in addition to exhibiting the cut geometrically. In order to capture general cut topologies, a tetrahedral subdivision scheme with the granularity to represent various types of topological cuts is needed. To this end we built a generic 32-vertex tetrahedral template, where arrangements of these vertices can generate the various discontinuities that appear during cutting. 
+Cutting a tetrahedral mesh should result in a new mesh retaining topological integrity in addition to exhibiting the cut geometrically. In order to capture general cut topologies, a tetrahedral subdivision scheme with the granularity to represent various types of topological cuts is needed. To this end we built a generic 32-vertex tetrahedral template, where arrangements of these vertices can generate the various discontinuities that appear during cutting.
 
 \begin{figure}
 	\includegraphics[width=0.6\textwidth]{cutting/vertextable.pdf}
@@ -20,10 +20,9 @@ Cutting a tetrahedral mesh should result in a new mesh retaining topological int
 	\label{fig:vertices}
 \end{figure}
 
-Figure \ref{fig:vertices} lists the 32 virtual vertices on the surface of the template sudivision tetrahedron. These vertices are distinct only topologically, not geometrically. The table lists these vertices in three categories: vertices of the original tetrahedron, vertices at the middle of edges, and vertices at the middle of faces. For the subdivision, an edge is split into 2, requiring 2 vertices in the (topological) middle of the edge. A face is split into 4 or 5 triangles and requires 4 vertices in the (topological) middle of the face. The notation used in the table is as follows. The mid-edge vertex $i\times .j$ denote the vertex on edge $ij$ closest to $i$. The mid-face $ijk\times ..$ denotes the vertex on face $ijk$ closest to the position denoted by the $\times$. The vertex denoted as $ijk$ is the mid-face vertex on face $ijk$. 
+Figure \ref{fig:vertices} lists the 32 virtual vertices on the surface of the template sudivision tetrahedron. These vertices are distinct only topologically, not geometrically. The table lists these vertices in three categories: vertices of the original tetrahedron, vertices at the middle of edges, and vertices at the middle of faces. For the subdivision, an edge is split into 2, requiring 2 vertices in the (topological) middle of the edge. A face is split into 4 or 5 triangles and requires 4 vertices in the (topological) middle of the face. The notation used in the table is as follows. The mid-edge vertex $i\times .j$ denote the vertex on edge $ij$ closest to $i$. The mid-face $ijk\times ..$ denotes the vertex on face $ijk$ closest to the position denoted by the $\times$. The vertex denoted as $ijk$ is the mid-face vertex on face $ijk$.
 
-Assuming that cuts are limited to a single cut per edge and no more than 2 cuts on the edges of a triangular face, 
-these vertices provide the necessary topology for a tetrahedron to be properly subdivided into 17 children tetrahedra. However these subdivisions may be produce incompatible meshes where an edge or face may be subdivided differently depending on the tetrahedra it is connected to. These incompatible subdivisions produce hanging nodes that complicate the physical simulation. In order to avoid these incompatibilities in the mesh, the generic subdivision is modified to merge the children tetrahedra that lie on a single undivided edge. This reduces the number of child tetrahedra and as importantly preserves a full connectivity with neighbors sharing uncut edges. The resulting subdivision template is shown in Figure \ref{fig:Merged_universal_subdivision}. In addition, subdivided faces with uncut edges are also merged to avoid face cracks between neighboring tetrahedra. 
+Assuming that cuts are limited to a single cut per edge and no more than 2 cuts on the edges of a triangular face, these vertices provide the necessary topology for a tetrahedron to be properly subdivided into 17 children tetrahedra. However these subdivisions may be produce incompatible meshes where an edge or face may be subdivided differently depending on the tetrahedra it is connected to. These incompatible subdivisions produce hanging nodes that complicate the physical simulation. In order to avoid these incompatibilities in the mesh, the generic subdivision is modified to merge the children tetrahedra that lie on a single undivided edge. This reduces the number of child tetrahedra and as importantly preserves a full connectivity with neighbors sharing uncut edges. The resulting subdivision template is shown in \autoref{fig:Merged_universal_subdivision}. In addition, subdivided faces with uncut edges are also merged to avoid face cracks between neighboring tetrahedra.
 
 \begin{figure}
   \centering%
@@ -39,7 +38,7 @@ The template above supports the five types of topologically-distinct discontinuo
 \begin{figure}
   \centering%
   \includegraphics[width=0.85\linewidth]{simulation/cut_configurations}
-  \caption{---}\label{fig:discontinuous_tetrahedra_fem}
+  \caption{Cut configurations}\label{fig:discontinuous_tetrahedra_fem}
 \end{figure}
 
 
@@ -90,21 +89,18 @@ These subdivision methods have the ability to handle in a robust manner a variet
   \caption{---}\label{fig:cuts}
 \end{figure}
 
-% ======================================================================
+% ----------------------------------------------------------------------
 
-\clearpage
 \subsection{Fast Incremental Solver}\label{ssec:incremental_solver}
-
 % \subsubsection{Incremental Cutting Architecture}
 
-\autoref{fig:Cutting_process_flow} shows the overall flow of the progressive cutting procedure. The first step in the procedure is to compute intersections of the tool surface path with the edges and faces of the mesh. A Bounding Volume Hierarchy (BVH) data structure is used to allow for fast computations of global intersections allowing disconnected parts of the mesh to be cut as the cutting tool is swept. The intersection information on the edges and faces is used to determine which tetrahedral cells are affected and which are active. Affected cells are those that have been intersected by the tool path and active cells are those pierced by the last position of the cutting tool. The active cells are treated differently than others as their subdivision is not yet complete in the mesh as a subsequent movement of the tool could cut the cell further and cause an internal topology change.  When the intersections are completed, the cut can be processed. Subdivision can then take place and the resulting changes are reported back to the BVH to update its internal structure, and to the finite element (FE) physics engine to communicate new and deleted vertices and edges.  
+\autoref{fig:cutting_process_flow} shows the overall flow of the progressive cutting procedure. The first step in the procedure is to compute intersections of the tool surface path with the edges and faces of the mesh. A \acr{bvh} data structure is used to allow for fast computations of global intersections allowing disconnected parts of the mesh to be cut as the cutting tool is swept. The intersection information on the edges and faces is used to determine which tetrahedral cells are affected and which are active. Affected cells are those that have been intersected by the tool path and active cells are those pierced by the last position of the cutting tool. The active cells are treated differently than others as their subdivision is not yet complete in the mesh as a subsequent movement of the tool could cut the cell further and cause an internal topology change.  When the intersections are completed, the cut can be processed. Subdivision can then take place and the resulting changes are reported back to the \acr{bvh} to update its internal structure, and to the \acr{fe} physics engine to communicate new and deleted vertices and edges.
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.75\linewidth]{figures/cutting/Process_cut.png}
-  \caption{Flow of progressive cutting procedure.}\label{fig:Cutting_process_flow}
+  \caption{Flow of progressive cutting procedure.}\label{fig:cutting_process_flow}
 \end{figure}
-
 
 
 % Processing of the cut distinguishes between finalized and active cells, where finalized cells are affected cells that are not active. Each is treated differently primarily because the resulting changes to the mesh need to be treated differently. BVH deals only with the part of the mesh that is possible to intersect, therefore the changes resulting from active cells should not be reported to it. On the other hand, physics should be aware of the exact state of the mesh topology, therefore everything is reported to it. To keep track of the affected, active, finalized cells as well as their children a CutTetrahedronManager object is used to provide all the management functionalities.\ref{fig:Process_cut_details_flow}
@@ -112,7 +108,7 @@ These subdivision methods have the ability to handle in a robust manner a variet
 % Each cell is treated independently. If there is no topology change to the cell, its geometry (its children’s geometry) is updated. Otherwise, the cell gets a first or a new subdivision once the new vertices are determined and set in the mesh. The subdivision process itself is very involved and another point where this work diverges from Bielser’s. First a modified universal subdivision is introduced that merges cells along uncut edges. This does not eliminate “crack”s in the mesh, however in the select cases where it is used, it ensures that uncut edges are not subdivided. We also use the cut-specific subdivisions. The use cases are shown in the subdivision diagram level 3. This mix of subdivision ensures the fewest the introduction of fewer cells, a major drawback of any subdivision based geometry cutting. \ref{fig:CutTetrahedron_flow} \ref{fig:Subdivision_flow}
 
 % The continuous tool path geometry is discretized and represented as a set of triangles approximating the swept cut surface.
-Besides the subdivision procedures described in the previous section, the implementation of this incremental cutting architecture requires a number of components to be tightly integrated. First, the continuous tool path geometry (e.g., \autoref{fig:incremental} needs to be discretized. A triangular surface that approximates the swept path of the moving tool and bounded by the start and end physical positions of the blade is generated and passed to the BVH intersection routines. 
+Besides the subdivision procedures described in the previous section, the implementation of this incremental cutting architecture requires a number of components to be tightly integrated. First, the continuous tool path geometry \eg \autoref{fig:incremental} needs to be discretized. A triangular surface that approximates the swept path of the moving tool and bounded by the start and end physical positions of the blade is generated and passed to the BVH intersection routines.
 
 \begin{figure}
 	\centering%
@@ -122,7 +118,7 @@ Besides the subdivision procedures described in the previous section, the implem
 
 % At-every-iteration of the simulation, a geometric master model locates the surgical tools, resolves tool-tissue collisions and tissue-tissue collisions, and communicates this information to the finite element model.
 
-Incremental updating of the BVH geometry model and FE physics models are essential for real-time cutting procedure simulation. The key to incremental cutting is to reuse as much state information as possible from the previous steps and express a new cut state as a minimal and low rank update of the previous one. The figure below shows an example of single tetrahedral being cut incrementally, where the added sub-tetrahedra generate the necessary updates that are passed to the BVH and FE models. These updates involve information about deleted edges and faces as well as newly added ones. These updates are obviously much smaller in size than the model size, and can therefore be quickly incorporated in the BVH and FE models, as well as the rendering and UI modules of the system. The efficient collection and communication of these changes (also known as topology deltas) are key to the successful integration of the different modules. This was implemented within the cutting system to allow efficient fine-grained communication between the different modules. The system keeps track of all new tetrahedra along with the new and deleted edges and faces per cutting step and communicates the strict necessary information to the other modules.
+Incremental updating of the \acr{bvh} geometry model and \acr{fe} physics models are essential for real-time cutting procedure simulation. The key to incremental cutting is to reuse as much state information as possible from the previous steps and express a new cut state as a minimal and low rank update of the previous one. The figure below shows an example of single tetrahedral being cut incrementally, where the added sub-tetrahedra generate the necessary updates that are passed to the \acr{bvh} and \acr{fe} models. These updates involve information about deleted edges and faces as well as newly added ones. These updates are obviously much smaller in size than the model size, and can therefore be quickly incorporated in the \acr{bvh} and \acr{fe} models, as well as the rendering and \acr{ui} modules of the system. The efficient collection and communication of these changes (also known as topology deltas) are key to the successful integration of the different modules. This was implemented within the cutting system to allow efficient fine-grained communication between the different modules. The system keeps track of all new tetrahedra along with the new and deleted edges and faces per cutting step and communicates the strict necessary information to the other modules.
 
 
 % We have finished the implementation and testing of the incremental solution strategy which relies on a state machine to change elements from one cut state to another and generate the necessary updates.
@@ -133,26 +129,26 @@ Incremental updating of the BVH geometry model and FE physics models are essenti
   \caption{Progressive cut of tetrahedral element.}\label{fig:discontinuous_tetrahedra_solver}
 \end{figure}
 
-Specifically, the fast incremental solver needs a fine-grained communication with a \acr{bvh}, a powerful data structure for tracking geometric objects and accelerating geometric operations such as triangle-segment intersections ubiquitous in the cutting module. An \acr{api} was designed and implemented to allow the cutting module to communicate information to the \acr{bvh}. In particular, the \acr{bvh} \acr{api} allows the cutting module to determine which edges and faces of the mesh have been cut by a particular sweep of a cutting tool, as well as the geometries of these intersections, in logarithmic complexity. The \acr{bvh} module also requires information about all changes in the mesh to be able to update and restructure the hierarchy so it is synchronized with the base mesh to continue supporting intersection queries. 
+Specifically, the fast incremental solver needs a fine-grained communication with a \acr{bvh}, a powerful data structure for tracking geometric objects and accelerating geometric operations such as triangle-segment intersections ubiquitous in the cutting module. An \acr{api} was designed and implemented to allow the cutting module to communicate information to the \acr{bvh}. In particular, the \acr{bvh} \acr{api} allows the cutting module to determine which edges and faces of the mesh have been cut by a particular sweep of a cutting tool, as well as the geometries of these intersections, in logarithmic complexity. The \acr{bvh} module also requires information about all changes in the mesh to be able to update and restructure the hierarchy so it is synchronized with the base mesh to continue supporting intersection queries.
 
 
-The FE model has to also update the solution, including the displacements of the model and the stresses in it, based on the new geometry (cut location) and any contact constraints between tools and tissue. Resolving the finite element system from scratch with every tool movement would preclude real-time operation. Therefore, incremental solution strategies that exploit the nature of the changes to generate the updated displacements and stresses are needed. These changes in the model and contact constraints are formulated as low rank updates of the finite element stiffness matrix and its factorization. As with BVH, the key to fast incremental solution is the efficient two-way fine-grained communication between the finite element system and the collision detection and intersection computation system which incorporates bounding volume hierarchy of the geometric representation. The geometric computation system returns intersection information that is used to build incrementally a set of constraints and/or a set of cuts in the volumetric mesh, as well as \enquote{topology deltas} indicating which elements have been removed and which new elements were added. This incremental communication allows fast updates to the factorization of the finite element stiffness system matrix
- and the resulting solution. 
+The \acr{fe} model has to also update the solution, including the displacements of the model and the stresses in it, based on the new geometry (cut location) and any contact constraints between tools and tissue. Resolving the finite element system from scratch with every tool movement would preclude real-time operation. Therefore, incremental solution strategies that exploit the nature of the changes to generate the updated displacements and stresses are needed. These changes in the model and contact constraints are formulated as low rank updates of the finite element stiffness matrix and its factorization. As with \acr{bvh}, the key to fast incremental solution is the efficient two-way fine-grained communication between the finite element system and the collision detection and intersection computation system which incorporates bounding volume hierarchy of the geometric representation. The geometric computation system returns intersection information that is used to build incrementally a set of constraints and/or a set of cuts in the volumetric mesh, as well as \enquote{topology deltas} indicating which elements have been removed and which new elements were added. This incremental communication allows fast updates to the factorization of the finite element stiffness system matrix
+ and the resulting solution.
 
-Furthermore, cutting the mesh produces modifications and this information must be communicated with the other modules of the system. 
-For example, the \acr{ui} requires the new surface triangles that are created as the mesh opens up after the cut in order to render the new shape of the mesh. 
+Furthermore, cutting the mesh produces modifications and this information must be communicated with the other modules of the system.
+For example, the \acr{ui} requires the new surface triangles that are created as the mesh opens up after the cut in order to render the new shape of the mesh.
 
 The result is a complete system controllable through a \acr{ui} that can cut open a volumetric mesh in real time. Cuts can have sharp curvatures---sharper than those that are resolved by the geometric mesh; cuts are incremental: they can completely separate the \acr{3d} mesh or only partially open it; cuts can also intersect each other. We believe these capabilities surpass the state of the art in this area and our early presentations of the system at international conferences have been very well received, with leading groups from around the world requesting access to the system. Below is a screenshot from the running system. Sample animation videos are available at \url{https://www.dropbox.com/s/ly53lbgmy1m2aw2/animm-4cuts.avi} and \url{https://www.dropbox.com/s/rjmw8avzb0dkwpm/animm-liver.avi}.
 
 \begin{figure}
 	\centering%
 	\includegraphics[width=\linewidth,frame]{simulation/endo_cut}
-	\caption{Multiple cuts of a cylindrical model.}
+	\caption{Multiple cuts of a cylindrical model}
 	\label{fig:endo_cut}
 \end{figure}
 
 \autoref{fig:contact} shows a typical cutting scenario that involves a deformation of the soft tissue by a tool followed by a snipping motion in the case of scissors (the transparent triangular surface shows the snipping motion of the blades of the scissors).
-\autoref{} shows various geometrically complex cut paths of a solid sphere discretized by tetrahedral elements to demonstrate the general flexibility and reliability of the progressive cutting procedures.
+\autoref{fig:sphere} shows various geometrically complex cut paths of a solid sphere discretized by tetrahedral elements to demonstrate the general flexibility and reliability of the progressive cutting procedures.
 \begin{figure}
   \centering%
   \setlength{\fboxsep}{0pt}%
@@ -169,15 +165,13 @@ The result is a complete system controllable through a \acr{ui} that can cut ope
 	\includegraphics[width=0.4\linewidth]{simulation/sphere_4}\\[1.5ex]
 	\includegraphics[width=0.4\linewidth]{simulation/sphere_5}\hfill%
 	\includegraphics[width=0.4\linewidth]{simulation/sphere_6}\\
-	\caption{Examples of geometrically complex cuts of a spherical mesh.}\label{fig:sphere}
+	\caption{Examples of geometrically complex cuts of a spherical mesh}\label{fig:sphere}
 \end{figure}
 
 
 % Timings of the various steps in the process have been performed. The results of the timings identified one bottleneck that could prevent real-time interaction as the constrains set size increases. Optimizations we performed as a result to remove inactive constraints prior to entering the solution loop. This resulted in a much more responsive system with a stable interaction time for the kinds of meshes needed when cutting urethra and models of similar complexity.
 
-
-
-% ======================================================================
+% ----------------------------------------------------------------------
 
 \subsection{Non-linear Solver}\label{ssec:nonlinear_solver}
 % The nonlinear solver is necessary when large deformations take place. The solution strategy in this case involves an iterative Newton-like scheme that builds on the linear solve. The challenge for the non-linear solution is to control both the number of iterations and the cost of solving the modified linear problem at every iteration. We have started the development of a strategy that performs an approximate solution for the modified problem at every iteration, based on a hierarchical matrix representation of the stiffness matrix which produce algebraic approximations of off-diagonal matrix blocks and can substantially speed up the solution process.
@@ -199,51 +193,33 @@ In simulations of cutting procedures, large deformations generally take place ne
 	\caption{Progressive cut of a tubular shape (mesh, top; and rendered shape, bottom).}\label{fig:tube}
 \end{figure}
 
-We handle the nonlinearities using a local-global strategy, and assume the strain energy of the system
-comes from the edges of the mesh. The local-global strategy reformulates the potential energy 
-of the system as a minimization problem and introduces auxiliary variables
-corresponding to the rest-length of the elements. This new problem is linear in the 
-positions of the nodes, and non-linear in the newly introduced variable. 
-By employing block coordinate descent, we can iteratively solve for the spring 
-directions and node positions separately, allowing us to split each iteration 
-into a simple non-linear local problem with a solution in closed form, and a
-linear problem involving the global stiffness matrix. Furthermore, the linear problem is independent of the system
-state, allowing us to benefit from pre-factoring or pre-inverting the system matrix.
-Although this method converges slower than Newton's method in terms of the
-number of iterations, it is more work-efficient and the low 
-computational cost of an iteration makes up for the slow convergence.
+We handle the nonlinearities using a local-global strategy, and assume the strain energy of the system comes from the edges of the mesh. The local-global strategy reformulates the potential energy of the system as a minimization problem and introduces auxiliary variables corresponding to the rest-length of the elements. This new problem is linear in the positions of the nodes, and non-linear in the newly introduced variable.
 
-Consider a system with $m$ nodes and $s$ elements. Let $\mathbf{K}$ be the stiffness 
-matrix of the system, and let $\mathbf{J}$ be the matrix consisting 
-the stiffness weighted incidence vectors of the springs in its columns. 
-The potential energy of the system can be expressed in the following minimization 
-problem:
+By employing block coordinate descent, we can iteratively solve for the spring directions and node positions separately, allowing us to split each iteration into a simple non-linear local problem with a solution in closed form, and a linear problem involving the global stiffness matrix. Furthermore, the linear problem is independent of the system state, allowing us to benefit from pre-factoring or pre-inverting the system matrix.
+
+Although this method converges slower than Newton's method in terms of the number of iterations, it is more work-efficient and the low computational cost of an iteration makes up for the slow convergence.
+
+Consider a system with $m$ nodes and $s$ elements. Let $\mathbf{K}$ be the stiffness matrix of the system, and let $\mathbf{J}$ be the matrix consisting the stiffness weighted incidence vectors of the springs in its columns. The potential energy of the system can be expressed in the following minimization problem:
 \begin{equation}
-  E(x) = \min_{\|\mathbf{d}_i\| = r_i} \ 
+  E(x) = \min_{\|\mathbf{d}_i\| = r_i} \
   \frac{1}{2}\mathbf{x}^\intercal\mathbf{Kx} -
   \mathbf{x}^\intercal\mathbf{Jd}
 \end{equation}
-where $\mathbf{x}$ represents the node positions, $\mathbf{d}$ the spring 
-directions, and $r_i$ the rest length of the \textit{ith} spring. To model
-bending resistance for surface elements, a quadratic bending 
-energy model presented in \cite{Bergou06} is used. 
+where $\mathbf{x}$ represents the node positions, $\mathbf{d}$ the spring directions, and $r_i$ the rest length of the \textit{ith} spring. To model bending resistance for surface elements, a quadratic bending energy model presented in \cite{Bergou06} is used.
 
-$\mathbf{K}$ can be expressed as the sum of rank-one matrices: 
+$\mathbf{K}$ can be expressed as the sum of rank-one matrices:
 \begin{equation}
   \mathbf{K} = \sum_{i = 1}^s k_i\mathbf{A}_i\mathbf{A}_i^\intercal
 \end{equation}
-where $\mathbf{A}_i \in R^{m}$ are the spring incidence vectors and 
-We  make use of this fact to directly update the inverse of $\mathbf{K}$ (or
-equivalently, its Cholesky factors), allowing for fast interactive cutting.
-%------------------------------------------------
+where $\mathbf{A}_i \in R^{m}$ are the spring incidence vectors and we make use of this fact to directly update the inverse of $\mathbf{K}$ (or equivalently, its Cholesky factors), allowing for fast interactive cutting.
+%-----------------------------------------------------------------------
 
 % In this section, we outline the parallel implementation of the implicit integrator,
 % introduce the cutting algorithm, and present a method for augmenting the system
 % to introduce physically-based external interaction.
 
 \subsubsection{Parallel Integrator}
-The solution framework is described next, and is implemented both for multicore CPUs as well as GPUs.  
-Each iteration of the integrator for this framework consists of the following steps:
+The solution framework is described next, and is implemented both for multicore \acr{cpu}s as well as \acr{gpu}s. Each iteration of the integrator for this framework consists of the following steps:
 \begin{enumerate}
   \item Compute the element directions $\mathbf{d}$.
   \item Compute $\mathbf{Jd}$.
@@ -260,42 +236,28 @@ Each iteration of the integrator for this framework consists of the following st
     %   \item Compute $\mathbf{x} = \mathbf{K^{-1}Jd}$.
     % \end{enumerate}
   \end{enumerate}
- 
+
   \item Repeat from step 1.
 \end{enumerate}
 where $\mathbf{P}$ is the approximate minimum degree permutation of the
-Cholesky factorization of $\mathbf{K}$. 
+Cholesky factorization of $\mathbf{K}$.
 
-Steps 1 and 2 are fairly straight forward to parallelize. In step 1, we
-launch a kernel where each thread computes the direction of a single spring.
-This involves normalizing each spring direction and multiplying by the corresponding
-rest-length. Step 2 is implemented as a level 3 sparse BLAS operation.
+Steps 1 and 2 are fairly straight forward to parallelize. In step 1, we launch a kernel where each thread computes the direction of a single spring. This involves normalizing each spring direction and multiplying by the corresponding rest-length. Step 2 is implemented as a level 3 sparse \acr{blas} operation.
 
-Step 3 uses a pre-computed Cholesky factorization of
-$\mathbf{K}$ to perform a sparse triangular solve. However, due to the inherently
-serial nature of triangular solvers, this will have to be preceded with an 
-analysis phase to extract as much parallelism as possible \cite{Mayer09}.
-Furthermore, the permutation
-required at every iteration is a potential performance bottleneck, since it is 
-highly memory bound. However, this can easily be avoided by computing all 
-iterations in the permuted space, thus only permuting at the very first and 
-very last iterations.
+Step 3 uses a pre-computed Cholesky factorization of $\mathbf{K}$ to perform a sparse triangular solve. However, due to the inherently serial nature of triangular solvers, this will have to be preceded with an analysis phase to extract as much parallelism as possible \cite{Mayer09}.
 
-Another approach for the linear solution is to pre-compute $\mathbf{K^{-1}}$ and solve the system
-using dense matrix multiplication. Although this is expected to perform
-extremely well on GPUs, it might not be feasible to store the inverse
-for very large matrices and will not scale well. 
+Furthermore, the permutation required at every iteration is a potential performance bottleneck, since it is highly memory bound. However, this can easily be avoided by computing all iterations in the permuted space, thus only permuting at the very first and very last iterations.
+
+Another approach for the linear solution is to pre-compute $\mathbf{K^{-1}}$ and solve the system using dense matrix multiplication. Although this is expected to perform extremely well on \acr{gpu}s, it might not be feasible to store the inverse for very large matrices and will not scale well.
 
 \subsubsection{Effects of cuts on the solver}
-Cuts in the mesh are incorporated into the model by deleting and adding elements. Suppose we delete
-$n$ elements, where each element has a rank-one contribution to the system matrix. 
-This cut corresponds to the following low-rank update:
+Cuts in the mesh are incorporated into the model by deleting and adding elements. Suppose we delete $n$ elements, where each element has a rank-one contribution to the system matrix. This cut corresponds to the following low-rank update:
 \begin{equation}
   \mathbf{K}:=
   \mathbf{K} - \mathbf{U}\mathbf{U^\intercal}
 \end{equation}
 where $\mathbf{U} \in R^{m \times n}$ encapsulates the contributions
-of all the deleted springs. 
+of all the deleted springs.
 
 Thus, we can directly update the Cholesky factors or the inverse of the
 system matrix. For example, using the dense solver approach we can update
@@ -308,18 +270,11 @@ $\mathbf{K^{-1}}$ using the Sherman-Morrison identity:
 \end{equation}
 % First, we intersect the edges of the mesh with a cutting surface and accumulate
 % the intersected edges in a buffer. These edges are then deleted from the mesh.
-In the case of the GPU implementation, the ``topological deltas'' are accumulated in 
-an edge buffer and transfered to the GPU and a kernel is launched to construct
-the matrix $\mathbf{U}$. The Sherman-Morrison identity involves dense matrix
-multiplication and inversion, which have fast parallel implementations. 
+In the case of the GPU implementation, the ``topological deltas'' are accumulated in an edge buffer and transfered to the \acr{gpu} and a kernel is launched to construct the matrix $\mathbf{U}$. The Sherman-Morrison identity involves dense matrix multiplication and inversion, which have fast parallel implementations.
 
 
 \subsubsection{Interaction}
-A slight modification of the basic solution strategy is needed to 
-allow for user interaction using dynamic constraints.
-We can constrain any point on the mesh surface using the method of
-Lagrange multipliers. First, the constrained point $\mathbf{p_i}$ is expressed as a linear 
-combination of one, two or three vertices:
+A slight modification of the basic solution strategy is needed to allow for user interaction using dynamic constraints. We can constrain any point on the mesh surface using the method of Lagrange multipliers. First, the constrained point $\mathbf{p_i}$ is expressed as a linear combination of one, two or three vertices:
 \begin{equation}
 \label{eq:lin_comb}
 \mathbf{p_i} =
@@ -328,9 +283,7 @@ combination of one, two or three vertices:
 \alpha_{i_3} \mathbf{x_{i_3}} =
 \mathbf{C_{i,:} x},
 \end{equation}
-where \autoref{eq:lin_comb} can be thought of as a constraint of the original minimization 
-problem. Next, we augment the orignal linear system with these constraints via the 
-following reformulation:
+where \autoref{eq:lin_comb} can be thought of as a constraint of the original minimization problem. Next, we augment the orignal linear system with these constraints via the following reformulation:
 \begin{equation}
     \begin{bmatrix}
         \mathbf{K} & \mathbf{C}^\intercal \\
@@ -346,27 +299,23 @@ following reformulation:
         \mathbf{p}
     \end{bmatrix}
 \end{equation}
-where $\boldsymbol{\lambda}$ corresponds to the Lagrange multipliers of the 
-constrained problem, and $\mathbf{p}$ to the positions of the constrained points.
-To allowing for dynamic resizing of $\mathbf{C}$ without having to continuously
-update the linear system, we reduce the system to the following form:
+where $\boldsymbol{\lambda}$ corresponds to the Lagrange multipliers of the constrained problem, and $\mathbf{p}$ to the positions of the constrained points. To allowing for dynamic resizing of $\mathbf{C}$ without having to continuously update the linear system, we reduce the system to the following form:
 \begin{equation}
-    \begin{bmatrix}
-        \mathbf{K} & \mathbf{C}^\intercal \\
-        \mathbf{0} & -\mathbf{CK^{-1}C^\intercal}
-    \end{bmatrix}
-    \begin{bmatrix}
-        \mathbf{x} \\
-        \boldsymbol{\lambda}
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        \mathbf{Jd} \\
-        \mathbf{p} - \mathbf{CK^{-1}Jd}
-    \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{K} & \mathbf{C}^\intercal \\
+    \mathbf{0} & -\mathbf{CK^{-1}C^\intercal}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \mathbf{x} \\
+    \boldsymbol{\lambda}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \mathbf{Jd} \\
+    \mathbf{p} - \mathbf{CK^{-1}Jd}
+  \end{bmatrix}
 \end{equation}
-where $\mathbf{C}$ can now be updated separately from $\mathbf{K}$,
-at the cost of having to solve for $\boldsymbol{\lambda}$ in a separate step.
+where $\mathbf{C}$ can now be updated separately from $\mathbf{K}$, at the cost of having to solve for $\boldsymbol{\lambda}$ in a separate step.
 % \begin{figure}[ht]
 %   \centering
 %   \includegraphics[width=0.25\textwidth]{images/shirt_push_no_back.png}
@@ -377,28 +326,16 @@ at the cost of having to solve for $\boldsymbol{\lambda}$ in a separate step.
 %   \label{fig:shirt-push}
 % \end{figure}
 
-%------------------------------------------------
-
+%-----------------------------------------------------------------------
 
 \subsubsection{Results}
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{simulation/performance_plots.png}
-  \caption{
-    Performance of different stages of a single iteration of the 
-    sparse serial and parallel implementations. From left to right:
-    linear solve, computation of $\mathbf{d}$, computation of $\mathbf{Jd}$.
-  }
-  \label{fig:performance-iteration}
+  \caption{Performance of different stages of a single iteration of the sparse serial and parallel implementations. From left to right: linear solve, computation of $\mathbf{d}$, computation of $\mathbf{Jd}$.}\label{fig:performance-iteration}
 \end{figure}
 
-Figure \ref{fig:performance-iteration} illustrates the performance of this framework.
-Each graph shows the execution time of the serial and parallel implementations of
-an iteration of the sparse integrator on an increasing
-number of vertices. This performance allows us to execute a large number of iterations in real-time. 
-Table \ref{table:dense} shows how the dense integrator significantly outperforms 
-both the serial and parallel sparse implementations for a relatively small mesh. However, 
-the polynomial complexity of the dense representation will not scale. 
+\autoref{fig:performance-iteration} illustrates the performance of this framework. Each graph shows the execution time of the serial and parallel implementations of an iteration of the sparse integrator on an increasing number of vertices. This performance allows us to execute a large number of iterations in real-time. \autoref{table:dense} shows how the dense integrator significantly outperforms both the serial and parallel sparse implementations for a relatively small mesh. However, the polynomial complexity of the dense representation will not scale.
 
 \begin{table}[ht]
 \caption{Performance of the different solvers on small meshes.}
@@ -407,7 +344,7 @@ the polynomial complexity of the dense representation will not scale.
 \toprule
 \multicolumn{3}{r}{Execution Time (ms)} \\
 \cmidrule(r){2-4}
-\textit{m} & Sparse(CPU) & Sparse (GPU) & Dense (GPU) \\
+\textit{m} & Sparse(\acr{cpu}) & Sparse (\acr{gpu}) & Dense (\acr{gpu}) \\
 \midrule
 % $9$ & $0.002$& $0.320512$ & $0.007328$ \\
 $2590$ & $1.575$ & $1.33437$ & $0.202816$ \\
@@ -415,7 +352,6 @@ $2590$ & $1.575$ & $1.33437$ & $0.202816$ \\
 \end{tabular}
 \label{table:dense}
 \end{table}
-
 
 % We have started the development of a refinement of our non-linear solver that has the potential to produce two key advantages:
 % \begin{enumerate*}[(1)]
@@ -432,16 +368,13 @@ $2590$ & $1.575$ & $1.33437$ & $0.202816$ \\
 % \end{enumerate*}
 
 
+% ----------------------------------------------------------------------
 
-
-% ======================================================================
- 
 \subsection{GPU Acceleration}\label{ssec:gpu_acceleration}
 
-The solution of the underlying large system of algebraic equations is the main time-consuming portion of a finite element simulation, and it is therefore critical to accelerate this step using \acr{gpu} parallel hardware. The sparse factorization described in the previous section suffers from two difficulties on parallel GPU hardware. Its memory footprint and the number of FLOPS it requires scale superlineary with problem size because of fill-in, and the triangular sparse solves introduce an inherent serialization in the solution which prevent efficient parallel execution on manycore processors. As a scalable alternative strategy on GPUs, we generate the inverse stiffness matrix in a hierarchical matrix representation format requiring only linear memory footprint.  This reduces the solution problem to multiplying this matrix by a force vector, which can be parallelized very effectively. 
+The solution of the underlying large system of algebraic equations is the main time-consuming portion of a finite element simulation, and it is therefore critical to accelerate this step using \acr{gpu} parallel hardware. The sparse factorization described in the previous section suffers from two difficulties on parallel \acr{gpu} hardware. Its memory footprint and the number of FLOPS it requires scale superlineary with problem size because of fill-in, and the triangular sparse solves introduce an inherent serialization in the solution which prevent efficient parallel execution on manycore processors. As a scalable alternative strategy on \acr{gpu}s, we generate the inverse stiffness matrix in a hierarchical matrix representation format requiring only linear memory footprint.  This reduces the solution problem to multiplying this matrix by a force vector, which can be parallelized very effectively.
 
 Hierarchical matrices are space and time efficient representations of dense matrices that exploit the low rank structure of matrix blocks at different levels of granularity. The hierarchically low rank block partitioning produces representations that can be stored and operated on in near-linear complexity instead of the usual polynomial complexity of dense matrices. In the context of real-time simulation, this near-linear growth is key for the simulation of large realistic models. \autoref{fig:gpu_matrix} below show how a hierarchical matrix is partitioned: some blocks (shown in red) are stored as regular dense matrices, while others of differing sizes are stored as low rank blocks.
-
 
 \begin{figure}
   \centering%
@@ -450,9 +383,8 @@ Hierarchical matrices are space and time efficient representations of dense matr
 	\caption{Hierarchical matrix representation: dense blocks are shown in red; the rest of the matrix consists of low rank blocks at different level of granularities.}\label{fig:gpu_matrix}
 \end{figure}
 
-
-The challenges in developing efficient data-parallel \acr{gpu} algorithms come primarily from the irregular tree data structures that underlie the hierarchical representations, and the key to performance is to recast the computations on flattened trees in ways that allow batched linear algebra operations to be performed. We developed new \acr{gpu} algorithms in both \acr{sp} and \acr{dp}. Streams are used to overlap various stages of the computation and hide latencies. Sample performance results are shown in \autoref{fig:gpu_performance}. Our hierarchical matrix-vector multiplication 
-(\acr{hmvm}) \acr{gpu}-accelerated routines involved in the finite element solution can generate solutions in less than \SI{5}{\milli\second} on a problem with 260 K degrees of freedom, and can achieve over \SI{550}{\giga\byte/\second} on the P100 Pascal \acr{gpu}. These results show that the absolute performance of these operations can very effectively leverage the power of \acr{gpu}'s and, perhaps more importantly, that the optimal linear and log-linear growth of these algorithms allow the scaling of our cutting and suturing models beyond what current state of the art systems can do.  
+The challenges in developing efficient data-parallel \acr{gpu} algorithms come primarily from the irregular tree data structures that underlie the hierarchical representations, and the key to performance is to recast the computations on flattened trees in ways that allow batched linear algebra operations to be performed. We developed new \acr{gpu} algorithms in both \acr{sp} and \acr{dp}. Streams are used to overlap various stages of the computation and hide latencies. Sample performance results are shown in \autoref{fig:gpu_performance}. Our hierarchical matrix-vector multiplication
+(\acr{hmvm}) \acr{gpu}-accelerated routines involved in the finite element solution can generate solutions in less than \SI{5}{\milli\second} on a problem with 260 K degrees of freedom, and can achieve over \SI{550}{\giga\byte/\second} on the P100 Pascal \acr{gpu}. These results show that the absolute performance of these operations can very effectively leverage the power of \acr{gpu}'s and, perhaps more importantly, that the optimal linear and log-linear growth of these algorithms allow the scaling of our cutting and suturing models beyond what current state of the art systems can do.
 
 \begin{figure}
   \centering%
@@ -460,7 +392,7 @@ The challenges in developing efficient data-parallel \acr{gpu} algorithms come p
 	\caption{GPU performance of hierarchical matrix-vector multiplication.}\label{fig:gpu_performance}
 \end{figure}
 
-We also developed additional \acr{gpu}-accelerated operations including low rank update operations, matrix-matrix multiplication performed by sampling the resulting product using an adaptive randomized approximation (HARA) scheme,  as well as iterative Newton-schulz matrix inversion operations.  These state-of-the-art algorithms push the boundary of what is possible to do in real time on \acr{gpu}'s at the fundamental algorithmic level. Their integration in the simulation system allows us to scale the simulations to higher resolution and higher fidelity models. 
+We also developed additional \acr{gpu}-accelerated operations including low rank update operations, matrix-matrix multiplication performed by sampling the resulting product using an \acr{hara} scheme,  as well as iterative Newton-Schulz matrix inversion operations.  These state-of-the-art algorithms push the boundary of what is possible to do in real time on \acr{gpu}'s at the fundamental algorithmic level. Their integration in the simulation system allows us to scale the simulations to higher resolution and higher fidelity models.
 
 % We have continued the development of \acr{gpu}-accelerated routines for the \acr{hmvm} operations as well as for the low-rank update operations involved in the finite element solution. Our recent publication on this subject was accepted by the prestigious journal ACM Transactions on Mathematical Software,
 %
@@ -472,7 +404,7 @@ We also developed additional \acr{gpu}-accelerated operations including low rank
 %
 % A recent publication documenting various aspects of these developments has been accepted in the flagship SIAM Journal on Scientific Computing. These state-of-the-art algorithms are pushing the boundary of what is possible to do in real time on \acr{gpu}'s, at the fundamental algorithmic level. Their integration in the simulation system is allowing us to scale the simulations to higher resolution and higher fidelity models.
 
-As examples of the high performance of the system, the figure below shows \acr{gpu} timings and scalability results. The left figure shows the time it takes to construct a hierarchical matrix on a representative problem of various sizes on a P100 Nvidia \acr{gpu}, while the middle figure shows the corresponding performance achieved on these problems. Problems of size 16,000, which are already useful for high resolution surgical models, achieve a 100\,GFLOPS/s performance. Larger models achieve even higher performance, and the growth in runtime is only log-linear in problem size. The last plot shows a computation of the inverse of a stiffness matrix using an iterative Newton-Schulz method on a problem of size 4,000. Second order convergence is observed, and the whole computation is \acr{gpu}-resident.
+As examples of the high performance of the system, the figure below shows \acr{gpu} timings and scalability results. The left figure shows the time it takes to construct a hierarchical matrix on a representative problem of various sizes on a P100 nVIDIA \acr{gpu}, while the middle figure shows the corresponding performance achieved on these problems. Problems of size 16,000, which are already useful for high resolution surgical models, achieve a 100\,GFLOPS/s performance. Larger models achieve even higher performance, and the growth in runtime is only log-linear in problem size. The last plot shows a computation of the inverse of a stiffness matrix using an iterative Newton-Schulz method on a problem of size 4,000. Second order convergence is observed, and the whole computation is \acr{gpu}-resident.
 
 \begin{figure}
   \centering%
@@ -489,15 +421,14 @@ As examples of the high performance of the system, the figure below shows \acr{g
 % In addition, a hierarchical matrix representation of the system stiffness that replaces the sparse Cholesky factors of the stiffness was also tested and timed. This representation may be used for the solution involving simple deformation constraints and updated, via low-rank matrix updates, to account for cuts introduced. Hierarchical matrix representation is the primary mechanism for getting the solution strategy to run on \acr{gpu}'s, as the sparse matrix factors cannot efficiently take advantage of the many cores of the \acr{gpu}'s.
 % =========
 
-\autoref{fig:Htests} compares the effectiveness of the hierarchical matrix representation with that of the sparse Cholesky factorization implemented on GPUs. The time to solution of the hierarchical matrix solution, once the inverse is computed, is shown to be better than that of a forward and backward passes on precomputed Cholesky factors, and the improvement is more significant as the problem size increases. In terms of memory footprint, the hierarchical matrix inverse requires a little more memory than the sparse factors, however the rate of increase of the memory consumption of the hierarchical inverse slows down as the problem size increases and for larger-scale simulations the curves will cross. 
+\autoref{fig:Htests} compares the effectiveness of the hierarchical matrix representation with that of the sparse Cholesky factorization implemented on \acr{gpu}s. The time to solution of the hierarchical matrix solution, once the inverse is computed, is shown to be better than that of a forward and backward passes on precomputed Cholesky factors, and the improvement is more significant as the problem size increases. In terms of memory footprint, the hierarchical matrix inverse requires a little more memory than the sparse factors, however the rate of increase of the memory consumption of the hierarchical inverse slows down as the problem size increases and for larger-scale simulations the curves will cross.
 
 \begin{figure}
   \centering%
-  \includegraphics[width=0.4\linewidth]{simulation/sparse_vs_hgemv_time.pdf}	
-  \hfill%
+  \includegraphics[width=0.4\linewidth]{simulation/sparse_vs_hgemv_time.pdf}
+  \qquad\qquad%
   \includegraphics[width=0.4\linewidth]{simulation/sparse_vs_hgemv_memory.pdf}
-  \caption{Comparison of hierarchical matrix and sparse factorization solutions on GPUs.}
-  \label{fig:Htests}
+  \caption{Comparison of hierarchical matrix and sparse factorization solutions on \acr{gpu}s.}\label{fig:Htests}
 \end{figure}
 
 

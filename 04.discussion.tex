@@ -9,10 +9,8 @@ References to our published validation work in HSMR and other conferences.
 
 \hrule%
 
-\section{Validation}
-
-\subsection{Face Validity Tests}\label{sec:face}
-The face validity test was conducted to assess the subjective realism of the simulator by different urologists that have expertise in robot-assisted radical prostatectomy (RARP). Surgeons were invited to explore the interactive simulator and evaluate it in terms of how realistic it looks. Their feedback was collected in the form of a questionnaire, which was formulated based on a formative and summative approach. Likert scale was used to express their feedback on a scale from 1 to 5: 5-Strongly Agree, 4-Agree, 3-Undecided, 2-Disagree, 1-Strongly Disagree.
+\section{Face Validity Results}\label{sec:face}
+The face validity test was conducted to assess the subjective realism of the simulator by different urologists that have expertise in \acr{rarp}. Surgeons were invited to explore the interactive simulator and evaluate it in terms of how realistic it looks. Their feedback was collected in the form of a questionnaire, which was formulated based on a formative and summative approach. Likert scale was used to express their feedback on a scale from 1 to 5: 5-Strongly Agree, 4-Agree, 3-Undecided, 2-Disagree, 1-Strongly Disagree.
 \autoref{tab:faceTable} below summarizes the feedback from six different surgeons coming from different levels of expertise. Their expertise were classified as follows: A and B as novice with less than 5 years of experience, C and D as intermediate with 5 and 10 years of experience, and finally E and F as experts with more than 10 years of experience.
 
 \begin{table}
@@ -64,7 +62,7 @@ Results shown in the table above are analysed based on the mean score ($\bar{X}$
 
 As seen from \autoref{tab:faceTable} and \autoref{tab:faceTable2}, we are able to see significant differences between both evaluations. The mean before Twee integration was 3.00 out of 5.00 and became 4.20 out of 5.00. This means that the subjects found the tool quite similar to the actual robotic console controller.
 
-\subsection{Content Validity Tests}\label{sec:content}
+\section{Content Validity Results}\label{sec:content}
 A content validity test is conducted to assess the simulator's appropriateness as a teaching modality. Just like a face validity test, a group of urologists was asked to validate the simulator using a questionnaire. \autoref{tab:contentTable} below summarizes the feedback from five different surgeons.
 
 \begin{table}
@@ -97,7 +95,7 @@ Similar to face validity, surgeons from three levels of experiences assessed the
 
 Results shown in \autoref{tab:contentTable} are analysed based on the mean score ($\bar{X}$) of questions. Based on the results related to learning feasibility for first-time users, further detailed documentation on how to use the simulator and scoring mechanism is required to assist novice users. Documentation can be delivered in the form of a tutorial or an on-screen guide-through within the simulator.
 
-Adding documentation to the flow of the simulation, the subjects were able to understand and perform the simulation better: Background on the RARP procedure, what to do, and what not to do during simulation, \etc. We allowed subjects to freely interact with the simulator to get used to it before recording data. Like subjects in \autoref{tab:contentTable2}, subjects were a mix of 4 researchers who are aware of the general setting of robotic surgeries, 1 clinician, and 1 urologist.
+Adding documentation to the flow of the simulation, the subjects were able to understand and perform the simulation better: Background on the \acr{rarp} procedure, what to do, and what not to do during simulation, \etc. We allowed subjects to freely interact with the simulator to get used to it before recording data. Like subjects in \autoref{tab:contentTable2}, subjects were a mix of 4 researchers who are aware of the general setting of robotic surgeries, 1 clinician, and 1 urologist.
 
 \begin{table}
 \small
@@ -125,7 +123,7 @@ Adding documentation to the flow of the simulation, the subjects were able to un
 \caption{Results of content validity evaluation}\label{tab:contentTable2}
 \end{table}
 
-\subsection{Construct Validity Tests}\label{sec:construct}
+\section{Construct Validity Results}\label{sec:construct}
 
 The construct validity is a type of test that is widely used in research. The main goal is to measure how good is the simulator at differentiating between different skills, by collecting various parameters and checking the difference between them when it comes to novice or expert surgeon, for example.
 
@@ -230,7 +228,7 @@ Each surgeon will be performing the same cutting task five times. It is expected
 \caption{Sample output format}\label{tab:csv}
 \end{table}
 
-\subsection{Data Analysis}
+\section{Data Analysis}
 Upon performing the construct validity, we are able to quantify the subjects performance across trials and access how good is the simulator assessing their current performance and giving them feedback that would improve it in the next trial. As mentioned above, subjects were asked to perform 5 trials.
 
 To analyse data, we have visualized the recorded parameters per trial as a first step and then aggregated all trials of all subjects to assess their overall performance. For each of the subjects, it is clear that they are reflecting from their previous mistakes from the mini on-screen report that they see by the end of each trial. For almost all trials, all subjects have successfully decreased the number of mistakes in the following trial. Therefore, the on-screen report is crucial for performance feedback and improvement purposes.
@@ -242,7 +240,7 @@ The figures below show the performance of the subjects in terms of:
     \item \textbf{Rectal wall collisions count:} Tools should not be touching the surrounding organs. When the tool touches the rectal wall, the subject is visually notified and prompted to not touch it. The number of hits is shown in the on-screen report in the end of the simulation.
 \end{enumerate}
 
-A list of plots in \autoref{fig:indivSubjs} shows all trials and for all subjects. 
+A list of plots in \autoref{fig:indivSubjs} shows all trials and for all subjects.
 
 \begin{figure}
   \centering
@@ -277,14 +275,14 @@ Variability in the rectal wall collision data in \autoref{fig:recwallvar} is not
 
 Another potential reason is the size of surgical tools: One of the dominant feedback we received is that the tools are too big in the scene and they are not as big in a real setting. As the tool is big, hitting the rectal wall shall happen often. A combined factor of big surgical tools and depth misperception significantly increased the chances of rectal wall collisions. To rectify this, the tools will be made smaller than the current size in the future versions of the simulator.
 
-Taking by the subjects feedback, the depth issue was fixed by developing two different solutions and to check                                                                   
+Taking by the subjects feedback, the depth issue was fixed by developing two different solutions and to check
 \textbf{ADD ANOTHER SECTION FOR COMPARISON BETWEEN LKG AND VR}
 
-Hypothesis: VR is better than LKG since it mimics a real DaVinci console. 
+Hypothesis: VR is better than LKG since it mimics a real DaVinci console.
 
 Evaluation: pending
-Analysis: using Chi-squared for significance testing. 
-Final summative feedback: Pass testing (yes or no) 
+Analysis: using Chi-squared for significance testing.
+Final summative feedback: Pass testing (yes or no)
 
 \begin{figure}
   \centering
