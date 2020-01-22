@@ -1,9 +1,11 @@
 % Hamad Medical Corporation
 % Georges Younes
 
-\section{Model Generation}\label{sec:generation_3d}
+\section{Model Generation}
+\label{sec:generation_3d}
 
-\subsection{Generation of Surface Models}\label{ssec:generation_surface}
+\subsection{Generation of Surface Models}
+\label{ssec:generation_surface}
 
 We have designed five geometric models of the surgical tooltips (\autoref{fig:endowrist_generation}) based on the EndoWrist instruments of the da Vinci Xi surgical robot. These models were selected based on the five basic interactions of the surgical tooltip with the anatomical structures, which include the following:
 \begin{enumerate}
@@ -21,7 +23,8 @@ We have designed five geometric models of the surgical tooltips (\autoref{fig:en
   \subbottom[Clip applier]{\includegraphics[width=0.17\linewidth]{models/endowirst_clip}}
   \subbottom[Scissors]{\includegraphics[width=0.17\linewidth]{models/endowirst_scissor}}
   \subbottom[Graspers]{\includegraphics[width=0.20\linewidth]{models/endowirst_grasper}}
-  \caption{Snapshots of EndoWrist \acr{3d} \acr{cad} models}\label{fig:endowrist_generation}
+  \caption{Snapshots of EndoWrist \acr{3d} \acr{cad} models}
+  \label{fig:endowrist_generation}
 \end{figure}
 
 Shapes of the link and inter-link distances of the EndoWrist instrument were measured in detail. \acr{3d} virtual models were then recreated using SolidWorks, a \acr{cad} toolset, and are visualized in \autoref{fig:endowrist_generation}.
@@ -29,7 +32,8 @@ Shapes of the link and inter-link distances of the EndoWrist instrument were mea
 \begin{figure}
   \centering%
   \includegraphics[width=\linewidth,frame]{models/decimated}
-  \caption{Decimated model of an EndoWrist instrument (left) \vs original model (right). The decimated models are used to accelerate the collision detection and response}\label{fig:decimated}
+  \caption{Decimated model of an EndoWrist instrument (left) \vs original model (right). The decimated models are used to accelerate the collision detection and response}
+  \label{fig:decimated}
 \end{figure}
 
 We identified \acr{ut} in \acr{rarp} performed with the da Vinci surgical Xi robot (\acr{isi}) as the clinical procedure to be simulated on the surgical simulator being developed. The critical steps of the \acr{rarp} procedure were analyzed and for each step, organs/tissues involved during the procedure were delineated on anonymized \acr{mri} images of the pelvic region. From delineated data, \acr{3d} surface meshes of the organ were generated.
@@ -39,7 +43,8 @@ The main organ models, a total of 19, included: prostate, rectum, seminal vesicl
 \begin{figure}
   \centering%
   \includegraphics[width=0.6\linewidth]{models/augmented_pelvic}
-  \caption{Snapshot of organ models generated from \acr{mri} images}\label{fig:organ_generation}
+  \caption{Snapshot of organ models generated from \acr{mri} images}
+  \label{fig:organ_generation}
 \end{figure}
 
 We used CAD packages to generate surface models of the required organs and surrounding tissue, as shown in succession below: The urethra, the prostate, and surrounding tissue.
@@ -50,7 +55,8 @@ We used CAD packages to generate surface models of the required organs and surro
   \includegraphics[height=22ex]{models/surface_up_crop}\hfill%
   \includegraphics[height=22ex]{models/surface_upb_crop}\hfill%
   \includegraphics[height=22ex]{models/surface_upbt_crop}
-  \caption{---}\label{fig:surface_meshes}
+  \caption{---}
+  \label{fig:surface_meshes}
 \end{figure}
 
 We've generated meshes from MRI scans of a phantom as shown in \autoref{fig:pelvic_osirix} and \autoref{fig:pelvic_models}.
@@ -58,29 +64,34 @@ We've generated meshes from MRI scans of a phantom as shown in \autoref{fig:pelv
 \begin{figure}
   \centering%
 	\includegraphics[width=0.5\linewidth]{models/pelvic_mri}\\[10ex]
-	\caption{Pelvic \acr{mri} image}\label{fig:pelvic_osirix}
+	\caption{Pelvic \acr{mri} image}
+	\label{fig:pelvic_osirix}
 \end{figure}
 \begin{figure}
   \centering%
 	\includegraphics[width=0.25\linewidth]{models/pelvic_model_view_1}\hfill%
 	\includegraphics[width=0.20\linewidth]{models/pelvic_model_view_2}\hfill%
 	\includegraphics[width=0.20\linewidth]{models/pelvic_model_view_3}
-	\caption{Pelvic surfaces generated from an \acr{mri} image}\label{fig:pelvic_models}
+	\caption{Pelvic surfaces generated from an \acr{mri} image}
+	\label{fig:pelvic_models}
 \end{figure}
 
 \begin{figure}
   \centering%
   \includegraphics[width=\linewidth,frame]{models/urethra}
-  \caption{Detailed volumetric model of a (hollow) urethra}\label{fig:urethra}
+  \caption{Detailed volumetric model of a (hollow) urethra}
+  \label{fig:urethra}
 \end{figure}
 
 \begin{figure}
   \centering%
   \includegraphics[width=\linewidth,frame]{models/overlay}
-  \caption{Male reproductive system overlaid on top of a portion of interest of the urethra model. This display is helpful in navigating the initial scene and reorienting during the procedure}\label{fig:overlay}
+  \caption{Male reproductive system overlaid on top of a portion of interest of the urethra model. This display is helpful in navigating the initial scene and reorienting during the procedure}
+  \label{fig:overlay}
 \end{figure}
 
-\subsection{Generation of Volumetric Models}\label{ssec:generation_volume}
+\subsection{Generation of Volumetric Models}
+\label{ssec:generation_volume}
 
 In the previous task, we generated the triangular surface meshes for organs in the pelvic region by delineating \acr{mri} images. The triangular meshes representing tissue surfaces were further processed to generate two types of tissue models:
 \begin{enumerate}
@@ -95,7 +106,8 @@ Textures were overlaid on the surfaces as a final step to improve the realism.
 \begin{figure}
   \centering%
   \includegraphics[width=0.75\linewidth]{models/pelvic_volumes}
-  \caption{Volumetric meshes for prostate and bladder.}\label{fig:organ_prostate_bladder_generation}
+  \caption{Volumetric meshes for prostate and bladder}
+  \label{fig:organ_prostate_bladder_generation}
 \end{figure}
 
 \subsubsection{Realistic Volumetric Models}
@@ -126,7 +138,8 @@ Textures were overlaid on the surfaces as a final step to improve the realism.
 We're currently extracting background scene and organ textures from stereoscopic recordings of robotic procedures performed at HMC. Our future plan is to extract volumetric textures as well, to render cuts more realistically.
 
 
-\subsubsection{Textures from Stereoscopic Videos}\label{sssec:videos}
+\subsubsection{Textures from Stereoscopic Videos}
+\label{sssec:videos}
 The textures were extracted from a stereoscopic recording of the procedure that is being simulated, and then pasted on top of the surface models that were generated in the previous step. The end result can be seen below.
 
 \begin{figure}
@@ -136,10 +149,12 @@ The textures were extracted from a stereoscopic recording of the procedure that 
   \fbox{\includegraphics[width=0.48\linewidth]{models/edges}}
   \hfill%
   \fbox{\includegraphics[width=0.48\linewidth]{models/textures}}
-  \caption{---}\label{fig:texture_videos}
+  \caption{---}
+  \label{fig:texture_videos}
 \end{figure}
 
-\subsubsection{Procedural Textures}\label{sssec:procedural}
+\subsubsection{Procedural Textures}
+\label{sssec:procedural}
 To produce seamless and realistic textures in the simulation, we opted to go for procedurally generated textures. Procedural textures are textures created from a user defined procedure instead of using predefined or existing image textures. This provides flexibility in customizing textures, not being limited by source image resolution and to generate textures for different meshes. Blender, a free and open source 3D creation suite supports creating procedural materials using visual programming. The generated textures can then be baked to static images in the required format for rendering later in OpenGL. By using procedural textures instead of textures from real images, we can reduce the time needed in preparing a model.
 
 UV unwrapping a 3D model to a real image of the model to render the texture avoiding seams can be difficult and time consuming. Textures generated from the procedural materials account for the unwrapping, therefore less time can be spent on adjusting the UV coordinates. Moreover, procedural materials can be easily transferred onto other objects as the textures are generated based on the UV unwrapping that would be done beforehand.
@@ -153,7 +168,8 @@ Blender comes packaged with the option to real-time render the scene which helps
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=\linewidth]{models/fat}}\\[2ex]
   \fbox{\includegraphics[width=\linewidth]{models/tissue}}
-  \caption{Node editor in Blender.}\label{fig:procedural_textures}
+  \caption{Node editor in Blender}
+  \label{fig:procedural_textures}
 \end{figure}
 
 \subsubsection{Node Editor}
@@ -164,7 +180,8 @@ Node editor in blender provides a visual way to program the procedural material.
   \setlength{\fboxsep}{0pt}%
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=\linewidth,frame]{models/blender}}
-  \caption{Node editor in Blender.}\label{fig:blender}
+  \caption{Node editor in Blender}
+  \label{fig:blender}
 \end{figure}
 
 \subsubsection{Model Import}
@@ -202,7 +219,8 @@ Regardless of the approach, to have continuous textures between cuts, the UVW co
 \begin{figure}
   \centering
   \includegraphics[width=0.6\textwidth]{models/solid_textures}
-  \caption{Shader-based noise texture on the left and precomputed noise texture on the right}\label{fig:solid_textures}
+  \caption{Shader-based noise texture on the left and precomputed noise texture on the right}
+  \label{fig:solid_textures}
  \end{figure}
 
 \subsection{Material Models}
@@ -213,7 +231,8 @@ Volumetric models were generated using the TetWild library, which produces meshe
 \begin{figure}
   \centering%
   \includegraphics[width=0.8\linewidth]{models/tets}
-  \caption{---}\label{fig:tetra_meshes}
+  \caption{---}
+  \label{fig:tetra_meshes}
 \end{figure}
 
 We're currently at the last step of tweaking the physical parameters to match with the surgeons' expectations.

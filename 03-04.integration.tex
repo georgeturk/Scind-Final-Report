@@ -1,9 +1,11 @@
 % Hamad Medical Corporation
 % Georges Younes
 
-\section{System Integration and Demonstration Prototype}\label{sec:system_integration}
+\section{System Integration and Demonstration Prototype}
+\label{sec:system_integration}
 
-\subsection{Console Setup}\label{ssec:console_setup}
+\subsection{Console Setup}
+\label{ssec:console_setup}
 We developed software with the following features:
 \begin{enumerate}
   \item Able to load and render \acr{dicom} images, organ models (derived from \acr{mri} images), and \acr{cad} models of surgical robotic instruments (which include stereoscopic camera, EndoWrist instruments, and trocars),
@@ -14,34 +16,39 @@ We developed software with the following features:
 \begin{figure}
   \centering%
   \includegraphics[width=1.0\linewidth]{integration/multiple_views_fusion}
-  \caption{Simulation setup rendered by software from different viewpoints.}\label{fig:simulation_setup}
+  \caption{Simulation setup rendered by software from different viewpoints}
+  \label{fig:simulation_setup}
 \end{figure}
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.6\linewidth]{integration/console_view}
-  \caption{View from stereoscopic camera as seen from surgeon’s console.}\label{fig:stereoscopic_console}
+  \caption{View from stereoscopic camera as seen from surgeon’s console}
+  \label{fig:stereoscopic_console}
 \end{figure}
 
 \hrule%
 
-\subsection{Stereoscopic Rendering}\label{ssec:stereo_rendering}
+\subsection{Stereoscopic Rendering}
+\label{ssec:stereo_rendering}
 
 We have implemented true off-axis stereoscopic rendering as shown below where a two tubes are rendered in Red-Cyan Anaglyph \acr{3d}.
 
 \begin{figure}
   \centering%
 	\frame{\includegraphics[width=0.5\linewidth]{integration/stereoscopic_anaglyph_red_cyan_rendering}}
-	\caption{---}\label{fig:stereo}
+	\caption{---}
+	\label{fig:stereo}
 \end{figure}
 
 \hrule%
 
-\subsection{Cross-Platform Integration}\label{ssec:cross}
+\subsection{Cross-Platform Integration}
+\label{ssec:cross}
 We have created a cross-platform pipeline for continuous integration between our different collaborating teams. Our prototype compiles (using CMake) and runs on all three major platforms: Windows (10 1909 Professional), macOS (Catalina), and GNU/Linux (Fedora 31 and Ubuntu 19.10). We're hosting our private source control repository with \href{https://gitlab.com}{GitLab} to streamline the code access and allow us to experiment with different branches, and are currently working on automating our builds if we were to have more collaborators on board or disseminate our product in the future.
 
-\subsection{User Interface}\label{ssec:console}
-
+\subsection{User Interface}
+\label{ssec:console}
 We're using robust C++11 libraries and frameworks such as GLFW, GLM, CGAL, Boost, and Eigen, and rendering using OpenGL's Core Profile. We've added support for a bimanual interface using a pair of 3Dconnexion Spaceballs, shown in \autoref{fig:spaceball}, and we're also collecting all the various metrics outlined in Aim 5. This will allow to replay the procedures as they happened too.
 
 \begin{figure}
@@ -51,20 +58,23 @@ We're using robust C++11 libraries and frameworks such as GLFW, GLM, CGAL, Boost
   \includegraphics[width=0.32\linewidth]{integration/spaceball_front}
   \hfill%
   \includegraphics[width=0.32\linewidth]{integration/spaceball_top}
-  \caption{Three views of the 3Dconnexion SpaceBall}\label{fig:spaceball}
+  \caption{Three views of the 3Dconnexion SpaceBall}
+  \label{fig:spaceball}
 \end{figure}
 
 \begin{figure}
   \centering%
   \includegraphics[width=\linewidth]{integration/nanogui_sample}
-  \caption{NanoGUI widget library example}\label{fig:nanogui}
+  \caption{NanoGUI widget library example}
+  \label{fig:nanogui}
 \end{figure}
 
 We've added support for \acr{hud} using NanoGUI widgets. This'll allow us to display user-friendly notifications and queues, and implement the mockups designed in Aim 5. A sample of the what the library is capable of is shown in \autoref{fig:nanogui}.
 
 An interactive animation from our system integrating the outcomes from the various aims is available at \url{https://www.dropbox.com/s/ax9kmdhaeq91puc/scind_gui.mp4}.
 
-\subsection{Haptic Control}\label{ssec:haptic}
+\subsection{Haptic Control}
+\label{ssec:haptic}
 We're using the OpenHaptics framework and the 3D Systems Touch, shown in \autoref{fig:touch}, to render the forces relayed from the finite element method kernel from Aim 2.
 
 \begin{figure}
@@ -72,16 +82,19 @@ We're using the OpenHaptics framework and the 3D Systems Touch, shown in \autore
   \includegraphics[width=0.48\linewidth]{integration/touch_hero_encoders}
   \hfill%
   \includegraphics[width=0.48\linewidth]{integration/touch_hero_dofs}
-  \caption{Different encoders and degrees of freedom for 3D Systems Touch}\label{fig:touch}
+  \caption{Different encoders and degrees of freedom for 3D Systems Touch}
+  \label{fig:touch}
 \end{figure}
 
-\subsection{Stereoscopisc Rendering}\label{ssec:stereo}
+\subsection{Stereoscopisc Rendering}
+\label{ssec:stereo}
 \begin{figure}
   \centering%
   \includegraphics[width=0.45\linewidth]{integration/oculus_rift}
   \hfill%
   \includegraphics[width=0.54\linewidth]{integration/oculus_rift_touch}
-  \caption{Oculus Rift and Oculus Touch}\label{fig:oculus}
+  \caption{Oculus Rift and Oculus Touch}
+  \label{fig:oculus}
 \end{figure}
 
 We've enhanced our stereoscopic rendering techniques to work better with stereo displays and we're working on extending our routines to support Oculus Rift and Touch shown in \autoref{fig:oculus} for a more immersive experience.
@@ -95,22 +108,26 @@ We've enhanced our stereoscopic rendering techniques to work better with stereo 
 
 \hrule%
 
-\subsection{Cross-Platform Integration}\label{sec:cross}
+\subsection{Cross-Platform Integration}
+\label{sec:cross}
 
 We have integrated more libraries into our CMake-based build process. Our whole system is now under one repository with centralized access to all collaborators.
 
-\subsection{User Interface}\label{sec:console}
+\subsection{User Interface}
+\label{sec:console}
 To simulate a realistic presentation of a medical surgery for surgeons to train on, we need to have the same graphical interface as the real surgeries. Hence we need to mimic the graphical interface of the surgical robot in our simulation, but with the addition of feedback queues to help trainees understand their actions during the surgery.
 
 Using a C++ graphical library that can be layered on top of our simulation, easy to use and has no extra/separate code or libraries required, and that works on all three major operating systems: Windows, macOS, and GNU/Linux). To achieve this we decided to try out two of the most popular and widely used C++ graphical user interface libraries: NanoGUI and ImGUI.
 
-\subsubsection{NanoGUI}\label{ssec:nanogui}
+\subsubsection{NanoGUI}
+\label{ssec:nanogui}
 We went with NanoGUI first to assess it according to our requirements. NanoGUI is a minimalistic cross-platform widget library written in C++ for OpenGL which already meets two of the requirements. We started with testing it with our basic requirements by adding images, buttons, inputs, and drop-down menus. The widgets additions were fairly simple and looked promising for our goal, but all of the widgets were windowed, as can be seen below.
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.5\linewidth]{integration/nanogui}
-  \caption{---}\label{fig:}
+  \caption{---}
+  \label{fig:}
 \end{figure}
 
 Next we went on to see if we can make the widgets translucent, especially images. We were able to control the images translucency, but when it came to the other widgets we faced our first obstacle as it wasn’t as direct as the images. For the buttons to be translucent, we had to change the theme of NanoGUI which means it takes effect on multiple widgets that share similar components and all the buttons will be translucent, which does conflict with our needs but it was not a huge issue, and we could work around it by overlaying the transparent widget over an image that act as a non transparent background color for the widget.
@@ -120,21 +137,25 @@ Now we need to meet our last requirement, removing the window and the title menu
 \begin{figure}
   \centering%
   \includegraphics[width=0.4\linewidth]{integration/cropped_button}
-  \caption{---}\label{fig:}
+  \caption{---}
+  \label{fig:}
 \end{figure}
 
 In conclusion, given the behaviour of NanoGUI and the requirements it both met and did not meet, and in addition to the complexity of overcoming some constraints, we marked NanoGUI as an unsuitable tool for this project and other future projects.
 
-\subsubsection{ImGUI}\label{ssec:imgui}
+\subsubsection{ImGUI}
+\label{ssec:imgui}
 After deciding on NanoGUI not being a good fit, we moved on to our second option ImGUI. ImGUI is a light-weight graphical user interface library for C++ that is fast, portable, renderer agnostic, and self-contained (no external dependencies). So just like NanoGUI, ImGUI is both written in C++ and cross-platform making it easier for us to integrate it with our simulator. We first started testing ImGUI with removing the window and the title menu, and we managed to do that with only two lines of code, which was a big improvement from NanoGUI both in simplicity and functionality, in addition to controlling the resizing and the movability of the window. After it, we added widgets which had a better structure in the form adding them to our \acr{gui}, where each widget such as buttons and labels had their own styling properties that can be applied. In addition, we were able to add images, make them translucent and overlay text on top of them as shown below. Given that, ImGUI met all our requirements, this gave us the green light to go ahead and use it for our graphical interface.
 
 \begin{figure}
   \centering%
   \includegraphics[width=\linewidth]{integration/imgui}
-  \caption{---}\label{fig:}
+  \caption{---}
+  \label{fig:}
 \end{figure}
 
-\subsubsection{Graphical User Interface}\label{ssec:gui}
+\subsubsection{Graphical User Interface}
+\label{ssec:gui}
 We started creating our \acr{gui} by looking at the \acr{gui} of the da Vinci Robot that is used in the surgeries we are working on simulating for surgeons to train on.
 
 Given these images, we started recreating the widgets in sketch to have them in high resolution to look crisp on all sizes of monitors. In addition, we used our own fonts for the text to give an elegant and simple design to the \acr{gui}, especially in the feedback dialogs for the trainees, making it easy for them to read and gentle on their eyes.
@@ -145,7 +166,8 @@ Given these images, we started recreating the widgets in sketch to have them in 
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=\linewidth]{integration/davinci_snapshot}}\\[1ex]
   \fbox{\includegraphics[width=\linewidth]{integration/interface_basic_scind}}
-  \caption{---}\label{fig:}
+  \caption{---}
+  \label{fig:}
 \end{figure}
 
 Following this we decided to add a popup window that allows the user to specify options and settings of the scene, in addition to adding a file dialog window, that in the future would give the user the ability to add their own scenes or models to the simulation.
@@ -174,14 +196,16 @@ In conclusion, NanoGUI appeared to be less flexible than ImGUI, giving ImGUI the
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=\linewidth]{integration/interface_scind}}\\[1ex]
   \fbox{\includegraphics[width=\linewidth]{integration/interface_scind_popup}}
-  \caption{---}\label{fig:}
+  \caption{---}
+  \label{fig:}
 \end{figure}
 
 %\section{Haptic Control}\label{sec:haptic}
 
 %\section{Stereoscopic Rendering}\label{sec:stereo}
 
-\subsection{SOFA}\label{sec:sofa}
+\subsection{SOFA}
+\label{sec:sofa}
 We want to create a robotic surgery simulator similar to what we are making but in using the available solutions that exist to have a comparison to evaluate and measure our solution performance to them.
 
 Using SOFA framework as a tool to develop the robotic surgery simulation. SOFA is an efficient framework dedicated to research, prototyping and development of physics-based simulations that is both open source and cross-platform, this gives the ability to use it freely and modify it on the same three platforms we work on. We wanted to use SOFA since it is extensively used in medical simulation and is mature enough for development since it is been around since 2005.
@@ -202,7 +226,8 @@ We want to be able to load 3D models to apply the other functions we need. Loadi
   \setlength{\fboxsep}{0pt}%
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=0.7\linewidth]{integration/sofa_textures}}
-  \caption{---}\label{fig:sofa_textures}
+  \caption{---}
+  \label{fig:sofa_textures}
 \end{figure}
 
 \subsection{Deformation}
@@ -211,7 +236,8 @@ Next step was us looking at the physics of the engine, specifically the deformat
 \begin{figure}
   \centering%
   \includegraphics[width=0.35\linewidth]{integration/sofa_endowrist}
-  \caption{---}\label{fig:sofa_endowrist}
+  \caption{---}
+  \label{fig:sofa_endowrist}
 \end{figure}
 
 \subsubsection{Cutting}
@@ -220,7 +246,8 @@ Now we want to implement the cutting to simulate the dissection in a robotic sur
 \begin{figure}
   \centering%
   \includegraphics[width=0.35\linewidth]{integration/sofa_cloth}
-  \caption{---}\label{fig:sofa_cloth}
+  \caption{---}
+  \label{fig:sofa_cloth}
 \end{figure}
 
 \subsection{Input Interface}
@@ -229,12 +256,14 @@ Finally, we worked on integrating the 3DSystems Touch with our SOFA program usin
 \begin{figure}
   \centering%
   \includegraphics[width=0.5\linewidth]{integration/sofa_interaction}
-  \caption{---}\label{fig:sofa_interaction}
+  \caption{---}
+  \label{fig:sofa_interaction}
 \end{figure}
 
 In conclusion, SOFA turned out to be a great choice for us to go with, given all its functionality, but it still has it is own hurdles which we need to work around.
 
-\subsection{Scenarios Replay}\label{sec:replay}
+\subsection{Scenarios Replay}
+\label{sec:replay}
 Our logging module that was mainly developed for Aim 5 and 6, allows us to record the user's actions and replay them. This can be used to recored multiple scenarios and to monitor a user's progress.
 
 
@@ -248,12 +277,14 @@ Our logging module that was mainly developed for Aim 5 and 6, allows us to recor
   \fbox{\includegraphics[width=0.49\linewidth]{integration/snap3}}\\[1.5ex]%
   \fbox{\includegraphics[width=0.49\linewidth]{integration/snap4}}\hfill%
   \fbox{\includegraphics[width=0.49\linewidth]{integration/snap5}}\\[1.5ex]%
-  \caption{---}\label{fig:cuts}
+  \caption{---}
+  \label{fig:cuts}
 \end{figure}
 
 \hrule%
 
-\subsection{Cross-Platform Integration}\label{sec:cross}
+\subsection{Cross-Platform Integration}
+\label{sec:cross}
 \subsubsection{Corrade and Magnum}
 Magnum is a graphics C++ library for easy development of games, data visualization, and graphics simulation. It is a lightweight and modular platform. Magnum uses the Corrade C++ library for platform abstraction and it is its only external dependency. Magnum provides following functionalities:
 
@@ -272,13 +303,15 @@ We used the following features of Magnum:
   \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{integration/toolposition}
-    \caption{Tool Positions and Orientations}\label{fig:tool_position_orientation}
+    \caption{Tool Positions and Orientations}
+    \label{fig:tool_position_orientation}
   \end{figure}
 
   \item [Core Graphics \acr{api}] Magnum provides a core set of easy-to-use \acr{api} to develop graphical user interfaces. It abstracts OpenGL and GLSL programming which makes it convenient to use and has set of mathematical \acr{api} for doing graphics manipulation such as object translation and rotation using vectors and matrices. Magnum has a built-in camera object (both 2D and 3D) so that we don't have to develop custom camera objects. It also provide built-in meshes for basic shapes \ie spheres, cylinders, and cubes, which can be used by the user to build graphical objects.
 \end{description}
 
-\subsection{User Interface}\label{sec:ui}
+\subsection{User Interface}
+\label{sec:ui}
 %\subsection{\st{Context-sensitive Messages}}
 \subsubsection{Eye-tracking Interaction}
 Eye-tracking interaction provides another dimension to interact with the system. This is useful in surgical simulation systems because both hands will be occupied while manipulating surgical tools. With a head tracker, a user can zoom, rotate, and move the camera using its head motion. With an eye tracker, a user can select menu entries, click on any button in the system using their eye motion. For this purpose we developed an eye and head tracking system using Tobii's eye/head tracking \acr{api} and integrated it with our simulator. The operating distance of the Tobii 4C eye tracker is from \SI{50}{\centi\metre} to \SI{90}{\centi\metre}. It can work with screen sizes of \SI{27}{in} with 16:9 aspect ratio or \SI{30}{in} with 21:9 aspect ratio. We implemented zoom in, zoom out, left rotation, right rotation, top movement and down movement using head position and we implemented detection of the position where user is looking in the screen using eye position. \autoref{fig:tobii_eye_tracker} shows a Tobbi 4C eye tracking device.
@@ -286,7 +319,8 @@ Eye-tracking interaction provides another dimension to interact with the system.
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{integration/tobii}
-  \caption{Cutaway view of the Tobii 4C eye tracker}\label{fig:tobii_eye_tracker}
+  \caption{Cutaway view of the Tobii 4C eye tracker}
+  \label{fig:tobii_eye_tracker}
 \end{figure}
 
 \subsubsection{Twee Integration}
@@ -301,7 +335,8 @@ We have three states for the scissors based on the angle of the scissor, initial
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth,frame]{integration/twee}
-  \caption{Twee connected to a 3D Touch device}\label{fig:twee}
+  \caption{Twee connected to a 3D Touch device}
+  \label{fig:twee}
 \end{figure}
 
 \subsubsection{Basic Console}
@@ -310,7 +345,8 @@ We have three states for the scissors based on the angle of the scissor, initial
 \begin{figure}
   \centering%
   \includegraphics[width=0.55\textwidth]{integration/console_iso}
-  \caption{Isometric view of the basic console}\label{fig:3d_console}
+  \caption{Isometric view of the basic console}
+  \label{fig:3d_console}
 \end{figure}
 
 \autoref{fig:side_console} illustrates how the position of the \acr{vrh} is adjusted thanks to an articulated arm that can be rotated/tilted through the handles 1, 2 and 3 that locks its joints. Additionally, the spherical joints 4, 5 attached to a \acr{3d} printed case \enquote{C} allow fine adjustment of the device's orientation in the space.
@@ -320,7 +356,8 @@ The base is mounted atop the central part of the structure where it is secured f
 \begin{figure}
   \centering
   \includegraphics[width=0.55\textwidth]{integration/console_side}
-  \caption{Side view of the basic console}\label{fig:side_console}
+  \caption{Side view of the basic console}
+  \label{fig:side_console}
 \end{figure}
 
 The position of the haptic devices can be modified in three dimensions $(x, y, z)$ within the workspace of the surgeon arms. \autoref{fig:side_console} shows how these devices can be moved up/down or forward/backward by screwing its support, (board in red color), to different holes in the structure. The left/right adjustment is visible in \autoref{fig:3d_console}.
@@ -335,14 +372,17 @@ Our initial tests on deforming the urethra with the points resulted in over cons
 \begin{figure}
   \centering
   \includegraphics[width=0.45\textwidth]{integration/toolspiral}
-  \caption{Tool points on the blade following a spiral path}\label{fig:spiral_tool}
+  \caption{Tool points on the blade following a spiral path}
+  \label{fig:spiral_tool}
 \end{figure}
 
-%\section{Haptic Control}\label{sec:haptic}
+%\section{Haptic Control}
+\label{sec:haptic}
 %\subsection{\st{Color-coded Tools}}
 %\subsection{\st{Basic Force Feedback}}
 
-\subsubsection{Stereoscopic Rendering}\label{sec:stereo}
+\subsubsection{Stereoscopic Rendering}
+\label{sec:stereo}
 %\subsection{\st{Endoscopic Camera Control}}
 \acr{vr} is a simulated experience that can be similar to or completely different from the real world. A person using virtual reality equipment is able to look around the artificial world, move around in it, and interact with virtual features or items.
 
@@ -351,19 +391,22 @@ Using this technology we have rendered the scene in the virtual environment and 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{integration/oculus-rift}
-  \caption{Oculus Rift}\label{fig:oculus_rift}
+  \caption{Oculus Rift}
+  \label{fig:oculus_rift}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{integration/oculus_rift_s}
-  \caption{Oculus Rift S}\label{fig:oculus_rift_s}
+  \caption{Oculus Rift S}
+  \label{fig:oculus_rift_s}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth]{integration/oculus_quest}
-  \caption{Oculus Quest}\label{fig:oculus_quest}
+  \caption{Oculus Quest}
+  \label{fig:oculus_quest}
 \end{figure}
 
 \begin{enumerate}
@@ -408,7 +451,8 @@ Using this technology we have rendered the scene in the virtual environment and 
   \begin{figure}
     \centering
     \includegraphics[width=1.0\textwidth]{integration/controllers}
-    \caption{Controllers button-to-action mapping}\label{fig:touch_controllers}
+    \caption{Controllers button-to-action mapping}
+    \label{fig:touch_controllers}
   \end{figure}
 \end{enumerate}
 
@@ -419,7 +463,8 @@ Looking Glass outputs a horizontal-parallax-only light field image made of 45 di
 \begin{figure}
   \centering
   \includegraphics[width=0.75\textwidth,frame]{integration/looking_glass}
-  \caption{The simulator scene being visualized in the large variant of the Looking Glass}\label{fig:looking_glass}
+  \caption{The simulator scene being visualized in the large variant of the Looking Glass}
+  \label{fig:looking_glass}
 \end{figure}
 
 \subsubsection{\acr{sofa} Integration}
@@ -432,10 +477,12 @@ We were able to successfully develop plugins that enable us to load tagged \acr{
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth,frame]{integration/sofa_preview}
-  \caption{\acr{ovm} meshes loaded and textured in \acr{sofa}}\label{fig:sofa_preview}
+  \caption{\acr{ovm} meshes loaded and textured in \acr{sofa}}
+  \label{fig:sofa_preview}
 \end{figure}
 
-\subsubsection{Simulation Software Architecture}\label{sec:software_architecture}
+\subsubsection{Simulation Software Architecture}
+\label{sec:software_architecture}
 Our simulation software architecture is a modular and layered architecture. Each module of the software is responsible for one major task of the system.
 
 Following are the major components of our simulator:
@@ -455,10 +502,12 @@ Following are the major components of our simulator:
 \begin{sidewaysfigure}
   \centering
   \includegraphics[width=1.0\textheight]{integration/swArchitectureScind}
-  \caption{Surgical simulation software architecture}\label{fig:software_architecture}
+  \caption{Surgical simulation software architecture}
+  \label{fig:software_architecture}
 \end{sidewaysfigure}
 
-\subsubsection{Cutting System}\label{sec:cutting_system}
+\subsubsection{Cutting System}
+\label{sec:cutting_system}
 The cutting system module is one of the important software module of the simulation software system whose main responsibility is to perform the cut in a volumetric mesh. It takes a volumetric mesh and cut geometry as input and processes the cut. Finally it update the volumetric mesh with updated information so that the physics  module as well as the rendering module can use it for the simulation. Cut geometry can be either cut surface triangles or traversal point paths. At a very high level, the cutting system performs the following tasks:
 \begin{enumerate}
   \item Initialize the cut geometry
@@ -476,17 +525,20 @@ The cutting system module is one of the important software module of the simulat
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{integration/cutting_system}
-  \caption{Cutting system overall flowchart}\label{fig:cutting_system}
+  \caption{Cutting system overall flowchart}
+  \label{fig:cutting_system}
 \end{figure}
 
-\subsubsection{Surgical Simulator Installer}\label{sec:installer}
+\subsubsection{Surgical Simulator Installer}
+\label{sec:installer}
 Easy deployment of the software saves both cost and time. Also with easy deployment mechanism like single click installer, it is easy to transfer the software across the globe and setup the system with compatible hardware. Our simulator software has external dependencies, drivers, and \acr{3d} mesh files. So, it is important to package them together so that it can be run and used on any laptop/workstation. For this reason, we developed a single click installer using Nullsoft scripting which packages all the needed components. To run Surgery Simulator we have to install Surgery Simulator Software using Surgical Simulator Installer, install 3D Touch drivers, and connect two 3D Touch Omni's. In conclusion, it is much easier to set up the Surgery Simulator System for demos using this installer. Note that this installer is only available for Windows. It also be used for uninstallation. \autoref{fig:installer} shows a picture of Surgical Simulator Installer while installing the software.
 
 \begin{figure}
   \centering
   \thesubfigure{\includegraphics[width=0.45\textwidth]{integration/installer1}}\qquad
   \thesubfigure{\includegraphics[width=0.45\textwidth]{integration/installer2}}
-  \caption{Surgical simulator installer}\label{fig:installer}
+  \caption{Surgical simulator installer}
+  \label{fig:installer}
 \end{figure}
 
 \clearpage%

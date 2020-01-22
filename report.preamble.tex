@@ -56,11 +56,11 @@
 \usepackage[all]{hypcap}
 \usepackage[toc,acronym,symbols,nonumberlist]{glossaries}
 %\usepackage[toc,acronym,symbols,nonumberlist]{glossaries-extra}
-\usepackage[defernumbers=true,backend=biber,style=numeric-comp,sorting=none,isbn=false,url=false,doi=false,maxbibnames=99]{biblatex}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,isbn=false,url=false,doi=false,maxbibnames=99,defernumbers=true]{biblatex}
+\addbibresource{project.bib}
 \addbibresource{report.bib}
 \addbibresource{proposal.bib}
-\addbibresource{project.bib}
-%\bibliography{rep
+%\bibliography{report}
 
 %% helper commands for cover page
 \newcommand{\xtitle}[1]{\gdef\xtitle{#1}\title{#1}}
@@ -167,8 +167,9 @@
 \makeevenfoot{headings}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
 \makeoddfoot{headings}{\footnotesize NPRP \#\xnprp}{}{\footnotesize\thepage\ (\theCurrentPage/\lastpageref{LastPages})}
 
-%\makefootrule{plain}{\textwidth}{\normalrulethickness}{}
-%\makeheadrule{headings}{\textwidth}{\normalrulethickness}{}
+\makefootrule{plain}{\textwidth}{\normalrulethickness}{0pt}
+\makefootrule{headings}{\textwidth}{\normalrulethickness}{0pt}
+%\makeheadrule{headings}{\textwidth}{\normalrulethickness}
 
 %%% toc dots
 \renewcommand{\cftchapterdotsep}{\cftdotsep}
@@ -251,20 +252,20 @@
   bookmarksdepth=subsection,
   colorlinks=true,
   linktoc=all,
-  %linkcolor=gray,
-  %anchorcolor=gray,
-  %citecolor=gray,
-  %filecolor=gray,
-  %menucolor=gray,
-  %runcolor=gray,
-  %urlcolor=gray,
-  linkcolor=Blue,
-  anchorcolor=Blue,
-  citecolor=Blue,
-  filecolor=Blue,
-  menucolor=Blue,
-  runcolor=Blue,
-  urlcolor=Blue,
+  linkcolor=Red,
+  anchorcolor=Red,
+  citecolor=Red,
+  filecolor=Red,
+  menucolor=Red,
+  runcolor=Red,
+  urlcolor=Red,
+%  linkcolor=Blue,
+%  anchorcolor=Blue,
+%  citecolor=Blue,
+%  filecolor=Blue,
+%  menucolor=Blue,
+%  runcolor=Blue,
+%  urlcolor=Blue,
   plainpages=false,
   pdfpagelabels,
   hyperfigures,
@@ -638,8 +639,7 @@
 % \end{macro}
 \makeatother
 
-
-
+%%% listing formatting
 \DeclareCaptionFormat*{capstyle}{\noindent\hrulefill\par\bfseries#1.\space\normalfont#3\par}
 \captionsetup[lstlisting]{format=capstyle,singlelinecheck=false}
 

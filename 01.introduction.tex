@@ -1,9 +1,11 @@
 % Hamad Medical Corporation
 % Georges Younes
 
-\chapter{Introduction}\label{chp:introduction}
+\chapter{Introduction}
+\label{chp:introduction}
 
-\section{Project Background}\label{sec:background}
+\section{Project Background}
+\label{sec:background}
 Robotic-assisted surgery promises to bring significant improvements in precision and accuracy to surgical interventions as well as reduced pain, scars, and recovery time and cost to patients. Since their introduction in operating rooms about a decade and a half ago, the surgical robots have steadily improved in capabilities, dexterity, and ease of use and there are more than a thousand surgical robots deployed worldwide. The current generation of commercial robots (\eg\ \acr{isi}'s da Vinci Xi) attempts to combine the ergonomic and visual advantages of open surgical techniques with the benefits of traditional laparoscopy, also known as \acr{mis}. A surgeon's console offers a comfortable seated position and a \acr{3d} view of the surgical field through a stereo endoscope. A patient-side cart with robotic arms that translate and pivot at small operating ports is controlled from the remote surgeon's console via master controls. In addition, through the use of robotic wrist mechanisms at the end of the laparoscopic arms, increased dexterity, finer ranges of motion, and additional manipulation degrees of freedom beyond those currently possible with traditional \acr{mis} are available. This allows precise dissection, suturing and tissue manipulation and holds the promise to significantly improve the effectiveness of surgical therapy, as well as to allow remote surgical procedures.
 
 Despite significant progress, there remains however a mismatch between the medical promise of robotic-assisted surgery and the clinical outcomes observed in operating rooms. Reasons for this disparity are manifold. New interfaces to the dexterous robotic wrists and the resulting tool-tissue interaction behaviors create a steep learning curve for surgeons. The range of motion of the instruments and the available degrees of freedom require complex manipulation of soft tissue and organs from perspectives and angles that make it difficult to register all relevant anatomical landmarks, especially when tissue is being dissected and undergoes very large deformations. The steep learning curve of robotic \acr{mis} procedures in complex anatomies has been extensively documented and has resulted in significant variation in surgical outcome by different surgeons. These hurdles towards achieving the full potential of robotic surgery point to the critical need for significant surgeon training prior to using the robots on patients. Urologists generally agree that a typical surgeon will need to perform as many as 50 prostatectomies with the robot before achieving real proficiencies. This is quite impractical and expensive. Alternative training methods are needed.
@@ -12,12 +14,14 @@ Among the many possible training modalities, surgical simulation is perhaps the 
 
 Significant challenges remain however towards the development of next-generation simulators that can offer sufficient fidelity to become reliable training environments. Current-generation simulators allow users to practice on the control of robotic wrists, clutching and arm movement, camera control, and \enquote{drills} such as putting rings on pegs---tasks all intended for psychomotor skills training (instrument manipulation, depth perception, and overall console awareness) but not sufficient for procedure training. Some modern simulators use \enquote{pseudo-physics-based} models (spring and masses) in an attempt to simulate operations such as cutting, suturing, and tissue deformation, and hence cannot offer sufficient fidelity. While such simplified models may occasionally be adequate for giving an overall feel of a procedure, they do not provide the necessary high-quality realism for haptic rendering and tool-tissue deformation, nor the reliable collision and contact handling among the deforming tissue models. Such fidelity is essential for developing trustworthy immersive environments acceptable for training. The primary challenges of high-fidelity simulations come from the complex geometry and mechanical behavior involved in dissection, resection, organ deformations, suturing, and related procedures of surgical robotics, and the need to perform all the processing in real-time. Effective simulators demand interactive performance (\ie 30 or more updates per second) in the presence of a human-in-the-loop. This implies that all physics-based computations, collision handling and display need to be performed in less than \SI{35}{\milli\second} per update!
 
-\section{Study Objectives}\label{sec:objectives}
+\section{Study Objectives}
+\label{sec:objectives}
 In this project, we propose to develop, deploy, and evaluate a new interactive robotic surgery simulation system that addresses the key challenges highlighted above. The proposed simulator will support higher-resolution geometric representations and visual fidelity, and more realistic tissue mechanics, and contact handling models, than has been possible hitherto. Advances in modeling and simulation, as well as in commodity high-performance hardware and user interface technology have now made it possible to envision the development of real-time, immersive, bimanual surgical simulators of unprecedented visual and haptic fidelity to bring more robust and versatile virtual environments to surgeons. Commodity \acr{gpu}'s, which were originally designed for graphical display and visual processing, are now used as general purpose computational units and are capable of performing teraflop-computations on desktop workstations thereby making it possible to achieve interactive real-time simulation of complicated non-linear behavior of deformable models. High-quality affordable stereo displays devices can now provide a much richer and compelling interaction with virtual worlds.
 
 The project brings together two novel algorithmic contributions towards the development and deployment of such a system: parallel \acr{gpu} algorithms for handling collisions and geometric computations in a dynamically changing, deformable complex anatomical environment, as well as parallel continuum-mechanics based finite element algorithms for generating the mechanical behavior of soft tissues as they are manipulated by surgical instruments. Both sets of algorithms operate in real-time allowing the human-in-the-loop to interactively control the simulation at unprecedented levels of fidelity. These innovations will be integrated in an immersive environment to provide an ergonomically-realistic experience for surgeons. The resulting system will allow the generation of specific metrics for assessing the quality of the simulator and detailed data on its effectiveness in training. We will focus on a specific procedure, urethral transection in a radical prostatectomy, for developing and testing the simulator. Clinically, this is the most common procedure performed in robot-assisted \acr{mis}. Technically, the anatomy of the prostate has a high complexity in terms of simulation and allows us to showcase our technology in a complex heterogeneous setting.
 
-\section{Tasks and Aims}\label{sec:aims}
+\section{Tasks and Aims}
+\label{sec:aims}
 
 This project had 2 (iterative) phases, 6 aims, and 21 tasks. The aims/tasks are outlined in \autoref{tbl:outline}.
 
@@ -62,7 +66,8 @@ This project had 2 (iterative) phases, 6 aims, and 21 tasks. The aims/tasks are 
   & Predictive Evaluation\\
   \bottomrule
 \end{tabular}
-\caption{Project aims and tasks}\label{tbl:outline}
+\caption{Project aims and tasks}
+\label{tbl:outline}
 \end{table}
 
 %\begin{enumerate}
@@ -117,7 +122,7 @@ This project had 2 (iterative) phases, 6 aims, and 21 tasks. The aims/tasks are 
 %\subsubsection{Task 2: Texture Models}
 %\subsubsection{Task 3: Material Models}
 
-This aims involves the modeling, texturing, and visualization of \acr{3d} surface and volumetric meshes for procedure-specific surgical tools and tissue/organs. We will focus on modeling robotic tools used in \acr{rarp} with the da Vinci Xi, and tissue/organs that are specific to \acr{rarp} \acr{ut} which include the prostate, the urethra, the bladder, and surrounding tissue.
+This aims includes modeling, texturing, and visualization of \acr{3d} surface and volumetric meshes for procedure-specific surgical tools and tissue/organs. The work will focus on modeling robotic tools used in \acr{rarp} with the da Vinci Xi, and tissue/organs that are specific to \acr{rarp} \acr{ut}: the prostate, the urethra, the bladder, and surrounding tissue.
 
 \subsection{Aim 2: Finite Element Simulation Kernel}
 %\subsubsection{Task 4: Discontinuous Finite Elements}
@@ -137,16 +142,14 @@ This aim is about developing new algorithms for faster time integration using po
 
 \textbf{TODO}
 
-This aim involves checking for intersections between the surface and volumetric primitives in a continous fashion. These intersections include self-collision as well as collisions between discrete time instances. Collision detection can be regarded as a major bottleneck in terms of realtime simulation and it is important to resolve these collisions accurately for a robust simulation.
+This aim involves checking for intersections between the surface and volumetric primitives in a continuous fashion. These intersections include self-collision as well as collisions between discrete time instances. Collision detection can be regarded as a major bottleneck in terms of realtime simulation and it is important to resolve these collisions accurately for a robust simulation.
 
 \subsection{Aim 4: System Integration}
 %\subsubsection{Task 11: Console Setup}
 %\subsubsection{Task 12: Haptic Control}
 %\subsubsection{Task 13: Stereo Rendering}
 
-multiple iterations, spiral development, source control
-
-This aim consists of tasks involving the integration of the collision computations, finite element simulation kernel, cutting system and integration with various display and input technologies including stereoscopic and monoscoping display technologies. This includes handling many issues related to the interfaces between different modules and the corner cases.
+This aim is about iteratively integrating all of the developed software modules into a working cross-platform simulator. The source code for the various modules will be hosted centrally and distributed version controlled to enable concurrent spiral/iterative development efforts. Among the major challenges are building facades to plug all the components cohesively together, handling a myriad of input and output devices in an agnostic and extensible manner, and ensuring cross-platform compatibility for fast deployment and testing.
 
 \subsection{Aim 5: Metrics for Performance Evaluation}
 %\subsubsection{Task 14: Clinical Steps}
@@ -154,7 +157,7 @@ This aim consists of tasks involving the integration of the collision computatio
 %\subsubsection{Task 16: Metrics for Performance Evaluation}
 %\subsubsection{Task 17: Evaluation Protocols}
 
-This aim starts with understanding the clinical steps involved in the chosen surgical procedure, showing live metrics through the user interface and to define the protocols for evaluation.
+This aim will outline the surgical steps for \acr{rarp} \acr{ut} then devise a handful of metrics for tracking and measuring the performance of an end-user on one or multiple steps. The metrics will be used for real-time feedback and guidance during a simulated procedure and logged for clinical validation and assessment.
 
 \subsection{Aim 6: Validation and Assessment}
 %\subsubsection{Task 18: Face Validity Tests}
@@ -162,5 +165,5 @@ This aim starts with understanding the clinical steps involved in the chosen sur
 %\subsubsection{Task 20: Construct Validity Tests}
 %\subsubsection{Task 21: Predictive Evaluation}
 
-Evaluating the system with clinicians using for face, content, and construct validity.
+This aim will generate protocols for clinical validation and assessment of the developed simulator. These protocols aim to capture an end-user interaction with the system through various metrics and criteria, and their feedback which will then be used for face, content, construct, and predictive validity. The results from this aim will be fed back into the system integration aim so that simulator is continuously improved and updated.
 

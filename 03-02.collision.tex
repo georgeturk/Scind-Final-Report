@@ -3,16 +3,19 @@
 
 \section{Geometric Algorithms for Continuous Collision Detection}\label{sec:continuous_collision}
 
-\subsection{Collision Detection}\label{ssec:collision_detection}
+\subsection{Collision Detection}
+\label{ssec:collision_detection}
 A key challenge is to develop new collision detection algorithms that can be used to check for contacts between deforming objects. One of the issues is to develop scheme that can handle topology changes that are induced by operations such as cutting and suturing. We have been working new techniques to compute the first time of contact between the models using novel continuous collision detection algorithms. Not only do they check for collisions between different objects (\eg organ and the instruments), but they also perform self-collisions between each organ. We dynamically divide the models into clusters that are guaranteed to be non-self-colliding. That way, the problem is reduced to checking for collisions between different clusters. The key issue in computing such clusters is to ensure to minimize the number of such clusters during each step of the simulation. We are currently finished the first prototype implementation and hope to test its performance on the organ benchmarks. The initial evaluation is performed on a single core \acr{cpu}, but later we would parallelize them to many-core \acr{gpu}'s. These collision algorithms would be integrated with the finite-element solvers as part of the robust surgical simulation system.
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.55\linewidth]{collision/workflow}
-  \caption{Overview of the new dynamic collision-checking algorithm that can handle models undergoing topology changes in deformable models. }\label{fig:dynamic_collision}
+  \caption{Overview of the new dynamic collision-checking algorithm that can handle models undergoing topology changes in deformable models}
+  \label{fig:dynamic_collision}
 \end{figure}
 
-\subsection{Fast Continuous Collision Processing}\label{ssec:fast_ccd}
+\subsection{Fast Continuous Collision Processing}
+\label{ssec:fast_ccd}
 We have  developed new algorithms for deformable collision detection using hierarchical representations. These include recomputing a new hierarchy based on the mesh topology, traversing the hierarchy and checking for overlaps, and finally between elementary tests for continuous collision detection between the triangle primitives. The continuous collision checks are performed to compute any overlaps between two discrete instances. In order to deal with the topological changes in the mesh caused by cutting operation, we keep track of the changes in mesh connectivity and the new triangles that are added or deleted between successive frames. Our work exploits the local nature of these mesh connectivity changes and performs selective update of the mesh hierarchy that is governed by these incremental changes. In order to perform the selective updates, we use a novel dynamic clustering scheme. Our clustering scheme quickly decomposes the boundary of the objects into non self-colliding clusters based on the mesh connectivity and topology information. This dynamic clustering strategy is general, efficient and involves no pre-computation and exploits the high coherence in the simulation results between successive frames of the mesh. Furthermore, we use a merging algorithm that tends to compute tighter-fitting \acr{bvh}. Such tighter hierarchy reduces the number of false positives during the traversal and ultimately reduces the number of elementary tests between the triangle primitives corresponding to the \acr{ccd} results. The cluster hierarchy is used to dynamically compute the new \acr{bvh} using a lazy approach governed by the mesh topology changes.
 
 We assume that we are given a scene composed of one or more objects. Typically each joint organ used in the surgical simulator represents a separately object and is given as a mesh. Each object is represented as a triangle mesh and may correspond to an open or closed object. We assume that it is possible to perform a local inside/outside classification with respect to each triangle in the mesh and that each triangle normal is pointing outward. During the \acr{fem} simulation, the objects may undergo motion or deformations, which can change their topology or generate new vertices and triangles; while the connectivity information may change, we assume that the new set of objects are still represented as triangular meshes with local inside/outside classification. Given two discrete time instances in a simulation, we assume that the vertices of the objects move at a constant velocity during that time interval. If new vertices are generated due to topology changes, the \acr{ccd} problem is then posed as a problem of defining appropriate mapping between the two discrete instances. Our goal is to check whether there is any collision, including self-collisions, during that time interval, which we represent as $t \in [0, 1]$. For two triangles, this computation reduces to performing 15 elementary tests corresponding to vertex-face (VF) and edge-edge (EE) pairs. Given a \acr{ccd} query, we assume that there are no collisions among the primitives at $t = 0$. This assumption can be easily checked by using a discrete collision detection algorithm and using the simple \acr{bvh}.
@@ -23,19 +26,24 @@ There are two key issues that arise in terms of computing such leaf clusters. Th
 
 We have finished a preliminary implementation of this algorithm and tested its correctness on simple benchmarks. In the next six months, we propose to integrate them with the outputs of the \acr{fem} simulator that are used to implement the cutting operation.
 
-\subsubsection{Volume Mesh}\label{sssec:volume_mesh}
+\subsubsection{Volume Mesh}
+\label{sssec:volume_mesh}
 We are currently considering cutting human tissue open. When the human tissue is not cut, it is a volume and we can represent it as a watertight mesh and represent the internal materials as a discrete set of elements. When the tissue is cut, what we can do is to extend the surface mesh into the cut and stills make the mesh watertight. Our collision detection algorithm assumes that the mesh is always watertight. This assumption has been implemented using a remeshing tool.
 
-\subsubsection{$k$-DOP}\label{sssec:kdop}
+\subsubsection{$k$-DOP}
+\label{sssec:kdop}
 In order to make collision detection faster, we do not directly check collision between every pair of n elements (this is $\mathrm{O}(n^2)$).  Therefore, we first use a simple geometry, \eg a box, to bound a set of fine-detailed tissues and check whether these simple geometry collides, if not we do not need costly fine-detailed collision detection checks. These fine-detailed geometry cannot be too simple, they should represent the fine-detailed tissues reasonably well, $k$-DOP's does this job better than boxes.
 
-\subsubsection{Front Tracking}\label{sssec:front_tracking}
+\subsubsection{Front Tracking}
+\label{sssec:front_tracking}
 Front tracking means that between timesteps, your human tissues does not change alot. So that we do not perform collision detection checks from scratch at each iteration. Instead, we keep track of what's in collision during last timestep and go from there. This makes things faster.
 
-\subsubsection{Energy-based Collision Response}\label{sssec:energy_based_response}
+\subsubsection{Energy-based Collision Response}
+\label{sssec:energy_based_response}
 This is a method where we allow some degrees of collision to remain at every timestep, \ie we do not guarantee collisions are clearly up between timesteps. Instead, we provide a function that grows larger when you have more and deeper penetrations (collisions). Therefore, you can somewhat minimize collisions by minimizing our function.
 
-\subsubsection{CCD vs.\ DCD}\label{sssec:ccd_vs_dcd}
+\subsubsection{CCD vs.\ DCD}
+\label{sssec:ccd_vs_dcd}
 These are two modes of checking for collision detection between the geometric primitives. \acr{ccd} works in continuous time domain and checks whether the continuous movement between two timesteps will cause any  collision. If so, resolve these collisions and  until no collisions are remaining during the time interval. \acr{dcd} works in discrete time and checks whether the state of mesh at each time instance will cause collision. It does not guarantee collision-free state but runs much faster. In order to perform robust simulation, we perform \acr{ccd} computations. This also allows the underlying simulator to choose large time steps for integration.
 
 We've included a sample screenshot of a virtual tool interacting with a virtual sphere below, and a more elaborate animated video of the interaction at \url{https://www.dropbox.com/s/8r84zjortzvh5e8/video.mp4?dl=0}.
@@ -43,7 +51,8 @@ We've included a sample screenshot of a virtual tool interacting with a virtual 
 \begin{figure}
   \centering%
 	\includegraphics[width=\linewidth]{collision/cd}
-	\caption{We highlight the results of our continuous collision detection between the primitives. This includes self-collision as well as collisions between the objects.}\label{fig:cd}
+	\caption{We highlight the results of our continuous collision detection between the primitives. This includes self-collision as well as collisions between the objects}
+	\label{fig:cd}
 \end{figure}
 
 \subsection{Fast Collision Checking between Complex Models}
@@ -70,7 +79,8 @@ To combine the merits of these two methods, we use a dynamic \acr{bvh} data stru
   \put(-60,17){$C_3$}
   \put(-18,17){$C_4$}
   \vspace{-10px}
-  \caption{An illustration of iterative \acr{bvh} updation. We update the \acr{bvh} at every timestep by first visiting every node in depth first order, so that when we visit a node for the second time, its children have correct and updated bounding volume. During the second visit of an internal node, it can either has three children (\emph{a}) or four children (\emph{b}) with the next two levels. In the case of (\emph{a}), we check whether letting $C_1,C_3$ be sibling or letting $C_2,C_3$ be sibling will improve \acr{sah} cost. If so, we apply the corresponding rotation. In the case of (\emph{b}), we check whether letting $<C_1,C_3>,<C_2,C_4>$ be sibling or letting $<C_1,C_4>,<C_2,C_3>$ be sibling will improve SAH cost. If so, we apply the corresponding rotation. In summary, there are two possible rotations to be considered in both cases.}\label{fig:BVHRotation}
+  \caption{An illustration of iterative \acr{bvh} updation. We update the \acr{bvh} at every timestep by first visiting every node in depth first order, so that when we visit a node for the second time, its children have correct and updated bounding volume. During the second visit of an internal node, it can either has three children (\emph{a}) or four children (\emph{b}) with the next two levels. In the case of (\emph{a}), we check whether letting $C_1,C_3$ be sibling or letting $C_2,C_3$ be sibling will improve \acr{sah} cost. If so, we apply the corresponding rotation. In the case of (\emph{b}), we check whether letting $<C_1,C_3>,<C_2,C_4>$ be sibling or letting $<C_1,C_4>,<C_2,C_3>$ be sibling will improve SAH cost. If so, we apply the corresponding rotation. In summary, there are two possible rotations to be considered in both cases}
+  \label{fig:BVHRotation}
   \vspace{-5pt}
 \end{figure}
 

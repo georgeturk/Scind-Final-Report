@@ -1,7 +1,8 @@
 % Hamad Medical Corporation
 % Georges Younes
 
-\section{Clinical Validation and Assessment}\label{sec:clinical_validation}
+\section{Clinical Validation and Assessment}
+\label{sec:clinical_validation}
 
 \begin{itemize}
   \item RARP Surgical substep PR 1 \path{Document4_RARP_Surgical_Substeps.pdf}
@@ -11,7 +12,8 @@
 
 \hrule%
 
-\subsection{Validation and Assessment}\label{ssec:validation_assessment}
+\subsection{Validation and Assessment}
+\label{ssec:validation_assessment}
 
 % \textbf{\textcolor{red}{Add definitions of validities and summative/predictive, \etc. }}
 
@@ -23,7 +25,8 @@ Before the implementation starts, meetings were held with urologists to explain 
 
 The following points came up during the initial discussion with the surgeons for validation and assessment of a surgical simulator:
 
-\subsubsection{Face Validity}\label{sssec:face_validity}
+\subsubsection{Face Validity}
+\label{sssec:face_validity}
 \begin{itemize}
   \item Is Face validity dependent on hardware interface irrespective of the software simulation? If yes, as we will be using Mimic frame or Mantis Duo for interface, will the face validity be same as the studies published previously?
   \item Will the result be biased if the clinician providing input during the development phase is also included in evaluation?
@@ -35,7 +38,8 @@ The following points came up during the initial discussion with the surgeons for
 \end{itemize}
 
 
-\subsubsection{Content Validity}\label{sssec:content_validity}
+\subsubsection{Content Validity}
+\label{sssec:content_validity}
 \begin{itemize}
   \item The subjective study will give a single value for content validity questions. Would it be sufficient?
   \item Will the result be biased if the clinician providing input during the development phase is also included in evaluation?
@@ -47,7 +51,8 @@ The following points came up during the initial discussion with the surgeons for
   \end{itemize}
 \end{itemize}
 
-\subsubsection{Construct Validity}\label{sssec:construct_validity}
+\subsubsection{Construct Validity}
+\label{sssec:construct_validity}
 \begin{itemize}
   \item Some sample objective data metric to be measured by system's software itself:
   \begin{itemize}
@@ -63,7 +68,8 @@ The following points came up during the initial discussion with the surgeons for
 
 \hrule%
 
-\subsection{Clinical Steps}\label{ssec:clinical}
+\subsection{Clinical Steps}
+\label{ssec:clinical}
 The surgical sub-step of cutting the urethra during \acr{rarp} procedure was selected for generation of simulation scenario. The required surgical-steps during \acr{rarp} procedure includes:
 \begin{enumerate*}[\em i\em)]
   \item Dropping the bladder,
@@ -112,13 +118,15 @@ Once the surgeon has reached to the urethra (after going through the different s
 \begin{figure}
   \centering%
   \includegraphics[width=0.5\textwidth]{validation/cut_1}
-  \caption{A sketch of the interface showing the user the intended location of cutting}\label{fig:ideal_cut}
+  \caption{A sketch of the interface showing the user the intended location of cutting}
+  \label{fig:ideal_cut}
 \end{figure}
 
 \subsubsection{Shape of the Cut}
 An ideal shape of the cut is evaluated by three  metrics as described in following sub-sections.
 
-\paragraph{Cutting in One Plane}\label{par:metric_1}
+\paragraph{Cutting in One Plane}
+\label{par:metric_1}
 This means that the cut should be symmetrical, \ie it is only performed in one plane. The plane should be parallel to the plane of the prostate surface. The simulation software should be able to calculate the cutting plane the surgeon is performing and approximate it to one flat plane parallel to the surface of the prostate for a cut to be correctly performed.
 \autoref{fig:prostate_surface_plane} shows the plane of the surface of the prostate. An ideal cut should be performed in a plane parallel to this plane, as shown in \autoref{fig:cutting_location_parallel_to_prostate}. Since the training simulation will display the location of the ideal cut, as shown in \autoref{fig:ideal_cut}, a surgeon using this simulation will have a visual cue of the angle of the plane. \autoref{fig:plane_location_orientation} shows the ideal cutting plane location and orientation with respect to the plane of the prostate surface.
 
@@ -127,33 +135,46 @@ This means that the cut should be symmetrical, \ie it is only performed in one p
 \begin{figure}
   %\captionsetup[subfigure]{width=0.3\textwidth}
   \centering%
-  \subbottom[The prostate's surface plane]{\includegraphics[width=0.3\textwidth]{validation/cut_2}\label{fig:prostate_surface_plane}}
+  \subbottom[The prostate's surface plane]{\includegraphics[width=0.3\textwidth]{validation/cut_2}
+  \label{fig:prostate_surface_plane}}
   \hfill%
-  \subbottom[The cutting location should be above the apex of the prostate and in one plane parallel to the prostate's surface plane]{\includegraphics[width=0.3\textwidth]{validation/cut_3}\label{fig:cutting_location_parallel_to_prostate}}
+  \subbottom[The cutting location should be above the apex of the prostate and in one plane parallel to the prostate's surface plane]{\includegraphics[width=0.3\textwidth]{validation/cut_3}
+  \label{fig:cutting_location_parallel_to_prostate}}
   \hfill%
-  \subbottom[Cutting the urethra should not be performed in a plane not in parallel to the prostate]{\includegraphics[width=0.3\textwidth]{validation/cut_4}\label{fig:cutting_location_not_parallel_to_prostate}}
-  \caption{The ideal location and orientation of the cutting plane}\label{fig:plane_location_orientation}
+  \subbottom[Cutting the urethra should not be performed in a plane not in parallel to the prostate]{\includegraphics[width=0.3\textwidth]{validation/cut_4}
+  \label{fig:cutting_location_not_parallel_to_prostate}}
+  \caption{The ideal location and orientation of the cutting plane}
+  \label{fig:plane_location_orientation}
 \end{figure}
 
 \begin{figure}
 %\captionsetup[subfigure]{width=0.45\textwidth}
   \centering%
-  \subbottom[An example of a non-uniform1 cut performed in multiple planes]{\label{fig:asymmetrical_cut}\includegraphics[width=0.45\textwidth]{validation/cut_5}}
+  \subbottom[An example of a non-uniform1 cut performed in multiple planes]{
+    \includegraphics[width=0.45\textwidth]{validation/cut_5}
+    \label{fig:asymmetrical_cut}
+  }
   \hfill%
-  \subbottom[Cutting the urethra should not be performed in multiple planes]{\label{fig:multiple_planes}\includegraphics[width=0.45\textwidth]{validation/cut_6}}
-  \caption{Cutting in multiple planes}\label{fig:cutting_in_multiple_planes}
+  \subbottom[Cutting the urethra should not be performed in multiple planes]{
+    \includegraphics[width=0.45\textwidth]{validation/cut_6}
+    \label{fig:multiple_planes}
+  }
+  \caption{Cutting in multiple planes}
+  \label{fig:cutting_in_multiple_planes}
 \end{figure}
 
-\paragraph{One Initial Opening}\label{par:metric_2}
+\paragraph{One Initial Opening}
+\label{par:metric_2}
 As a good practice for a clean cut, the surgeon should should perform the task starting from only one initial cut in the urethra and should not create multiple initial cuts.
 
-\paragraph{Cut in Small Steps}\label{par:metric_3}
+\paragraph{Cut in Small Steps}
+\label{par:metric_3}
 Another good practice for a clean cut is cutting only a few millimeters at a time. The minimum and maximum size of a single cutting step is to be defined empirically through test runs and evaluations with surgeons during the formative validity tests.
 
 \hrule%
 
-\subsection{Evaluation Metrics}\label{ssec:evaluation_metrics}
-
+\subsection{Evaluation Metrics}
+\label{ssec:evaluation_metrics}
 
 % \begin{figure}
 %   \centering%
@@ -162,7 +183,8 @@ Another good practice for a clean cut is cutting only a few millimeters at a tim
 % 	\includegraphics[width=0.13\linewidth]{validation/anastomosis_blockage_3}\hspace{2ex}
 % 	\includegraphics[width=0.13\linewidth]{validation/anastomosis_blockage_4}\hspace{2ex}
 % 	\includegraphics[width=0.13\linewidth]{validation/anastomosis_blockage_5}
-%   \caption{Examples of anastomosis blockage configurations.}\label{fig:anastomosis_leakage}
+%   \caption{Examples of anastomosis blockage configurations}
+%   \label{fig:anastomosis_leakage}
 % \end{figure}
 
 In order to evaluate the surgeons performance while using the simulator, several parameters need to be recorded during simulation time. These parameters are based on the aforementioned performance evaluation metrics:
@@ -178,10 +200,17 @@ In order to evaluate the surgeons performance while using the simulator, several
 
 \begin{figure}
   \centering%
-  \subbottom[Side view of rectal wall boarders planes]{\label{fig:asymmetrical_cut}\includegraphics[width=0.45\textwidth]{figures/validation/rec1.png}}
+  \subbottom[Side view of rectal wall boarders planes]{
+    \includegraphics[width=0.45\textwidth]{figures/validation/rec1.png}
+    \label{fig:asymmetrical_cut}
+  }
   \hfill%
-  \subbottom[Front view of rectal wall boarders planes]{\label{fig:multiple_planes}\includegraphics[width=0.45\textwidth]{figures/validation/rec2.png}}
-  \caption{Rectal wall boarders}\label{fig:recWalls}
+  \subbottom[Front view of rectal wall boarders planes]{
+    \includegraphics[width=0.45\textwidth]{figures/validation/rec2.png}
+    \label{fig:multiple_planes}
+  }
+  \caption{Rectal wall boarders}
+  \label{fig:recWalls}
 \end{figure}
 
 	\item \textbf{Tools out-of-scene count:} A good practice is to keep surgical tools always visible within the surgical view. Moving the tools out of the scene may result in injuring the patient in a real operation setting. The surgeon shall be able to control the motion of these surgical tools and keep them within his surgical view. \autoref{fig:fov} illustrates the good and back scenarios of this parameter.
@@ -189,7 +218,8 @@ In order to evaluate the surgeons performance while using the simulator, several
   \begin{figure}
     \centering
     \includegraphics[width=.6\textwidth,frame]{figures/validation/fov.JPG}
-    \caption{Tools should be always kept within the field of view. Tools out of the scene are dangerous in a real setting.}\label{fig:fov}
+    \caption{Tools should be always kept within the field of view. Tools out of the scene are dangerous in a real setting}
+    \label{fig:fov}
   \end{figure}
 
 	\item \textbf{Time elapsed for task completion:} This parameter will be used to assess the skills acquired by surgeons by using this simulator through their difference in performance parameters throughout trials. This parameter will also be used as an indication to differentiate between different surgeon expertise: a senior surgeon who is used to the console set up perform the task faster than a novice surgical surgeon.
@@ -219,7 +249,8 @@ Before the start of the simulation, the subject is taken through a presentation 
 \begin{figure}
   \centering%
   \includegraphics[width=1\textwidth]{validation/pre_training}
-  \caption{A mockup of the pre-training screen}\label{fig:pre_training_mockup}
+  \caption{A mockup of the pre-training screen}
+  \label{fig:pre_training_mockup}
 \end{figure}
 
 \subsubsection{Per-Simulation}
@@ -236,7 +267,8 @@ Note that all error visualizations and messages disappear within a few seconds t
   \subbottom[Error: multiple initial cuts]{\includegraphics[width=0.45\textwidth]{validation/training_3}}
   \hfill%
   \subbottom[Unnecessary collusion with surrounding organs]{\includegraphics[width=0.45\textwidth]{validation/training_4}}
-  \caption{A mockup of the training screen and the different possible scenarios}\label{fig:training_mockup}
+  \caption{A mockup of the training screen and the different possible scenarios}
+  \label{fig:training_mockup}
 \end{figure}
 
 \subsubsection{Post-Simulation}
@@ -244,7 +276,8 @@ This graphical user interface, displayed upon the completion of the cutting task
 \begin{figure}
   \centering%
   \includegraphics[width=.7\textwidth]{validation/post_training}
-  \caption{A mockup of an example of results screen}\label{fig:post_training_mockup}
+  \caption{A mockup of an example of results screen}
+  \label{fig:post_training_mockup}
 \end{figure}
 
 \subsection{Evaluation Protocol}
@@ -393,7 +426,8 @@ Based on the evaluation protocol, a questionnaire was prepared using Likert Scal
 
 \hrule%
 
-% TO BE DELETED: \section{Metrics for Performance Evaluation}\label{part:}
+% TO BE DELETED: \section{Metrics for Performance Evaluation}
+\label{part:}
 
 % This document includes the technical details for collecting metrics to evaluate the user's performance in the surgical simulator built for the project.
 
@@ -455,7 +489,7 @@ Here is a list of all the values to be collected from a running program. Later s
 \subsubsection{Cut Area: $A^t_{predef}$, $A^t_{postdef}$, $A^b_{predef}$, $A^b_{postdef}$}
 \label{para:data_cut_area}
 
-This variable describes the area of the surfaces formed at the site of the cut. As shown in Figure \ref{fig:cut_area}, when a tetrahedral $x$ is cut, a new small surface is formed at the top ($a^t_x$) and at the bottom ($a^b_x$). A surface formed with an entire cut ($A$) is a summation of a total of $N$ small surfaces created at that site. This applies to the top ($A^t$) and bottom ($A^b$) areas of a cut, where:
+This variable describes the area of the surfaces formed at the site of the cut. As shown in \autoref{fig:cut_area}, when a tetrahedral $x$ is cut, a new small surface is formed at the top ($a^t_x$) and at the bottom ($a^b_x$). A surface formed with an entire cut ($A$) is a summation of a total of $N$ small surfaces created at that site. This applies to the top ($A^t$) and bottom ($A^b$) areas of a cut, where:
 
 \[ A^t = \sum_{i=1}^{N}a^t_i \]
 \[ A^b = \sum_{i=1}^{N}a^b_i \]
@@ -463,12 +497,14 @@ This variable describes the area of the surfaces formed at the site of the cut. 
 \begin{figure}
   \centering%
   \includegraphics[width=0.6\textwidth]{validation/cut_area.jpg}
-  \caption{Cut Area Variable Description}\label{fig:cut_area}
+  \caption{Cut Area Variable Description}
+  \label{fig:cut_area}
 \end{figure}
 
 These variables are recorded before deformation ($predef$) and after deformation ($postdef$).
 
-\subsubsection{Plane Inclination And Distance Statistics}\label{para:data_plane_inclination_and_distance}
+\subsubsection{Plane Inclination And Distance Statistics}
+\label{para:data_plane_inclination_and_distance}
 
 To assess the shape of the cut, it is compared in real time to an ideal (invisible) cutting plane. As shown in \autoref{fig:surface_to_plane_distance}, the distance between each vertex and the plane is calculated as $d_1$, $d_2$ and $d_3$ per triangle. The data logged per cut is the minimum ($dMin$), maximum ($dMax$), and median ($dMed$) of all the generated distances for all the vertices of the new surface. Given that each cut results in two surfaces (top $t$ and bottom $b$), the distances are calculated separately per surface, resulting in the following variables for logging after each cut. Similarly, these values are logged before and after deformation.
 
@@ -483,12 +519,15 @@ $dMin_{postdef}^t$, $dMax_{postdef}^t$, $dMed_{postdef}^t$, $dMin_{postdef}^b$, 
 \begin{figure}
   \centering%
   \includegraphics[width=0.7\textwidth]{validation/plane_distance.jpg}
-  \caption{Surface to Plane Distance}\label{fig:surface_to_plane_distance}
+  \caption{Surface to Plane Distance}
+  \label{fig:surface_to_plane_distance}
 \end{figure}
 
-\subsubsection{Counters}\label{para:data_counters}
+\subsubsection{Counters}
+\label{para:data_counters}
 
-\paragraph{Initial Cut}\label{para:data_counters_initial_cut}
+\paragraph{Initial Cut}
+\label{para:data_counters_initial_cut}
 
 For a cut to be correct, the total number of initial cuts should not exceed 1. A way to determine the number of cuts is by flagging all the tetrahedra nearby a newly-generated surface with a boolean variable. After each cut:
 
@@ -510,17 +549,20 @@ For a cut to be correct, the total number of initial cuts should not exceed 1. A
 
 An unnecessary collision is any collision between the tool and the mesh of interest made without a subsequent cut. This variable, $UnnecessaryCollisionsCounter$, counts the number of times the tool collided with the target mesh without the intention of performing a subsequent cut. The counter is incremented every time the user hits the rectal wall (the mesh behind the urethra) once the surgical tool touches an invisibile square.
 
-\paragraph{Surgical Scene Exit}\label{para:data_surgical_scene_exit}
+\paragraph{Surgical Scene Exit}
+\label{para:data_surgical_scene_exit}
 
 This variable, $SurgicalSceneExitCounter$, counts the number of times the tool exited the surgical scene.
 
-\paragraph{Topological cuts}\label{para:data_counters_topological_cuts}
+\paragraph{Topological cuts}
+\label{para:data_counters_topological_cuts}
 
 This variable, $topoligicalCutCount$, counts the number of topological cuts are on the urethra. One of the metrics that would allow for us to confirm whether the final resulting cut(s) from all the small snips ends up as a single cut is to see the number of disconnected cuts or holes there are in the mesh after the user completes the simulation. In an ideal end scenario, the resulting mesh would only have a single topological cut (ie, the mesh is seperated into two pieces without any other cuts in the two pieces). To calculate topological cuts, once a cut is performed, we take a set intersection between the triangles of the mesh after cutting and the initial mesh. The result of this would be the new triangles resulting from all cuts. By counting the number of disjoint group of triangles, we can identify the number of topological cut.
 
 \subsubsection{Variables for Debugging}
 
-\paragraph{Swipe Area of Blades}\label{para:data_swipe_area_of_blades}
+\paragraph{Swipe Area of Blades}
+\label{para:data_swipe_area_of_blades}
 
 \subparagraph{Case I: Single Blade}
 
@@ -531,30 +573,34 @@ This variable records the area swept by the blade from $t_1$ to $t_2$, where:
   \item $t_2$: the cut has been performed and the tool stops colliding with the mesh and starts moving away
 \end{itemize}
 
-An illustration is shown in Figure \ref{fig:single_blade_area}
+An illustration is shown in \autoref{fig:single_blade_area}
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.7\textwidth]{validation/swipe_area_single_blade.jpg}
-  \caption{Swipe Area Made by a Single Blade}\label{fig:single_blade_area}
+  \caption{Swipe Area Made by a Single Blade}
+  \label{fig:single_blade_area}
 \end{figure}
 
 \subparagraph{Case II: Scissors}
 
-This variable records the area swept by scissors upon performing a cut, as shown in Figure \ref{fig:scissors_area}.
+This variable records the area swept by scissors upon performing a cut, as shown in \autoref{fig:scissors_area}.
 
 \begin{figure}
   \centering%
   \includegraphics[width=0.7\textwidth]{validation/swipe_area_scissors.jpg}
-  \caption{Swipe Area Made by Scissors}\label{fig:scissors_area}
+  \caption{Swipe Area Made by Scissors}
+  \label{fig:scissors_area}
 \end{figure}
 
-\subsubsection{Coordinates and Angle of Blades}\label{para:data_coordinates_of_blades}
+\subsubsection{Coordinates and Angle of Blades}
+\label{para:data_coordinates_of_blades}
 
 The $4\times 4$ transformation matrix of the tooltip $\mathbf{M}(t)$. This will give both location and orientation. In case of scissors, an additional variable representing the angle of open and close state would be stored.
 
 
-\subsection{Recording Metrics}\label{chp:literature}
+\subsection{Recording Metrics}
+\label{chp:literature}
 
 \subsubsection{Complex metrics}
 For recording metrics that have complicated structures required for the specified validations, we went for the serialization library that comes with Boost collection. The library allows for serializing C++ structs into boost format (written in ASCII). The serialized data can be de-serialized at a later stage and then converted into any format necessary for analysis and validation. A serialize function needs to be provided within structs that should be serialized. Boost serialization library provides a method to write serialization functions for data types that cannot be modified to include a serialize function such as with \texttt{glm} vectors, matrices that are required for recording metrics. The steps one should know are as follows:
@@ -593,7 +639,7 @@ namespace boost {
 } // namespace boost
     \end{lstlisting}
     \item Writing a struct for serialization (\autoref{code:serializable_struct})
-    \begin{lstlisting}[style=CStyle, caption={A struct with serialize function written within it.},label={code:serializable_struct}]
+    \begin{lstlisting}[style=CStyle, caption={A struct with serialize function written within it},label={code:serializable_struct}]
 struct my_struct {
   vec3 position;
   quat orientation;
@@ -656,7 +702,8 @@ struct log_cut_deformation_struct {
     \begin{figure}
       \centering%
       \includegraphics[width=0.7\textwidth]{validation/before_after_cut.png}
-      \caption{Mesh change before and after cut}\label{fig:before_after_cut}
+      \caption{Mesh change before and after cut}
+      \label{fig:before_after_cut}
     \end{figure}
 
     \item Per Collision: Data recorded at each collision between the tool and the mesh of interest.\autoref{code:per_collision}
@@ -681,7 +728,8 @@ struct log_per_time_frame_struct {
 \end{enumerate}
 
 % Commented part is to be deleted
-% \subsection{Evaluation Protocols}\label{sec:evaluation}
+% \subsection{Evaluation Protocols}
+\label{sec:evaluation}
 
 % The validity tests we are performing at this stage of research are carried in a form of a formative usability study. A formative usability study is an iterative process of multiple usability testing approaches to evaluate the system being developed and assess the integration of features to ensure detecting and eliminating usability issues early before the final design is produced.
 
@@ -790,7 +838,8 @@ struct log_per_time_frame_struct {
 % Validation is an iterative assessment process throughout the prototype's development cycle to evaluate it from different perspectives: how it looks, how efficient it is, \etc.  We chose to conduct face, content, and construct validity to evaluate the simulator's realism, appropriateness as a teaching modality, and how good it is to differentiate between novice and expert surgeons, respectively.
 % For this, we have developed a validation protocol, which we followed to conduct the studies. The protocol details are in the section below.
 
-% \subsubsection{Validation Study Protocol}\label{sec:protocol}
+% \subsubsection{Validation Study Protocol}
+\label{sec:protocol}
 
 
 % \paragraph{Pre-evaluation session}

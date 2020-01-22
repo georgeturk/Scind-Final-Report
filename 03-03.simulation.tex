@@ -16,18 +16,19 @@ Cutting a tetrahedral mesh should result in a new mesh retaining topological int
 \begin{figure}
 	\includegraphics[width=0.6\textwidth]{cutting/vertextable.pdf}
 	\includegraphics[width=0.4\textwidth]{cutting/face.pdf}
-	\caption{Vertices in the subdivision template. The vertices on face 012 are shown on the right.}
+	\caption{Vertices in the subdivision template. The vertices on face 012 are shown on the right}
 	\label{fig:vertices}
 \end{figure}
 
-Figure \ref{fig:vertices} lists the 32 virtual vertices on the surface of the template sudivision tetrahedron. These vertices are distinct only topologically, not geometrically. The table lists these vertices in three categories: vertices of the original tetrahedron, vertices at the middle of edges, and vertices at the middle of faces. For the subdivision, an edge is split into 2, requiring 2 vertices in the (topological) middle of the edge. A face is split into 4 or 5 triangles and requires 4 vertices in the (topological) middle of the face. The notation used in the table is as follows. The mid-edge vertex $i\times .j$ denote the vertex on edge $ij$ closest to $i$. The mid-face $ijk\times ..$ denotes the vertex on face $ijk$ closest to the position denoted by the $\times$. The vertex denoted as $ijk$ is the mid-face vertex on face $ijk$.
+\autoref{fig:vertices} lists the 32 virtual vertices on the surface of the template sudivision tetrahedron. These vertices are distinct only topologically, not geometrically. The table lists these vertices in three categories: vertices of the original tetrahedron, vertices at the middle of edges, and vertices at the middle of faces. For the subdivision, an edge is split into 2, requiring 2 vertices in the (topological) middle of the edge. A face is split into 4 or 5 triangles and requires 4 vertices in the (topological) middle of the face. The notation used in the table is as follows. The mid-edge vertex $i\times .j$ denote the vertex on edge $ij$ closest to $i$. The mid-face $ijk\times ..$ denotes the vertex on face $ijk$ closest to the position denoted by the $\times$. The vertex denoted as $ijk$ is the mid-face vertex on face $ijk$.
 
 Assuming that cuts are limited to a single cut per edge and no more than 2 cuts on the edges of a triangular face, these vertices provide the necessary topology for a tetrahedron to be properly subdivided into 17 children tetrahedra. However these subdivisions may be produce incompatible meshes where an edge or face may be subdivided differently depending on the tetrahedra it is connected to. These incompatible subdivisions produce hanging nodes that complicate the physical simulation. In order to avoid these incompatibilities in the mesh, the generic subdivision is modified to merge the children tetrahedra that lie on a single undivided edge. This reduces the number of child tetrahedra and as importantly preserves a full connectivity with neighbors sharing uncut edges. The resulting subdivision template is shown in \autoref{fig:Merged_universal_subdivision}. In addition, subdivided faces with uncut edges are also merged to avoid face cracks between neighboring tetrahedra.
 
 \begin{figure}
   \centering%
-  \includegraphics[width=0.85\linewidth]{figures/cutting/Merged_universal.png}
-  \caption{Universal subdivision tetrahedral template with merged children along edges.}\label{fig:Merged_universal_subdivision}
+  \includegraphics[width=0.85\linewidth,frame]{figures/cutting/Merged_universal.png}
+  \caption{Universal subdivision tetrahedral template with merged children along edges}
+  \label{fig:Merged_universal_subdivision}
 \end{figure}
 
 
@@ -38,7 +39,8 @@ The template above supports the five types of topologically-distinct discontinuo
 \begin{figure}
   \centering%
   \includegraphics[width=0.85\linewidth]{simulation/cut_configurations}
-  \caption{Cut configurations}\label{fig:discontinuous_tetrahedra_fem}
+  \caption{Cut configurations}
+  \label{fig:discontinuous_tetrahedra_fem}
 \end{figure}
 
 
@@ -47,16 +49,28 @@ One of the challenges of robust cutting is the case of edges that get cut twice.
 \begin{figure}
   %\captionsetup[subfigure]{width=0.2\textwidth}
   \centering%
-  \subbottom[]{\includegraphics[width=0.19\textwidth]{simulation/tet_cut1}\label{fig:tet_cut1}}
-  \hfill%
-  \subbottom[]{\includegraphics[width=0.19\textwidth]{simulation/tet_cut2}\label{fig:tet_cut2}}
-  \hfill%
-  \subbottom[]{\includegraphics[width=0.19\textwidth]{simulation/tet_cut3}\label{fig:tet_cut3}}
-  \hfill%
-  \subbottom[]{\includegraphics[width=0.19\textwidth]{simulation/tet_cut4}\label{fig:tet_cut4}}
-  \hfill%
-  \subbottom[]{\includegraphics[width=0.19\textwidth]{simulation/tet_cut5}\label{fig:tet_cut5}}
-  \caption{This figure shows 2 tetrahedra (\emph{a}), top and bottom, and a cut that intersects an edge separating the 2 tetrahedra (\emph{b}) curves inside the bottom one (\emph{c}) and exits intersecting the same edge. When the second cut is detected, the mesh is refined as seen in (\emph{d}), and the cut reapplied (\emph{e}).}\label{fig:tet_cuts}
+  \subbottom[]{
+    \includegraphics[width=0.18\textwidth]{simulation/tet_cut1}
+    \label{fig:tet_cut1}
+  }\hfill%
+  \subbottom[]{
+    \includegraphics[width=0.18\textwidth]{simulation/tet_cut2}
+    \label{fig:tet_cut2}
+  }\hfill%
+  \subbottom[]{
+    \includegraphics[width=0.18\textwidth]{simulation/tet_cut3}
+    \label{fig:tet_cut3}
+  }\hfill%
+  \subbottom[]{
+    \includegraphics[width=0.18\textwidth]{simulation/tet_cut4}
+    \label{fig:tet_cut4}
+  }\hfill%
+  \subbottom[]{
+    \includegraphics[width=0.18\textwidth]{simulation/tet_cut5}
+    \label{fig:tet_cut5}
+  }
+  \caption{This figure shows 2 tetrahedra (\emph{a}), top and bottom, and a cut that intersects an edge separating the 2 tetrahedra (\emph{b}) curves inside the bottom one (\emph{c}) and exits intersecting the same edge. When the second cut is detected, the mesh is refined as seen in (\emph{d}), and the cut reapplied (\emph{e})}
+  \label{fig:tet_cuts}
 \end{figure}
 
 
@@ -65,10 +79,13 @@ Finally, the subdivision scheme could result under certain conditions in some fl
 
 \begin{figure}
   \centering%
-  \includegraphics[width=0.3\textwidth]{simulation/tet_flat1}\label{fig:tet_flat1}
+  \includegraphics[width=0.3\textwidth]{simulation/tet_flat1}
+  \label{fig:tet_flat1}
   \hspace{10ex}
-  \includegraphics[width=0.3\textwidth]{simulation/tet_flat2}\label{fig:tet_flat2}
-  \caption{In this figure, the left mesh (3 tetrahedra) admits a single flat cell shaded in blue, on the right the cluster of affected cells are removed and replaced with an equivalent set (4 tetrahedra) without any flat cells.}\label{fig:flat_tet}
+  \includegraphics[width=0.3\textwidth]{simulation/tet_flat2}
+  \label{fig:tet_flat2}
+  \caption{In this figure, the left mesh (3 tetrahedra) admits a single flat cell shaded in blue, on the right the cluster of affected cells are removed and replaced with an equivalent set (4 tetrahedra) without any flat cells}
+  \label{fig:flat_tet}
 \end{figure}
 
 % In the Figure, the left mesh (3 tetrahedra) admits a single flat cell shaded in blue, on the right the cluster of affected cells are removed and replaced with an equivalent set (4 tetrahedra) without any flat cells.
@@ -86,26 +103,29 @@ These subdivision methods have the ability to handle in a robust manner a variet
   \fbox{\includegraphics[width=0.32\linewidth]{simulation/snip1}}
   \hfill%
   \fbox{\includegraphics[width=0.32\linewidth]{simulation/snip2}}
-  \caption{---}\label{fig:cuts}
+  \caption{---}
+  \label{fig:cuts}
 \end{figure}
 
 % ----------------------------------------------------------------------
 
-\subsection{Fast Incremental Solver}\label{ssec:incremental_solver}
+\subsection{Fast Incremental Solver}
+\label{ssec:incremental_solver}
 % \subsubsection{Incremental Cutting Architecture}
 
 \autoref{fig:cutting_process_flow} shows the overall flow of the progressive cutting procedure. The first step in the procedure is to compute intersections of the tool surface path with the edges and faces of the mesh. A \acr{bvh} data structure is used to allow for fast computations of global intersections allowing disconnected parts of the mesh to be cut as the cutting tool is swept. The intersection information on the edges and faces is used to determine which tetrahedral cells are affected and which are active. Affected cells are those that have been intersected by the tool path and active cells are those pierced by the last position of the cutting tool. The active cells are treated differently than others as their subdivision is not yet complete in the mesh as a subsequent movement of the tool could cut the cell further and cause an internal topology change.  When the intersections are completed, the cut can be processed. Subdivision can then take place and the resulting changes are reported back to the \acr{bvh} to update its internal structure, and to the \acr{fe} physics engine to communicate new and deleted vertices and edges.
 
 \begin{figure}
   \centering%
-  \includegraphics[width=0.75\linewidth]{figures/cutting/Process_cut.png}
-  \caption{Flow of progressive cutting procedure.}\label{fig:cutting_process_flow}
+  \includegraphics[width=0.75\linewidth,frame]{figures/cutting/Process_cut.png}
+  \caption{Flow of progressive cutting procedure}
+  \label{fig:cutting_process_flow}
 \end{figure}
 
 
-% Processing of the cut distinguishes between finalized and active cells, where finalized cells are affected cells that are not active. Each is treated differently primarily because the resulting changes to the mesh need to be treated differently. BVH deals only with the part of the mesh that is possible to intersect, therefore the changes resulting from active cells should not be reported to it. On the other hand, physics should be aware of the exact state of the mesh topology, therefore everything is reported to it. To keep track of the affected, active, finalized cells as well as their children a CutTetrahedronManager object is used to provide all the management functionalities.\ref{fig:Process_cut_details_flow}
+% Processing of the cut distinguishes between finalized and active cells, where finalized cells are affected cells that are not active. Each is treated differently primarily because the resulting changes to the mesh need to be treated differently. BVH deals only with the part of the mesh that is possible to intersect, therefore the changes resulting from active cells should not be reported to it. On the other hand, physics should be aware of the exact state of the mesh topology, therefore everything is reported to it. To keep track of the affected, active, finalized cells as well as their children a CutTetrahedronManager object is used to provide all the management functionalities.\autoref{fig:Process_cut_details_flow}
 
-% Each cell is treated independently. If there is no topology change to the cell, its geometry (its children’s geometry) is updated. Otherwise, the cell gets a first or a new subdivision once the new vertices are determined and set in the mesh. The subdivision process itself is very involved and another point where this work diverges from Bielser’s. First a modified universal subdivision is introduced that merges cells along uncut edges. This does not eliminate “crack”s in the mesh, however in the select cases where it is used, it ensures that uncut edges are not subdivided. We also use the cut-specific subdivisions. The use cases are shown in the subdivision diagram level 3. This mix of subdivision ensures the fewest the introduction of fewer cells, a major drawback of any subdivision based geometry cutting. \ref{fig:CutTetrahedron_flow} \ref{fig:Subdivision_flow}
+% Each cell is treated independently. If there is no topology change to the cell, its geometry (its children’s geometry) is updated. Otherwise, the cell gets a first or a new subdivision once the new vertices are determined and set in the mesh. The subdivision process itself is very involved and another point where this work diverges from Bielser’s. First a modified universal subdivision is introduced that merges cells along uncut edges. This does not eliminate “crack”s in the mesh, however in the select cases where it is used, it ensures that uncut edges are not subdivided. We also use the cut-specific subdivisions. The use cases are shown in the subdivision diagram level 3. This mix of subdivision ensures the fewest the introduction of fewer cells, a major drawback of any subdivision based geometry cutting. \autoref{fig:CutTetrahedron_flow} \autoref{fig:Subdivision_flow}
 
 % The continuous tool path geometry is discretized and represented as a set of triangles approximating the swept cut surface.
 Besides the subdivision procedures described in the previous section, the implementation of this incremental cutting architecture requires a number of components to be tightly integrated. First, the continuous tool path geometry \eg \autoref{fig:incremental} needs to be discretized. A triangular surface that approximates the swept path of the moving tool and bounded by the start and end physical positions of the blade is generated and passed to the BVH intersection routines.
@@ -113,7 +133,8 @@ Besides the subdivision procedures described in the previous section, the implem
 \begin{figure}
 	\centering%
 	\includegraphics[width=0.4\linewidth]{simulation/incremental}
-	\caption{Tool path between two successive blade locations.}\label{fig:incremental}
+	\caption{Tool path between two successive blade locations}
+	\label{fig:incremental}
 \end{figure}
 
 % At-every-iteration of the simulation, a geometric master model locates the surgical tools, resolves tool-tissue collisions and tissue-tissue collisions, and communicates this information to the finite element model.
@@ -126,7 +147,8 @@ Incremental updating of the \acr{bvh} geometry model and \acr{fe} physics models
 \begin{figure}
   \centering%
   \includegraphics[width=0.7\linewidth]{simulation/cut_progression}
-  \caption{Progressive cut of tetrahedral element.}\label{fig:discontinuous_tetrahedra_solver}
+  \caption{Progressive cut of tetrahedral element}
+  \label{fig:discontinuous_tetrahedra_solver}
 \end{figure}
 
 Specifically, the fast incremental solver needs a fine-grained communication with a \acr{bvh}, a powerful data structure for tracking geometric objects and accelerating geometric operations such as triangle-segment intersections ubiquitous in the cutting module. An \acr{api} was designed and implemented to allow the cutting module to communicate information to the \acr{bvh}. In particular, the \acr{bvh} \acr{api} allows the cutting module to determine which edges and faces of the mesh have been cut by a particular sweep of a cutting tool, as well as the geometries of these intersections, in logarithmic complexity. The \acr{bvh} module also requires information about all changes in the mesh to be able to update and restructure the hierarchy so it is synchronized with the base mesh to continue supporting intersection queries.
@@ -154,18 +176,20 @@ The result is a complete system controllable through a \acr{ui} that can cut ope
   \setlength{\fboxsep}{0pt}%
   \setlength{\fboxrule}{0.1pt}%
   \fbox{\includegraphics[width=0.5\linewidth]{simulation/snip3}}
-  \caption{Deforming and snipping a tube}\label{fig:contact}
+  \caption{Deforming and snipping a tube}
+  \label{fig:contact}
 \end{figure}
 
 \begin{figure}
   \centering%
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_1}\hfill%
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_2}\\[1.5ex]
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_3}\hfill%
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_4}\\[1.5ex]
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_5}\hfill%
-	\includegraphics[width=0.4\linewidth]{simulation/sphere_6}\\
-	\caption{Examples of geometrically complex cuts of a spherical mesh}\label{fig:sphere}
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_1}\hfill%
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_2}\\[1.5ex]
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_3}\hfill%
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_4}\\[1.5ex]
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_5}\hfill%
+	\includegraphics[width=0.4\linewidth,frame]{simulation/sphere_6}\\
+	\caption{Examples of geometrically complex cuts of a spherical mesh}
+	\label{fig:sphere}
 \end{figure}
 
 
@@ -173,7 +197,8 @@ The result is a complete system controllable through a \acr{ui} that can cut ope
 
 % ----------------------------------------------------------------------
 
-\subsection{Non-linear Solver}\label{ssec:nonlinear_solver}
+\subsection{Non-linear Solver}
+\label{ssec:nonlinear_solver}
 % The nonlinear solver is necessary when large deformations take place. The solution strategy in this case involves an iterative Newton-like scheme that builds on the linear solve. The challenge for the non-linear solution is to control both the number of iterations and the cost of solving the modified linear problem at every iteration. We have started the development of a strategy that performs an approximate solution for the modified problem at every iteration, based on a hierarchical matrix representation of the stiffness matrix which produce algebraic approximations of off-diagonal matrix blocks and can substantially speed up the solution process.
 
 In simulations of cutting procedures, large deformations generally take place necessitating a nonlinear solution strategy that handles the large kinematics of these deformations. \autoref{fig:tube} shows an example of such deformation where a tube under tension is snipped incrementally. Modifications to the underlying tetrahedral model are generated automatically as the tube is sniped around a cross section by a scissor tool (not shown), and the resulting large nonlinear tube deformations are shown.
@@ -190,7 +215,8 @@ In simulations of cutting procedures, large deformations generally take place ne
 	\includegraphics[width=0.2\linewidth]{simulation/tube_6}\hfill%
 	\includegraphics[width=0.2\linewidth]{simulation/tube_7}\hfill%
 	\includegraphics[width=0.2\linewidth]{simulation/tube_8}\\
-	\caption{Progressive cut of a tubular shape (mesh, top; and rendered shape, bottom).}\label{fig:tube}
+	\caption{Progressive cut of a tubular shape (mesh, top; and rendered shape, bottom)}
+	\label{fig:tube}
 \end{figure}
 
 We handle the nonlinearities using a local-global strategy, and assume the strain energy of the system comes from the edges of the mesh. The local-global strategy reformulates the potential energy of the system as a minimization problem and introduces auxiliary variables corresponding to the rest-length of the elements. This new problem is linear in the positions of the nodes, and non-linear in the newly introduced variable.
@@ -205,13 +231,14 @@ Consider a system with $m$ nodes and $s$ elements. Let $\mathbf{K}$ be the stiff
   \frac{1}{2}\mathbf{x}^\intercal\mathbf{Kx} -
   \mathbf{x}^\intercal\mathbf{Jd}
 \end{equation}
-where $\mathbf{x}$ represents the node positions, $\mathbf{d}$ the spring directions, and $r_i$ the rest length of the \textit{ith} spring. To model bending resistance for surface elements, a quadratic bending energy model presented in \cite{Bergou06} is used.
+where $\mathbf{x}$ represents the node positions, $\mathbf{d}$ the spring directions, and $r_i$ the rest length of the \textit{ith} spring. To model bending resistance for surface elements, a quadratic bending energy model presented in \autocite{Bergou06} is used.
 
 $\mathbf{K}$ can be expressed as the sum of rank-one matrices:
 \begin{equation}
   \mathbf{K} = \sum_{i = 1}^s k_i\mathbf{A}_i\mathbf{A}_i^\intercal
 \end{equation}
 where $\mathbf{A}_i \in R^{m}$ are the spring incidence vectors and we make use of this fact to directly update the inverse of $\mathbf{K}$ (or equivalently, its Cholesky factors), allowing for fast interactive cutting.
+
 %-----------------------------------------------------------------------
 
 % In this section, we outline the parallel implementation of the implicit integrator,
@@ -244,7 +271,7 @@ Cholesky factorization of $\mathbf{K}$.
 
 Steps 1 and 2 are fairly straight forward to parallelize. In step 1, we launch a kernel where each thread computes the direction of a single spring. This involves normalizing each spring direction and multiplying by the corresponding rest-length. Step 2 is implemented as a level 3 sparse \acr{blas} operation.
 
-Step 3 uses a pre-computed Cholesky factorization of $\mathbf{K}$ to perform a sparse triangular solve. However, due to the inherently serial nature of triangular solvers, this will have to be preceded with an analysis phase to extract as much parallelism as possible \cite{Mayer09}.
+Step 3 uses a pre-computed Cholesky factorization of $\mathbf{K}$ to perform a sparse triangular solve. However, due to the inherently serial nature of triangular solvers, this will have to be preceded with an analysis phase to extract as much parallelism as possible \autocite{Mayer09}.
 
 Furthermore, the permutation required at every iteration is a potential performance bottleneck, since it is highly memory bound. However, this can easily be avoided by computing all iterations in the permuted space, thus only permuting at the very first and very last iterations.
 
@@ -331,20 +358,21 @@ where $\mathbf{C}$ can now be updated separately from $\mathbf{K}$, at the cost 
 \subsubsection{Results}
 \begin{figure}
   \centering
-  \includegraphics[width=1.0\textwidth]{simulation/performance_plots.png}
-  \caption{Performance of different stages of a single iteration of the sparse serial and parallel implementations. From left to right: linear solve, computation of $\mathbf{d}$, computation of $\mathbf{Jd}$.}\label{fig:performance-iteration}
+  \includegraphics[frame,width=1.0\textwidth]{simulation/performance_plots.png}
+  \caption{Performance of different stages of a single iteration of the sparse serial and parallel implementations. From left to right: linear solve, computation of $\mathbf{d}$, computation of $\mathbf{Jd}$}
+  \label{fig:performance-iteration}
 \end{figure}
 
 \autoref{fig:performance-iteration} illustrates the performance of this framework. Each graph shows the execution time of the serial and parallel implementations of an iteration of the sparse integrator on an increasing number of vertices. This performance allows us to execute a large number of iterations in real-time. \autoref{table:dense} shows how the dense integrator significantly outperforms both the serial and parallel sparse implementations for a relatively small mesh. However, the polynomial complexity of the dense representation will not scale.
 
 \begin{table}[ht]
-\caption{Performance of the different solvers on small meshes.}
+\caption{Performance of the different solvers on small meshes}
 \centering
 \begin{tabular}{lrrr}
 \toprule
 \multicolumn{3}{r}{Execution Time (ms)} \\
 \cmidrule(r){2-4}
-\textit{m} & Sparse(\acr{cpu}) & Sparse (\acr{gpu}) & Dense (\acr{gpu}) \\
+\textit{m} & Sparse (\acr{cpu}) & Sparse (\acr{gpu}) & Dense (\acr{gpu}) \\
 \midrule
 % $9$ & $0.002$& $0.320512$ & $0.007328$ \\
 $2590$ & $1.575$ & $1.33437$ & $0.202816$ \\
@@ -370,7 +398,8 @@ $2590$ & $1.575$ & $1.33437$ & $0.202816$ \\
 
 % ----------------------------------------------------------------------
 
-\subsection{GPU Acceleration}\label{ssec:gpu_acceleration}
+\subsection{GPU Acceleration}
+\label{ssec:gpu_acceleration}
 
 The solution of the underlying large system of algebraic equations is the main time-consuming portion of a finite element simulation, and it is therefore critical to accelerate this step using \acr{gpu} parallel hardware. The sparse factorization described in the previous section suffers from two difficulties on parallel \acr{gpu} hardware. Its memory footprint and the number of FLOPS it requires scale superlineary with problem size because of fill-in, and the triangular sparse solves introduce an inherent serialization in the solution which prevent efficient parallel execution on manycore processors. As a scalable alternative strategy on \acr{gpu}s, we generate the inverse stiffness matrix in a hierarchical matrix representation format requiring only linear memory footprint.  This reduces the solution problem to multiplying this matrix by a force vector, which can be parallelized very effectively.
 
@@ -380,7 +409,8 @@ Hierarchical matrices are space and time efficient representations of dense matr
   \centering%
 	\includegraphics[width=0.4\linewidth]{simulation/GPU_block}\vspace{2ex}
 	\includegraphics[width=0.9\linewidth]{simulation/GPU_zoom}\\
-	\caption{Hierarchical matrix representation: dense blocks are shown in red; the rest of the matrix consists of low rank blocks at different level of granularities.}\label{fig:gpu_matrix}
+	\caption{Hierarchical matrix representation: dense blocks are shown in red; the rest of the matrix consists of low rank blocks at different level of granularities}
+	\label{fig:gpu_matrix}
 \end{figure}
 
 The challenges in developing efficient data-parallel \acr{gpu} algorithms come primarily from the irregular tree data structures that underlie the hierarchical representations, and the key to performance is to recast the computations on flattened trees in ways that allow batched linear algebra operations to be performed. We developed new \acr{gpu} algorithms in both \acr{sp} and \acr{dp}. Streams are used to overlap various stages of the computation and hide latencies. Sample performance results are shown in \autoref{fig:gpu_performance}. Our hierarchical matrix-vector multiplication
@@ -389,7 +419,8 @@ The challenges in developing efficient data-parallel \acr{gpu} algorithms come p
 \begin{figure}
   \centering%
 	\includegraphics[width=\linewidth]{simulation/GPU_performance}
-	\caption{GPU performance of hierarchical matrix-vector multiplication.}\label{fig:gpu_performance}
+	\caption{GPU performance of hierarchical matrix-vector multiplication}
+	\label{fig:gpu_performance}
 \end{figure}
 
 We also developed additional \acr{gpu}-accelerated operations including low rank update operations, matrix-matrix multiplication performed by sampling the resulting product using an \acr{hara} scheme,  as well as iterative Newton-Schulz matrix inversion operations.  These state-of-the-art algorithms push the boundary of what is possible to do in real time on \acr{gpu}'s at the fundamental algorithmic level. Their integration in the simulation system allows us to scale the simulations to higher resolution and higher fidelity models.
@@ -414,7 +445,8 @@ As examples of the high performance of the system, the figure below shows \acr{g
   \hfill%
   \includegraphics[trim=180 200 160 300,clip,width=0.32\linewidth]{simulation/plot2.pdf}
   \vspace{-15ex}
-  \caption{Scalability of GPU-accelerated hierarchical matrix operations.}\label{fig:plots}
+  \caption{Scalability of GPU-accelerated hierarchical matrix operations}
+  \label{fig:plots}
 \end{figure}
 
 % ==========
@@ -428,15 +460,17 @@ As examples of the high performance of the system, the figure below shows \acr{g
   \includegraphics[width=0.4\linewidth]{simulation/sparse_vs_hgemv_time.pdf}
   \qquad\qquad%
   \includegraphics[width=0.4\linewidth]{simulation/sparse_vs_hgemv_memory.pdf}
-  \caption{Comparison of hierarchical matrix and sparse factorization solutions on \acr{gpu}s.}\label{fig:Htests}
+  \caption{Comparison of hierarchical matrix and sparse factorization solutions on \acr{gpu}s}
+  \label{fig:Htests}
 \end{figure}
 
 
 \subsection{Faster Time Integration Schemes for Simulation}
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.99\textwidth]{simulation/defo.pdf}
-  \caption{Our novel time-integration scheme \acr{pbdd} can simulate deformable objects such as a ball or a large object with large timesteps for realtime applications.}\label{fig:pbdd}
+  \includegraphics[frame,width=0.99\textwidth]{simulation/defo.pdf}
+  \caption{Our novel time-integration scheme \acr{pbdd} can simulate deformable objects such as a ball or a large object with large timesteps for realtime applications}
+  \label{fig:pbdd}
 \end{figure}
 
 Many widely-used deformable body simulation packages are based on implicit time-stepping schemes. These methods model the deformable body's governing equation as an \acr{ode} and then integrate the \acr{ode} using high-order numerical schemes. These methods can be arbitrarily accurate but require small timestep sizes. One simple strategy to improve the runtime performance is to use a large timestep size. This strategy has proven successful in some applications, such as controlling humanoid robots, where the timestep size used in a controller can be larger than that used in the underlying simulator. A key issue in using a large timestep size is ensuring that the time integrator is still stable. For example, the stable region of a semi-implicit Euler integrator shrinks as the timestep size increases. To time integrate a deformable body under a large timestep size, a simple and widely-used method is to use an unconditionally stable fully implicit Euler integrator. However, in a conventional deformable body's governing dynamics equation, the use of a fully implicit Euler integrator involves a costly $\mathcal{O}(N^3)$ computation of high-order derivatives, where $N$ is the number of vertices in a deformable body.
@@ -453,7 +487,8 @@ The solver of linear systems in \acr{fem} is used as a sub-system in the simulat
   \subcaptionphantom{\label{fig:swing_sim_b}}\vspace{-2ex}
   \subcaptionphantom{\label{fig:swing_sim_c}}\vspace{-2ex}
   \vspace{-2ex}
-  \caption{(\emph{a}) We plot the total kinetic+potential energy over time during a standard simulation of a 10-link chain that swings downward. Each joint of this chain is a 2-DOF ball joint so that this chain has 20-DOF. Forward Euler integrator for the Newton-Euler equation and semi-implicit Euler integrator are not stable. Being fully implicit, our second-order \acr{pbdd} solver is stable but quickly loses energy. By increasing the order by one, both the second-order Runge-Kutta and our third-order \acr{pbdd} solver preserve energy very well. (\emph{b}) For the more challenging task of a 100-link chain (200-DOF) that swings downward, even the second-order Runge-Kutta method is not stable and we have to use the third-order Runge-Kutta method for better energy preservation. Our second-order \acr{pbdd} solver is stable but quickly loses energy. Our third-order \acr{pbdd} solver preserves energy very well. (\emph{c}) We compare the total computational time for generating a \SI{10}{\second} trajectory of a 10-link chain swinging down using a second-order collocation method for \acr{pbdd} and a semi-implicit Euler integrator for a conventional formulation. \acr{pbdd} is 1.5--2.1 times slower at a small timestep size and up to 4 times faster at a large timestep size, such as \SI{0.05}{\second}. The faster time integration is used for real-time rigid and deformable simulation.}\label{fig:swing_sim}
+  \caption{(\emph{a}) We plot the total kinetic+potential energy over time during a standard simulation of a 10-link chain that swings downward. Each joint of this chain is a 2-DOF ball joint so that this chain has 20-DOF. Forward Euler integrator for the Newton-Euler equation and semi-implicit Euler integrator are not stable. Being fully implicit, our second-order \acr{pbdd} solver is stable but quickly loses energy. By increasing the order by one, both the second-order Runge-Kutta and our third-order \acr{pbdd} solver preserve energy very well. (\emph{b}) For the more challenging task of a 100-link chain (200-DOF) that swings downward, even the second-order Runge-Kutta method is not stable and we have to use the third-order Runge-Kutta method for better energy preservation. Our second-order \acr{pbdd} solver is stable but quickly loses energy. Our third-order \acr{pbdd} solver preserves energy very well. (\emph{c}) We compare the total computational time for generating a \SI{10}{\second} trajectory of a 10-link chain swinging down using a second-order collocation method for \acr{pbdd} and a semi-implicit Euler integrator for a conventional formulation. \acr{pbdd} is 1.5--2.1 times slower at a small timestep size and up to 4 times faster at a large timestep size, such as \SI{0.05}{\second}. The faster time integration is used for real-time rigid and deformable simulation}
+  \label{fig:swing_sim}
 \end{figure}
 
 We compare the accuracy of time integrators for our \acr{pbdd} formulation and conventional formulation. In \autoref{fig:swing_sim_a}, we plot the total kinetic+potential energy over time during a standard simulation of a 10-link chain (20-DOF) that swings downward. The timestep size is \SI{0.0025}{\second}. We can see that \acr{pbdd} is very stable and continuously loses energy (\autoref{fig:swing_sim_a} purple). In contrast, low-order explicit integrators such as forward Euler and semi-implicit Euler are not stable. For better accuracy, we can increase the order of integration by one, resulting in a much better performance in terms of energy preservation. In \autoref{fig:swing_sim_b}, we redo the experiment for a 100-link chain (200-DOF). This is more challenging and low-order explicit integrators are more unstable. The Runge-Kutta method for the Newton-Euler equation is stable at the third order. Although our second-order \acr{pbdd} solver suffers a fast energy loss, increasing the order by one can significantly improve accuracy.
